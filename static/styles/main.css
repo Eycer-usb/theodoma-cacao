@@ -5,6 +5,7 @@
 }
 body {
     background-color:aliceblue;
+    background-image: url("../media/2316549.jpg");
     margin: 2%;
 }
 
@@ -16,3 +17,19 @@ h1, h2 {
     margin-top: 2%;
 }
 
+.login-title, .login-label {
+    color: aliceblue;
+}
+
+.login-title{
+    font-size: 3em;
+    font-family: cursive;
+}
+
+.login-label {
+    color:aliceblue;
+    font-family: 'Courier New', Courier, monospace;
+}
+.login-info {
+    color: whitesmoke;
+}
