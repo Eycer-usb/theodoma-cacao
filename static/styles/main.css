@@ -35,12 +35,21 @@ h1, h2 {
     color: whitesmoke;
 }
 
-section.content, .content-table {
+section.content {
     background-color: rgba(95, 54, 42, 0.7);
     padding: 2em;
     color:aliceblue;
     margin-top: 2em;
+    border-radius: 2em;
 }
+.content-table {
+    background-color: rgba(69, 40, 31, 0.7);
+    padding: 2em;
+    color:aliceblue;
+    margin-top: 2em;
+    border-radius: .5em;
+}
+
 .abord, .abord:hover{
     color: aliceblue;
     background-color: rgba(255, 0, 0, 0.8);
@@ -53,4 +62,14 @@ section.content, .content-table {
 }
 .abord:hover{
     background-color: rgba(255, 0, 0, 0.696);
+}
+nav.top {
+    padding: 1em;
+    border-radius: 0.5em;
+}
+.nav-user{
+    text-transform: capitalize;
+    text-align: center;
+    font-family: cursive;
+    font-size: 2.5em;
 }
