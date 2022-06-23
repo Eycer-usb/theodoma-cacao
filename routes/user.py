@@ -6,6 +6,6 @@ user = Blueprint('user', __name__)
 
 @user.route('/user-settings')
 def user_settings():
-    if( not verify_permissions(session, User) ):
+    if( not verify_permissions(session, User, 'all') ):
         return redirect(url_for('auth.index'))
     return render_template('user-settings.html', rol = session['rol'])

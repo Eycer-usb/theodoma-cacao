@@ -1,7 +1,12 @@
-function deleteConfirm(id){
+function deleteConfirm(id, table){
     let text = `Do you want to Delete this user? this action can not be undo.`
     if(confirm(text)==true){
-        window.location.href =`/user-management/delete/${id}`;
+        if(table == 'User'){
+            window.location.href =`/user-management/delete/${id}`;
+        }
+        else if(table == 'User_rol'){
+            window.location.href =`/user-rol-management/delete/${id}`;
+        }
     };
 }
 
@@ -16,12 +21,12 @@ function unmaskPassword(id){
     }
 }
 
-function showNewUserForm(){
-    element = document.getElementById("create-new-user");
+function showForm(){
+    element = document.getElementById("create-form");
     element.hidden = false;
 }
 
-function hiddeNewUserForm(){
-    element = document.getElementById("create-new-user");
+function hiddeForm(){
+    element = document.getElementById("create-form");
     element.hidden = true
 }

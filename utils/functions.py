@@ -42,10 +42,10 @@ def valid_user_rol(user_rol_desc):
         rols.append(x.description)
     return user_rol_desc in rols
 
-def verify_permissions(session, User, rol=['admin']):
+def verify_permissions(session, User, allowed=['admin']):
 # Verify Permissions       
     return 'username' in session and \
-    User.get_user_rol_by_username(User, session['username']) in rol
+    ( allowed == 'all' or User.get_user_rol_by_username(User, session['username']) in allowed)
 
 def valid_cedula(cedula):
     registers = Productor.query.filter_by(cedula=cedula)

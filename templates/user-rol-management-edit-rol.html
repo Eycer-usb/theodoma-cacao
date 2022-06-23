@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Edit User Rol</h3>
+
+<form method="POST" id="create-new-user-rol" action="/user-rol-management/edit-rol/save">
+
+  <div class="form-group">
+    <input type="hidden" name = "id" value="{{ editing_rol.id }}" />
+    <label>Rol Description</label>
+    <input class="form-control" type="text" name="str_description" value="{{ editing_rol.str_description }}" required/>                    
+    <label>Rol System Description</label>
+    <input class="form-control" type="text" name="description" value="{{ editing_rol.description }}" required/>                    
+  </div>  
+<button type="submit" class="btn btn-success btn-lg mb-1">Save</button>
+<a class="abord" href="/user-rol-management">Cancel</a>
+
+</form>
+{% endblock %}

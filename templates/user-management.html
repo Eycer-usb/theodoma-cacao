@@ -22,14 +22,14 @@
             <td>{{ user.username }}</td>
             <td>{{ user.user_rol_id }}</td>
             <td><button onclick="window.location.href=`/user-management/edit-user/{{ user.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
-            <td><button onclick='deleteConfirm( {{user.id}} )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+            <td><button onclick='deleteConfirm( {{user.id}}, "User" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
         </tr>    
         {% endfor %}
         </tbody>
     </table>
-    <button type="submit" onclick="showNewUserForm()" class="btn btn-success btn-lg mb-1">New User</button>
+    <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">New User</button>
 
-    <section id="create-new-user" class="h-100" hidden="true">
+    <section id="create-form" class="h-100" hidden="true">
 
         <h3>Create New User</h3>
 
@@ -72,7 +72,7 @@
 
 
         <button type="submit" class="btn btn-success btn-lg mb-1">Create</button>
-        <a class="abord" onclick="hiddeNewUserForm()">Cancel</a>
+        <a class="abord" onclick="hiddeForm()">Cancel</a>
 
         </form>
 </section>

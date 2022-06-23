@@ -19,13 +19,14 @@ def user_rol_management():
     return render_template('user-rol-management.html', status = status,\
             rol = session['rol'], rols = rols)
 
-@admin.route('/user-rol-management/create')
+@admin.route('/user-rol-management/create', methods = ['POST'])
 def user_rol_create():
     if( not verify_permissions(session, User) ):
         return redirect( url_for('auth.index') )
     
-    rol_description = request.form['rol-description']
-    new_rol = User_rol(rol_description)
+    description = request.form['description']
+    str_description = request.form['str_description']
+    new_rol = User_rol(description,str_description)
     db.session.add(new_rol)
     db.session.commit()
     session['management-status'] = "Rol Created"
@@ -38,7 +39,29 @@ def edit_rol(id):
     rol = User_rol.query.get(id)
     return render_template("user-rol-management-edit-rol.html", editing_rol = rol, \
         rol = session['rol'])
+@admin.route("/user-rol-management/edit-rol/save", methods = ['POST'])
+def update_user_rol():
 
+    if( not verify_permissions(session, User) ):
+        return redirect(url_for('auth.index'))
+    id = request.form['id']
+    user_rol = User_rol.query.get(id)
+    user_rol.str_description = request.form['str_description']
+    user_rol.description = request.form['description']
+
+    db.session.commit()
+    session['management-status'] = "User Rol Updated"
+    return redirect(url_for('admin.user_rol_management'))
+
+@admin.route('/user-rol-management/delete/<id>')
+def delete_user_rol(id):
+    if( not verify_permissions(session, User) ):
+        return redirect(url_for('auth.index'))
+    user_rol = User_rol.query.get(id)
+    db.session.delete(user_rol)
+    db.session.commit()
+    session['management-status'] = "User Rol Deleted"
+    return redirect(url_for('admin.user_rol_management'))
 
 @admin.route('/user-management')
 def user_management():    

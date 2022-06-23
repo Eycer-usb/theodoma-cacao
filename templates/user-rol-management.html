@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>User Rols List</h2>
+<p>{{ status }}</p>
+<table class="table content-table">
+  
+  <thead>
+      <th>ID</th>
+      <th>Description</th>
+      <th>System Description</th>
+      <th>Edit</th>
+      <th>Delete</th>
+  </thead>
+  <tbody>
+  {% for rol in rols %}
+  <tr>
+    <td>{{ rol.id }}</td>
+    <td>{{ rol.str_description }}</td>
+    <td>{{ rol.description }}</td>
+    <td><button onclick="window.location.href=`/user-rol-management/edit-rol/{{ rol.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
+    <td><button onclick='deleteConfirm( {{rol.id}}, "User_rol" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+  </tr>    
+  {% endfor %}
+  </tbody>
+</table>
+<button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">New User Rol</button>
+
+<section id="create-form" class="h-100" hidden="true">
+
+  <h3>Create New User Rol</h3>
+
+  <form method="POST" id="create-new-user-rol" action="/user-rol-management/create">
+
+    <div class="form-group">
+      <label>Rol Description</label>
+      <input class="form-control" type="text" name="str_description" placeholder="Shopping Analyst" required/>                    
+      <label>Rol System Description</label>
+      <input class="form-control" type="text" name="description" placeholder="shopping-analyst" required/>                    
+    </div>   
+  <button type="submit" class="btn btn-success btn-lg mb-1">Create</button>
+  <a class="abord" onclick="hiddeForm()">Cancel</a>
+
+  </form>
+</section>
+{% endblock %}

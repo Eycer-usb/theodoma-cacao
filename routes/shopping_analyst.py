@@ -4,10 +4,10 @@ from utils.db import db
 from utils.functions import *
 
 shp_analyst = Blueprint('shp_analyst', __name__)
-
+allowed_rols = ['admin', 'shopping-analyst']
 @shp_analyst.route('/productor-data')
 def productor():
-    if( not verify_permissions(session, User, ['admin', 'shopping analyst']) ):
+    if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
 
     productor_types = Productor_type.query.all()
@@ -28,7 +28,7 @@ def productor_search(query):
 @shp_analyst.route('/productor-data/create', methods = ['POST'])
 def productor_create():
 
-    if( not verify_permissions(session, User, ['admin', 'shopping analyst']) ):
+    if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
 
     cedula = request.form['cedula']

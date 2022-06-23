@@ -25,18 +25,28 @@
             <li class="nav-item">
               <a class="nav-link" href="/user-settings">Settings</a>
             </li>
+            {% if rol == 'admin' %}
             <li class="nav-item">
-                {% if rol == 'admin' %}
-                <a class="nav-link" href="/user-management">User Management</a>
-                <a class="nav-link" href="/user-rol-management">User Rol Management</a>
+                <a class="nav-link" href="/user-management">Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user-rol-management">User Rols</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/productor-data">Productors</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/productor-type">Productor Types</a>
+            </li>
+            {% elif rol == 'shopping-analyst' %}
+
+              <li class="nav-item">
                 <a class="nav-link" href="/productor-data">Productor List</a>
-                <a class="nav-link" href="/productor-type">Productor Type List</a>
-                {% elif rol == 'shopping analyst' %}
-                <a class="nav-link" href="/productor-data">Productor List</a>
-                <a class="nav-link" href="/productor-type">Productor Type List</a>
-                {% endif %}
               </li>
-            
+              <li class="nav-item">
+                <a class="nav-link" href="/productor-type">Productor Type List</a>
+              </li>
+                {% endif %}            
           </ul>
           
           <form action="logout">
