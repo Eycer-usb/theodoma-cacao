@@ -22,11 +22,18 @@ h1, h2 {
     color: aliceblue;
 }
 
-.login-title{
-    font-size: 3em;
+h1.login-title{
+    font-size: 3.3em;
+    font-family: cursive;
+    font-weight: bold;
+}
+h2.login-title {
+    font-size: 2em;
     font-family: cursive;
 }
-
+.login-title-box {
+    text-align: center;
+}
 .login-label {
     color:aliceblue;
     font-family: 'Courier New', Courier, monospace;
