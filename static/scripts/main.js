@@ -15,3 +15,13 @@ function unmaskPassword(id){
         element.type = 'password';
     }
 }
+
+function showNewUserForm(){
+    element = document.getElementById("create-new-user");
+    element.hidden = false;
+}
+
+function hiddeNewUserForm(){
+    element = document.getElementById("create-new-user");
+    element.hidden = true
+}

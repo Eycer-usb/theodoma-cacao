@@ -2,6 +2,7 @@ from flask import Flask
 from routes.auth import auth
 from routes.admin import admin
 from routes.user import user
+from routes.shopping_analyst import shp_analyst
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -17,5 +18,6 @@ SQLAlchemy(app)
 
 app.register_blueprint(auth)
 app.register_blueprint(admin)
+app.register_blueprint(shp_analyst)
 app.register_blueprint(user)
 app.secret_key = "#a@sKUGHkl[;][/=6095sKHGK-~gh`d=+p?*\ ~`z'.a&689Uh8bHahjashdbjHJKgsdsjaJKKJ"

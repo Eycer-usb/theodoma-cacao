@@ -5,16 +5,44 @@ from utils.db import db
 from utils.functions import *
 admin = Blueprint('admin', __name__)
 
+@admin.route('/user-rol-management')
+def user_rol_management():
+    if( not verify_permissions(session, User) ):
+        return redirect( url_for('auth.index') )
+    
+    rols = User_rol.query.all()
+    if 'management-status' not in session:
+        return render_template('user-rol-management.html', status="",\
+            rol = session['rol'], rols = rols)
+    status = session['management-status']
+    session.pop('management-status', None)
+    return render_template('user-rol-management.html', status = status,\
+            rol = session['rol'], rols = rols)
 
-def verify_permissions():
-    # Verify Permissions       
-    return 'username' in session and \
-        User.get_user_rol_by_username(User, session['username']) == 'admin'
+@admin.route('/user-rol-management/create')
+def user_rol_create():
+    if( not verify_permissions(session, User) ):
+        return redirect( url_for('auth.index') )
+    
+    rol_description = request.form['rol-description']
+    new_rol = User_rol(rol_description)
+    db.session.add(new_rol)
+    db.session.commit()
+    session['management-status'] = "Rol Created"
+    return redirect(url_for( 'admin.user_rol_management' ))
+
+@admin.route('/user-rol-management/edit-rol/<id>')
+def edit_rol(id):
+    if( not verify_permissions(session, User) ):
+        return redirect(url_for('auth.index'))
+    rol = User_rol.query.get(id)
+    return render_template("user-rol-management-edit-rol.html", editing_rol = rol, \
+        rol = session['rol'])
 
 
 @admin.route('/user-management')
 def user_management():    
-    if( not verify_permissions() ):
+    if( not verify_permissions(session, User) ):
         return redirect(url_for('auth.index'))
 
     rols = User_rol.query.all()
@@ -34,7 +62,7 @@ def user_create():
     # db.session.add(User_rol("admin"))
     # db.session.add(User_rol("user"))
     # db.session.commit()
-    if( not verify_permissions() ):
+    if( not verify_permissions(session, User) ):
         return redirect(url_for('auth.index'))
 
     name = request.form['name']
@@ -86,7 +114,7 @@ def user_create():
 
 @admin.route('/user-management/edit-user/<id>')
 def edit_user(id):
-    if( not verify_permissions() ):
+    if( not verify_permissions(session, User) ):
         return redirect(url_for('auth.index'))
     user = User.query.get(id)
     rols = User_rol.query.all()
@@ -96,7 +124,7 @@ def edit_user(id):
 @admin.route('/user-management/edit-user/save', methods = ["POST"])
 def update_user():
 
-    if( not verify_permissions() ):
+    if( not verify_permissions(session, User) ):
         return redirect(url_for('auth.index'))
 
     if( not valid_name(request.form["name"]) ):
@@ -147,7 +175,7 @@ def update_user():
 
 @admin.route('/user-management/delete/<id>')
 def delete_user(id):
-    if( not verify_permissions() ):
+    if( not verify_permissions(session, User) ):
         return redirect(url_for('auth.index'))
     user = User.query.get(id)
     db.session.delete(user)

@@ -1,6 +1,9 @@
-from datetime import date
 import re
 from models.user_rol import User_rol
+from models.productor import Productor
+from models.productor_type import Productor_type
+from models.user import User
+
 
 def valid_name(name):
     pat = "^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$"
@@ -15,7 +18,7 @@ def valid_email(email):
     return re.fullmatch(pat, email)
 
 def valid_password(password):
-    pat = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#:])[A-Za-z\d$@$!%*?&#:]{8,15}/"
+    #pat = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#:])[A-Za-z\d$@$!%*?&#:]{8,15}/"
     #return re.fullmatch(pat, password)
     return True
 
@@ -38,3 +41,21 @@ def valid_user_rol(user_rol_desc):
     for x in query:
         rols.append(x.description)
     return user_rol_desc in rols
+
+def verify_permissions(session, User, rol=['admin']):
+# Verify Permissions       
+    return 'username' in session and \
+    User.get_user_rol_by_username(User, session['username']) in rol
+
+def valid_cedula(cedula):
+    registers = Productor.query.filter_by(cedula=cedula)
+    pat = "^([VE])(-)(\d{8})$"
+
+    return len(register)==0
+
+def valid_productor_type(productor_type_description):
+    query = Productor_type.query.all()
+    types = []
+    for x in query:
+        types.append(x.description)
+    return productor_type_description in types

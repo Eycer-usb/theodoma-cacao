@@ -1,4 +1,3 @@
-from operator import truediv
 from utils.db import db
 from models.user_rol import User_rol
 from flask_bcrypt import generate_password_hash, check_password_hash
