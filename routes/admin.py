@@ -1,3 +1,24 @@
+"""
+Routes For the Administrator Rol
+
+Route Map:
+
+/user-rol-management
+/user-rol-management/create
+/user-rol-management/edit-rol/<id>
+/user-rol-management/edit-rol/save", methods = ['POST']
+/user-rol-management/delete/<id>
+
+/user-management
+/user-management/create
+/user-management/edit-user/<id>
+/user-management/edit-user/save
+/user-management/delete/<id>
+
+
+"""
+
+
 from crypt import methods
 from flask import Blueprint, render_template, redirect, url_for, request, session
 from models.user import User, User_rol
@@ -5,6 +26,13 @@ from utils.db import db
 from utils.functions import *
 admin = Blueprint('admin', __name__)
 
+
+"""
+User Rol routes
+
+"""
+
+# Show Users
 @admin.route('/user-rol-management')
 def user_rol_management():
     if( not verify_permissions(session, User) ):
@@ -19,6 +47,7 @@ def user_rol_management():
     return render_template('user-rol-management.html', status = status,\
             rol = session['rol'], rols = rols)
 
+# Create User Rol
 @admin.route('/user-rol-management/create', methods = ['POST'])
 def user_rol_create():
     if( not verify_permissions(session, User) ):
@@ -32,6 +61,7 @@ def user_rol_create():
     session['management-status'] = "Rol Created"
     return redirect(url_for( 'admin.user_rol_management' ))
 
+# Edit User rol
 @admin.route('/user-rol-management/edit-rol/<id>')
 def edit_rol(id):
     if( not verify_permissions(session, User) ):
@@ -39,7 +69,8 @@ def edit_rol(id):
     rol = User_rol.query.get(id)
     return render_template("user-rol-management-edit-rol.html", editing_rol = rol, \
         rol = session['rol'])
-        
+
+# Save Edition        
 @admin.route("/user-rol-management/edit-rol/save", methods = ['POST'])
 def update_user_rol():
 
@@ -54,6 +85,7 @@ def update_user_rol():
     session['management-status'] = "User Rol Updated"
     return redirect(url_for('admin.user_rol_management'))
 
+# Delete User Rol by id
 @admin.route('/user-rol-management/delete/<id>')
 def delete_user_rol(id):
     if( not verify_permissions(session, User) ):
@@ -64,6 +96,10 @@ def delete_user_rol(id):
     session['management-status'] = "User Rol Deleted"
     return redirect(url_for('admin.user_rol_management'))
 
+"""
+User routes
+"""
+# Show Users
 @admin.route('/user-management')
 def user_management():    
     if( not verify_permissions(session, User) ):
@@ -79,7 +115,7 @@ def user_management():
     return render_template('user-management.html', status=status, \
         rol = session['rol'], rols=rols, users = users )
     
-
+# Create User
 @admin.route('/user-management/create', methods = ['POST'])
 def user_create():
 
@@ -97,7 +133,8 @@ def user_create():
     phone = request.form['phone']
     address = request.form['address']
     user_rol_desc = request.form['user_rol']
-
+    
+    # Verify if correct respons 
     if( not valid_name(name) ):
         session["management-status"] = "Invalid Name"
         return redirect(url_for( 'admin.user_management'))
@@ -126,7 +163,7 @@ def user_create():
         session["management-status"] = "Invalid User Rol"
         return redirect(url_for( 'admin.user_management'))
 
-    ## Create User
+    # Create New User
     new_user = User(name, last_name, username, email, password, gender, date_of_birth, phone, address, user_rol_desc)
     db.session.add(new_user)
     db.session.commit()
@@ -134,6 +171,7 @@ def user_create():
     
     return redirect(url_for( 'admin.user_management'))
 
+# Edit User
 @admin.route('/user-management/edit-user/<id>')
 def edit_user(id):
     if( not verify_permissions(session, User) ):
@@ -143,6 +181,7 @@ def edit_user(id):
     return render_template("user-management-edit-user.html", user = user, \
         rol = session['rol'], rols=rols)
 
+# Save Edition User
 @admin.route('/user-management/edit-user/save', methods = ["POST"])
 def update_user():
 
@@ -195,6 +234,7 @@ def update_user():
     session['management-status'] = "User Updated"
     return redirect(url_for('admin.user_management'))
 
+# Delete User by id
 @admin.route('/user-management/delete/<id>')
 def delete_user(id):
     if( not verify_permissions(session, User) ):

@@ -1,9 +1,8 @@
 """
 User Entity class representation
 
-The user rols is a abstraction to diferent
-users permissions. The admin is the hightest
-rol in the jerarquic structure
+A User can use the system based in it's rol
+
 """
 
 
@@ -12,6 +11,8 @@ from models.user_rol import User_rol
 from flask_bcrypt import generate_password_hash, check_password_hash
 
 class User(db.Model) :
+
+    # User Attributes
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(100), nullable = False)
@@ -25,7 +26,7 @@ class User(db.Model) :
     address = db.Column(db.String(150), nullable = True)
     user_rol_id = db.Column(db.Integer, db.ForeignKey('user_rol.id'))
 
-
+    # User Class Constructor
     def __init__(self, name, last_name, username, email,\
          password, gender, date_of_birth, phone, address, user_rol_desc):
         self.name = name
@@ -39,21 +40,27 @@ class User(db.Model) :
         self.user_rol_id = User_rol.getId(rol_description= user_rol_desc)
         self.set_password(password)
 
+    # String representation or a User by its ID
     def __repr__(self):
         return '<Post %r >' % self.id
 
+    # The password is encripted
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
+    # Indicates when a username is the database or not
     def is_user(username):
         return User.query.filter_by(username=username).first() != None
 
+    # Given a password verify is correspond to the given user
     def verify_password( self, username, password ):
         if(self.is_user(username)):
             password_hashed = User.query.filter_by(username=username).first().password
             return check_password_hash(password_hashed, password)
         print("User not in Database")
         return False
+
+    # Return the user rol given the username
     def get_user_rol_by_username( self, username ):
         user_rol_id = User.query.filter_by(username = username).first().user_rol_id
         user_rol = User_rol.query.get(user_rol_id).description

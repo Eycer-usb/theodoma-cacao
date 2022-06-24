@@ -24,7 +24,7 @@ def valid_name(name):
 def valid_username(username, update=False):
     is_register = False
     if( not update ):
-        is_register =  User.query.filter_by(username=username).first() == None
+        is_register =  User.query.filter_by(username=username).first() != None
     pat = "^[A-Za-z]\\w{3,29}$"
     return re.fullmatch(pat, username) and not is_register
 
@@ -69,13 +69,16 @@ def verify_permissions(session, User, allowed=['admin']):
     return 'username' in session and \
     ( allowed == 'all' or User.get_user_rol_by_username(User, session['username']) in allowed)
 
+# A valid cedula example is V-1234567 or E-1234567
 def valid_cedula(cedula, update=False):
     is_register = False
     if( not update ):
-        is_register =  Productor.query.filter_by(cedula=cedula).first() == None or update
-    pat = "^[VE]-\d{6,7}$"
+        is_register =  Productor.query.filter_by(cedula=cedula).first() != None
+    pat = "^[VE]-\d{8}$"
     return re.fullmatch(pat, cedula) and not is_register
 
+# Verify if a productor type string is correct or not 
+# if is not register in the database return false
 def valid_productor_type(productor_type_description):
     query = Productor_type.query.all()
     types = []
@@ -83,6 +86,6 @@ def valid_productor_type(productor_type_description):
         types.append(x.description)
     return productor_type_description in types
 
-
+# Clean the empty side spacing
 def clean_string(string):
     return string.strip()

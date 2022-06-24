@@ -14,6 +14,7 @@ class TestUtilsFunctions(unittest.TestCase):
         self.assertFalse(valid_username("asd"))
         self.assertFalse(valid_username("ATooLongUsernameMostNotBeAllowedAtAll"))
         self.assertFalse(valid_username("   no    empty   espaces  "))
+        self.assertFalse( valid_username("eycer") )
 
     def test_valid_email(self):
         self.assertTrue( valid_email( "email@domin.extention" ) )
@@ -53,12 +54,12 @@ class TestUtilsFunctions(unittest.TestCase):
     def test_valid_cedula(self):
         app = create_app()
         with app.app_context():
-            self.assertTrue( valid_cedula( "V-1234567" , True) )
-            self.assertTrue( valid_cedula( "E-123456" , True) )
+            self.assertTrue( valid_cedula( "V-01234567" , True) )
+            self.assertTrue( valid_cedula( "E-12345678" , True) )
             self.assertFalse( valid_cedula( "1234567" , True) )
             self.assertFalse( valid_cedula( "     V-1234567" , True) )
             self.assertFalse( valid_cedula( "V1234567" , True) )
-            self.assertFalse( valid_cedula( "V-12345678" , True) )
+            self.assertFalse( valid_cedula( "V-123456789" , True) )
         
     def test_valid_productor_type(self):
         app = create_app()
