@@ -1,11 +1,17 @@
 function deleteConfirm(id, table){
-    let text = `Do you want to Delete this user? this action can not be undo.`
+    let text = `Do you want to Delete this element? this action can not be undo.`
     if(confirm(text)==true){
         if(table == 'User'){
             window.location.href =`/user-management/delete/${id}`;
         }
         else if(table == 'User_rol'){
             window.location.href =`/user-rol-management/delete/${id}`;
+        }
+        else if(table == 'Productor'){
+            window.location.href = `/productor-data/delete/${id}`
+        }
+        else if(table == 'Productor_type'){
+            window.location.href = `/productor-type/delete/${id}`            
         }
     };
 }

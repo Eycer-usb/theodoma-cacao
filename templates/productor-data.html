@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Productors List</h2>
+      <p>{{ status }}</p>
+    <table class="table content-table fixed-table">
+        
+        <thead>
+            <th>ID</th>
+            <th>Cedula</th>
+            <th>Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Date of Birth</th>
+            <th>Local Phone</th>
+            <th>Movil Phone</th>
+            <th>Address 1</th>
+            <th>Address 2</th>
+            <th>Productor Type</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+        {% for productor in productors %}
+        <tr>
+            <td>{{ productor.id }}</td>
+            <td>{{ productor.cedula }}</td>
+            <td>{{ productor.name }}</td>
+            <td>{{ productor.last_name }}</td>
+            <td>{{ productor.gender }}</td>
+            <td>{{ productor.date_of_birth }}</td>
+            <td>{{ productor.local_phone }}</td>
+            <td>{{ productor.movil_phone }}</td>
+            <td>{{ productor.address_1 }}</td>
+            <td>{{ productor.address_2 }}</td>
+            {% for type in productor_types %}
+            {% if type.id == productor.productor_type_id %}
+            <td>{{ type.description }} </td>
+            {% endif %}
+            {% endfor %}
+            <td><button onclick="window.location.href=`/productor-data/edit-productor/{{ productor.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
+            <td><button onclick='deleteConfirm( {{productor.id}}, "Productor" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+        </tr>    
+        {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">New Productor</button>
+
+    <section id="create-form" class="h-100" hidden="true">
+
+        <h3>New Productor</h3>
+
+        <form method="POST" id="create-new-productor" action="/productor-data/create">
+        
+        <label>Name</label>
+        <input class="form-control" type="text" name="name" placeholder="Name" required/>                    
+        <label>Last Name</label>
+        <input class="form-control" type="text" name="last_name" placeholder="Last Name" required/>
+        <label>Cedula</label>
+        <input class="form-control" type="text" name="cedula" placeholder="Cedula"  required/>
+        <label>Local Phone Number</label>
+        <input class="form-control" type="text" name="local_phone" placeholder="Phone Number"  required/>
+        <label>Movil Phone Number</label>
+        <input class="form-control" type="text" name="movil_phone" placeholder="Phone Number"  required/>
+        <label>Date of Birth</label>
+        <input class="form-control" type="date" name="date_of_birth"  required/>
+        <label>Address 1</label>
+        <textarea class="form-control" name="address_1" placeholder="Type your address here..." ></textarea>
+        <label>Address 2</label>
+        <textarea class="form-control" name="address_2" placeholder="Type your address here..." ></textarea>
+        <select class="form-select" name="gender" form="create-new-productor">
+            <option value="" disabled>Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+
+        <select class="form-select" name="productor_type" form="create-new-productor">
+            <option disabled>Productor Type</option>
+            {% for type in productor_types %}
+            <option value="{{ type.description }}">{{ type.description }}</option>
+            {% endfor %}
+        </select>
+
+
+        <button type="submit" class="btn btn-success btn-lg mb-1">Create</button>
+        <a class="abord" onclick="hiddeForm()">Cancel</a>
+
+        </form>
+</section>
+{% endblock %}

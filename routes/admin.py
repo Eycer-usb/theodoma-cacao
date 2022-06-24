@@ -39,6 +39,7 @@ def edit_rol(id):
     rol = User_rol.query.get(id)
     return render_template("user-rol-management-edit-rol.html", editing_rol = rol, \
         rol = session['rol'])
+        
 @admin.route("/user-rol-management/edit-rol/save", methods = ['POST'])
 def update_user_rol():
 
