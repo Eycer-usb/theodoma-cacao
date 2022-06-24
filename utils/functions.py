@@ -48,9 +48,11 @@ def verify_permissions(session, User, allowed=['admin']):
     ( allowed == 'all' or User.get_user_rol_by_username(User, session['username']) in allowed)
 
 def valid_cedula(cedula, update=False):
-    is_register = Productor.query.filter_by(cedula=cedula).first() == None or update
-    pat = "^([VE])(-)(\d{8})$"
-    return is_register
+    is_register = False
+    if( not update ):
+        is_register =  Productor.query.filter_by(cedula=cedula).first() == None or update
+    pat = "^[VE]-\d{6,7}$"
+    return re.fullmatch(pat, cedula) and not is_register
 
 def valid_productor_type(productor_type_description):
     query = Productor_type.query.all()

@@ -1,5 +1,6 @@
 import unittest
 import requests
+from utils import functions
 
 class TestLogin(unittest.TestCase):
 
