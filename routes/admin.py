@@ -155,7 +155,7 @@ def update_user():
     elif( not valid_name(request.form["last_name"]) ):
         session["management-status"] = "Invalid Last Name"
         return redirect(url_for( 'admin.user_management'))
-    elif( not valid_username(request.form["username"]) ):
+    elif( not valid_username(request.form["username"], True) ):
         session["management-status"] = "Invalid Username"
         return redirect(url_for( 'admin.user_management'))
     elif( not valid_email(request.form["email"]) ):

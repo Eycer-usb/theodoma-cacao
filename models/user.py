@@ -1,3 +1,12 @@
+"""
+User Entity class representation
+
+The user rols is a abstraction to diferent
+users permissions. The admin is the hightest
+rol in the jerarquic structure
+"""
+
+
 from utils.db import db
 from models.user_rol import User_rol
 from flask_bcrypt import generate_password_hash, check_password_hash

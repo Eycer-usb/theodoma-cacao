@@ -1,3 +1,10 @@
+"""
+Start Gateway
+
+And app instance is created and the service start
+running in debug mode
+"""
+
 from app import create_app
 from utils.db import db
 

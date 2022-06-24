@@ -1,8 +1,17 @@
+"""
+Productor Entity class representation
+
+A cacao productor is a individual person, so
+productor class wrap all the person data required
+"""
+
+
 from utils.db import db
 from models.productor_type import Productor_type
-from flask_bcrypt import generate_password_hash, check_password_hash
 
 class Productor(db.Model) :
+
+    # Initial Productor Attributes
     __tablename__ = "productor"
     id = db.Column(db.Integer, primary_key = True)
     cedula = db.Column(db.String(100), nullable = False, unique=True)
@@ -16,7 +25,7 @@ class Productor(db.Model) :
     address_2 = db.Column(db.String(150), nullable = True)
     productor_type_id = db.Column(db.Integer, db.ForeignKey('productor_type.id'))
 
-
+    # Every class most has its own constructor, isn't it ;)
     def __init__(self, cedula, name, last_name,\
         gender, date_of_birth, local_phone, movil_phone, address_1,\
         address_2, productor_type_description):
@@ -31,5 +40,6 @@ class Productor(db.Model) :
         self.address_2 = address_2
         self.productor_type_id = Productor_type.getId(description = productor_type_description)
 
+    # A productor is represented by the its unique id
     def __repr__(self):
         return '<Post %r >' % self.id
