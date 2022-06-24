@@ -24,8 +24,8 @@ def user_rol_create():
     if( not verify_permissions(session, User) ):
         return redirect( url_for('auth.index') )
     
-    description = request.form['description']
-    str_description = request.form['str_description']
+    description = clean_string(request.form['description'])
+    str_description = clean_string(request.form['str_description'])
     new_rol = User_rol(description,str_description)
     db.session.add(new_rol)
     db.session.commit()
@@ -83,15 +83,13 @@ def user_management():
 @admin.route('/user-management/create', methods = ['POST'])
 def user_create():
 
-    # db.session.add(User_rol("admin"))
-    # db.session.add(User_rol("user"))
-    # db.session.commit()
+
     if( not verify_permissions(session, User) ):
         return redirect(url_for('auth.index'))
 
     name = request.form['name']
     last_name = request.form['last_name']
-    username = request.form['username']
+    username = clean_string(request.form['username'])
     email = request.form['email']
     password = request.form['password']
     gender = request.form['gender']

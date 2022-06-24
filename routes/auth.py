@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, session
 from models.user import User
+from utils.functions import clean_string
 
 auth = Blueprint('auth', __name__)
 
@@ -20,14 +21,14 @@ def login():
         'username' in request.form and \
         'password' in request.form):
 
-        username = request.form['username']
+        username = clean_string(request.form['username'])
         password = request.form['password']
         if( not User.is_user(username) ): 
             session['login_status'] = 'User Not Found'
             return redirect(url_for('auth.index'))
         if( User.verify_password( User , username, password ) ):
-            session['username'] = request.form['username']
-            session['rol'] = User.get_user_rol_by_username(User, session['username'])
+            session['username'] = username
+            session['rol'] = User.get_user_rol_by_username(User, username)
             return redirect(url_for('auth.index'))
         session['login_status'] = 'Incorrect Password'
         return redirect(url_for('auth.index'))

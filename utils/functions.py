@@ -58,3 +58,7 @@ def valid_productor_type(productor_type_description):
     for x in query:
         types.append(x.description)
     return productor_type_description in types
+
+
+def clean_string(string):
+    return string.strip()
