@@ -1,44 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>User Management</h2>
+    <h2>Gestión de usuarios</h2>
     <section class="h-100">
 
-                  <h3>Edit User</h3>
+                  <h3>Editar Usuario</h3>
 
                   <form method="POST" id="edit-user" action="/user-management/edit-user/save">
                       
                   
                         <input class="form-control" type="hidden" name="id" value="{{ user.id }}" required/>
-                      <label>Name</label>
-                      <input class="form-control" type="text" name="name" placeholder="Name" value="{{ user.name }}" required/>                    
-                      <label>Last Name</label>
-                      <input class="form-control" type="text" name="last_name" placeholder="Last Name" value="{{ user.last_name }}" required/>
-                      <label>Username</label>
-                      <input class="form-control" type="text" name="username" placeholder="Username" value="{{ user.username }}"  required/>
-                      <label>Email address</label>
-                      <input class="form-control" type="email" name="email" placeholder="email@example.com" value="{{ user.email }}"  required/>
-                      <label>Password</label>
-                      <input id="edit-password" class="form-control" type="password" name="password" placeholder="Password" />
+                      <label>Nombre</label>
+                      <input class="form-control" type="text" name="name" placeholder="Introduzca su Nombre" value="{{ user.name }}" required/>                    
+                      <label>Apellido</label>
+                      <input class="form-control" type="text" name="last_name" placeholder="Introduzca su Apellido" value="{{ user.last_name }}" required/>
+                      <label>Nombre de Ususario</label>
+                      <input class="form-control" type="text" name="username" placeholder="Introduzca su Nombre de Usuario" value="{{ user.username }}"  required/>
+                      <label>Correo Electronico</label>
+                      <input class="form-control" type="email" name="email" placeholder="email@ejemplo.com" value="{{ user.email }}"  required/>
+                      <label>Contraseña</label>
+                      <input id="edit-password" class="form-control" type="password" name="password" placeholder="Introduzca su Contraseña" />
                       <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="unmaskPassword('edit-password')">
-                        <label class="form-check-label" for="exampleCheck1">Unmask password</label>
+                        <label class="form-check-label" for="exampleCheck1">Mostrar Contraseña</label>
                       </div>
-                      <label>Phone Number</label>
-                      <input class="form-control" type="text" name="phone" placeholder="Phone Number" value="{{ user.phone }}"  required/>
-                      <label>Date of Birth</label>
+                      <label>Número de Telefono</label>
+                      <input class="form-control" type="text" name="phone" placeholder="Introduzca su Número de Telefono" value="{{ user.phone }}"  required/>
+                      <label>Fecha de Nacimiento</label>
                       <input class="form-control" type="date" name="date_of_birth" value="{{ user.date_of_birth }}"  required/>
-                      <label>Address</label>
-                      <textarea class="form-control" name="address" placeholder="Type your address here..." >{{ user.address }}</textarea>
-
+                      <label>Dirección</label>
+                      <textarea class="form-control" name="address" placeholder="Introduzca su dirección" >{{ user.address }}</textarea>
+                      <label>Género</label>
                         <select class="form-select" name="gender" form="edit-user">
-                            <option value="" disabled>Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
+                            <option value="" disabled>Seleccionar</option>
+                            <option value="male">Masculino</option>
+                            <option value="female">Femenino</option>
+                            <option value="other">Otro</option>
                         </select>
-
+                        <label>Rol de Usuario</label>
                         <select class="form-select" name="user_rol" form="edit-user">
-                            <option disabled>User Rol</option>
+                            <option disabled>Seleccionar</option>
                             {% for rol in rols %}
                             <option value="{{ rol.description }}">{{ rol.description }}</option>
                             {% endfor %}
@@ -46,7 +46,7 @@
         
             
                     <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button>
-                    <a class="abord" href="/user-management">Cancel</a>
+                    <a class="abord" href="/user-management">Cancelar</a>
                   </form>
 
 {% endblock %}

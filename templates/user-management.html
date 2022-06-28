@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>Users Profiles</h2>
+    <h2>Perfiles de Usuarios</h2>
       <p>{{ status }}</p>
     <table class="table content-table">
         
         <thead>
             <th>ID</th>
-            <th>Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-            <th>User Rol Id</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Nombre De Usuario</th>
+            <th>Rol de Usuario</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
         </thead>
         <tbody>
         {% for user in users %}
@@ -27,52 +27,52 @@
         {% endfor %}
         </tbody>
     </table>
-    <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">New User</button>
+    <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">Nuevo Usuario</button>
 
     <section id="create-form" class="h-100" hidden="true">
 
-        <h3>Create New User</h3>
+        <h3>Crear Nuevo Usuario</h3>
 
         <form method="POST" id="create-new-user" action="/user-management/create">
 
-          <label>Name</label>
-          <input class="form-control" type="text" name="name" placeholder="Name" required/>                    
-          <label>Last Name</label>
-          <input class="form-control" type="text" name="last_name" placeholder="Last Name" required/>
-          <label>Username</label>
-          <input class="form-control" type="text" name="username" placeholder="Username"  required/>
-          <label>Email address</label>
+          <label>Nombre</label>
+          <input class="form-control" type="text" name="name" placeholder="Introduzca su Nombre" required/>                    
+          <label>Apellido</label>
+          <input class="form-control" type="text" name="last_name" placeholder="Introduzca Su Apellido" required/>
+          <label>Nombre de Usuario</label>
+          <input class="form-control" type="text" name="username" placeholder="Introduzca su Nombre de Usuario"  required/>
+          <label>Correo Electronico</label>
           <input class="form-control" type="email" name="email" placeholder="email@example.com"  required/>
-          <label>Password</label>
-          <input id="new-user-pass" class="form-control" type="password" name="password" placeholder="Password" />
+          <label>Contraseña</label>
+          <input id="new-user-pass" class="form-control" type="password" name="password" placeholder="Introduzca su Contraseña" />
           <div class="form-group form-check">
               <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="unmaskPassword('new-user-pass')">
-              <label class="form-check-label" for="exampleCheck1">Unmask password</label>
+              <label class="form-check-label" for="exampleCheck1">Mostrar Contraseña</label>
           </div>
-          <label>Phone Number</label>
-          <input class="form-control" type="text" name="phone" placeholder="Phone Number"  required/>
-          <label>Date of Birth</label>
+          <label>Numero de Telefono</label>
+          <input class="form-control" type="text" name="phone" placeholder="Introduzca su Numero de Telefono"  required/>
+          <label>Fecha De Nacimiento</label>
           <input class="form-control" type="date" name="date_of_birth"  required/>
-          <label>Address</label>
-          <textarea class="form-control" name="address" placeholder="Type your address here..." ></textarea>
-
+          <label>Dirección</label>
+          <textarea class="form-control" name="address" placeholder="Introduzca su Dirección" ></textarea>
+          <label>Género</label>
             <select class="form-select" name="gender" form="create-new-user">
-                <option value="" disabled>Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
+                <option value="" disabled>Seleccionar </option>
+                <option value="male">Masculino</option>
+                <option value="female">Femenino</option>
+                <option value="other">Otro</option>
             </select>
-
+            <label>Rol de Usuario</label>
             <select class="form-select" name="user_rol" form="create-new-user">
-                <option disabled>User Rol</option>
+                <option disabled>Seleccionar</option>
                 {% for rol in rols %}
                 <option value="{{ rol.description }}">{{ rol.description }}</option>
                 {% endfor %}
             </select>
 
 
-        <button type="submit" class="btn btn-success btn-lg mb-1">Create</button>
-        <a class="abord" onclick="hiddeForm()">Cancel</a>
+        <button type="submit" class="btn btn-success btn-lg mb-1">Crear</button>
+        <a class="abord" onclick="hiddeForm()">Cancelar</a>
 
         </form>
 </section>

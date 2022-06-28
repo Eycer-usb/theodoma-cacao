@@ -3,7 +3,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Theodoma Cacao | Welcome</title>
+    <title>Theodoma Cacao | Login </title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -19,26 +19,26 @@
   <div class="central-box">
     <div class="login-title-box">
     <h1 class="login-title">
-        Theodoma Cacao
+      Theodoma Cacao 
     </h1>
-    <h2 class="login-title"> Welcome, please log in</h2>
+    <h2 class="login-title"> Iniciar Sesión</h2>
     </div>
     <p>{{ login_status }}</p>
     <form action="/login" method="post">
         <div class="form-group">
-          <label class="login-label" for="exampleUsername">Username</label>
-          <input type="text" class="form-control" id="exampleUsername" aria-describedby="emailHelp" placeholder="Username" required name="username">
-          <small id="emailHelp" class="form-text login-info">We'll never share your email with anyone else.</small>
+          <label class="login-label" for="exampleUsername">Nombre de Usuario</label>
+          <input type="text" class="form-control" id="exampleUsername" aria-describedby="emailHelp" placeholder="Introduzca su Nombre de Usuario" required name="username">
+          <small id="emailHelp" class="form-text login-info">Nunca compartiremos tu correo electrónico con nadie más</small>
         </div>
         <div class="form-group">
-          <label class="login-label" for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required name="password">
+          <label class="login-label" for="exampleInputPassword1">Contraseña</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Introduzca su Contraseña" required name="password">
         </div>
         <div class="form-group form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="unmaskPassword('exampleInputPassword1')">
-          <label class="login-label" class="form-check-label" for="exampleCheck1">Unmask password</label>
+          <label class="login-label" class="form-check-label" for="exampleCheck1">Mostrar Contraseña</label>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
       </form>
   </div>
 </body>

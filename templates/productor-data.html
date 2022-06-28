@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Productors List</h2>
+<h2>Productores</h2>
       <p>{{ status }}</p>
     <table class="table content-table fixed-table">
         
         <thead>
             <th>ID</th>
-            <th>Cedula</th>
-            <th>Name</th>
-            <th>Last Name</th>
-            <th>Gender</th>
-            <th>Date of Birth</th>
-            <th>Local Phone</th>
-            <th>Movil Phone</th>
-            <th>Address 1</th>
-            <th>Address 2</th>
-            <th>Productor Type</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Cédula</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Género</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Telefono Local</th>
+            <th>Telefono Celular </th>
+            <th>Dirección 1</th>
+            <th>Dirección 2</th>
+            <th>Tipo de Productor</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
         </thead>
         <tbody>
         {% for productor in productors %}
@@ -43,47 +43,48 @@
         {% endfor %}
         </tbody>
     </table>
-    <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">New Productor</button>
+    <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">Nuevo Productor</button>
 
     <section id="create-form" class="h-100" hidden="true">
 
-        <h3>New Productor</h3>
+        <h3>Nuevo Productor</h3>
 
         <form method="POST" id="create-new-productor" action="/productor-data/create">
         
-        <label>Name</label>
-        <input class="form-control" type="text" name="name" placeholder="Name" required/>                    
-        <label>Last Name</label>
-        <input class="form-control" type="text" name="last_name" placeholder="Last Name" required/>
-        <label>Cedula</label>
-        <input class="form-control" type="text" name="cedula" placeholder="Cedula"  required/>
-        <label>Local Phone Number</label>
-        <input class="form-control" type="text" name="local_phone" placeholder="Phone Number"  required/>
-        <label>Movil Phone Number</label>
-        <input class="form-control" type="text" name="movil_phone" placeholder="Phone Number"  required/>
-        <label>Date of Birth</label>
+        <label>Nombre</label>
+        <input class="form-control" type="text" name="name" placeholder="Introduzca su Nombre" required/>                    
+        <label>Apellido</label>
+        <input class="form-control" type="text" name="last_name" placeholder="Introduzca su Apellido" required/>
+        <label>Cédula</label>
+        <input class="form-control" type="text" name="cedula" placeholder="Introduzca su numero de Cédula V-12345678"  required/>
+        <label>Número de Telefono Local</label>
+        <input class="form-control" type="text" name="local_phone" placeholder="Introduzca su Número de Telefono"  required/>
+        <label>Número de Celular</label>
+        <input class="form-control" type="text" name="movil_phone" placeholder="Introduzca su Número de Celular"  required/>
+        <label>Fecha de Nacimiento</label>
         <input class="form-control" type="date" name="date_of_birth"  required/>
-        <label>Address 1</label>
-        <textarea class="form-control" name="address_1" placeholder="Type your address here..." ></textarea>
-        <label>Address 2</label>
-        <textarea class="form-control" name="address_2" placeholder="Type your address here..." ></textarea>
+        <label>Dirección 1</label>
+        <textarea class="form-control" name="address_1" placeholder="Escriba su dirección aquí" ></textarea>
+        <label>Dirección 2</label>
+        <textarea class="form-control" name="address_2" placeholder="Escriba su dirección aquí" ></textarea>
+        <label>Género</label>
         <select class="form-select" name="gender" form="create-new-productor">
-            <option value="" disabled>Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
+            <option value="" disabled>Seleccionar</option>
+            <option value="male">Masculino</option>
+            <option value="female">Femenino</option>
+            <option value="other">Otro</option>
         </select>
-
+        <label>Tipo de Productor</label>
         <select class="form-select" name="productor_type" form="create-new-productor">
-            <option disabled>Productor Type</option>
+            <option disabled>Seleccionar</option>
             {% for type in productor_types %}
             <option value="{{ type.description }}">{{ type.description }}</option>
             {% endfor %}
         </select>
 
 
-        <button type="submit" class="btn btn-success btn-lg mb-1">Create</button>
-        <a class="abord" onclick="hiddeForm()">Cancel</a>
+        <button type="submit" class="btn btn-success btn-lg mb-1">Crear</button>
+        <a class="abord" onclick="hiddeForm()">Cancelar</a>
 
         </form>
 </section>

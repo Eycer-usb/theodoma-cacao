@@ -1,44 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3>Edit Productor</h3>
+<h3>Editar Productor</h3>
 
 <form method="POST" id="edit-productor" action="/productor-data/edit-productor/save">
 
   <input class="form-control" type="hidden" name="id" value="{{productor.id}}" required/>                    
-  <label>Name</label>
+  <label>Nombre</label>
   <input class="form-control" type="text" name="name" value="{{ productor.name }}" required/>                    
-  <label>Last Name</label>
+  <label>Apellido</label>
   <input class="form-control" type="text" name="last_name" value="{{productor.last_name}}" required/>
-  <label>Cedula</label>
+  <label>Cédula</label>
   <input class="form-control" type="text" name="cedula" value="{{productor.cedula}}"  required/>
-  <label>Local Phone Number</label>
+  <label>Número de Telefono Local </label>
   <input class="form-control" type="text" name="local_phone" value="{{ productor.local_phone}}"  required/>
-  <label>Movil Phone Number</label>
+  <label>Número de Celular</label>
   <input class="form-control" type="text" name="movil_phone" value="{{ productor.movil_phone}}"  required/>
-  <label>Date of Birth</label>
+  <label>Fecha de Nacimiento</label>
   <input class="form-control" type="date" name="date_of_birth" value="{{ productor.date_of_birth }}" required/>
-  <label>Address 1</label>
+  <label>Dirección 1</label>
   <textarea class="form-control" name="address_1">{{ productor.address_1 }}"</textarea>
-  <label>Address 2</label>
+  <label>Dirección 2</label>
   <textarea class="form-control" name="address_2">{{ productor.address_2 }}"</textarea>
+  <label>Genero</label>
   <select class="form-select" name="gender" form="edit-productor">
-      <option value="" disabled>Gender</option>
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-      <option value="other">Other</option>`
+      <option value="" disabled>Seleccionar</option>
+      <option value="male">Masculino</option>
+      <option value="female">Femenino</option>
+      <option value="other">Otro</option>`
   </select>
-
+  <label>Tipo de Productor</label>
   <select class="form-select" name="productor_type" form="edit-productor">
-      <option disabled>Productor Type</option>
+      <option disabled>Seleccionar</option>
       {% for type in productor_types %}
       <option value="{{ type.description }}">{{ type.description }}</option>
       {% endfor %}
   </select>
 
 
-  <button type="submit" class="btn btn-success btn-lg mb-1">Save</button>
-  <a class="abord" onclick="window.location.href = `/productor-data`">Cancel</a>
+  <button type="submit" class="btn btn-success btn-lg mb-1">Guardar</button>
+  <a class="abord" onclick="window.location.href = `/productor-data`">Cancelar</a>
 
   </form>
 
