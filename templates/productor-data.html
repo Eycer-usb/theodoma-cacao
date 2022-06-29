@@ -15,7 +15,7 @@
             <th>Telefono Celular </th>
             <th>Dirección 1</th>
             <th>Dirección 2</th>
-            <th>Tipo de Productor</th>
+            <th>Tipo de Recolector</th>
             <th>Editar</th>
             <th>Eliminar</th>
         </thead>
@@ -47,7 +47,7 @@
 
     <section id="create-form" class="h-100" hidden="true">
 
-        <h3>Nuevo Productor</h3>
+        <h3>Nuevo Recolector</h3>
 
         <form method="POST" id="create-new-productor" action="/productor-data/create">
         
@@ -74,7 +74,7 @@
             <option value="female">Femenino</option>
             <option value="other">Otro</option>
         </select>
-        <label>Tipo de Productor</label>
+        <label>Tipo de Recolector</label>
         <select class="form-select" name="productor_type" form="create-new-productor">
             <option disabled>Seleccionar</option>
             {% for type in productor_types %}

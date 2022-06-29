@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<h3>Editar Tipo de Productor</h3>
+<h3>Editar Tipo de Recolector</h3>
 
 <form method="POST" id="edit-productor-type" action="/productor-type/edit-type/save">
 
   <div class="form-group">
     <input type="hidden" name = "id" value="{{ type.id }}" />
-    <label>Descripcion del TIpo de Productor</label>
+    <label>Descripcion del Tipo de Recolector</label>
     <input class="form-control" type="text" name="description" value="{{ type.description }}" required/>
+    <label>Precio (%)</label>
+    <input class="form-control" type="number" value="{{ type.price }}" step=".01" required/>
   </div>  
 <button type="submit" class="btn btn-success btn-lg mb-1">Guardar</button>
 <a class="abord" href="/productor-type">Cancelar</a>

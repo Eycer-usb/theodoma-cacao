@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Tipos de Productores </h2>
+<h2>Tipos de Recolectores </h2>
 <p>{{ status }}</p>
 <table class="table content-table">
   
   <thead>
       <th>ID</th>
       <th>Descripcion</th>
+      <th>Precio (%)</th>
       <th>Editar</th>
       <th>Eliminar</th>
   </thead>
@@ -15,23 +16,26 @@
   <tr>
     <td>{{ type.id }}</td>
     <td>{{ type.description }}</td>
+    <td>{{ type.price }}</td>
     <td><button onclick="window.location.href=`/productor-type/edit-type/{{ type.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
     <td><button onclick='deleteConfirm( {{type.id}}, "Productor_type" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
   </tr>    
   {% endfor %}
   </tbody>
 </table>
-<button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">Nuevo Tipo de Productor</button>
+<button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">Nuevo Tipo de Recolector</button>
 
 <section id="create-form" class="h-100" hidden="true">
 
-  <h3>Crer Nuevo Tipo de Productor</h3>
+  <h3>Crer Nuevo Tipo de Recolector</h3>
 
   <form method="POST" id="create-new-productor-type" action="/productor-type/create">
 
     <div class="form-group">
-      <label>Descripcion del Tipo de Productor</label>
+      <label>Descripcion del Tipo de Recolector</label>
       <input class="form-control" type="text" name="description" placeholder="Productor X" required/> 
+      <label>Precio (%)</label>
+      <input value="" type="number" step=".01"/>
     </div>   
   <button type="submit" class="btn btn-success btn-lg mb-1">Crear</button>
   <a class="abord" onclick="hiddeForm()">Cancelar</a>

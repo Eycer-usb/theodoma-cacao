@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Portafolio de Cosechas</h2>
+        <p>{{ status }}</p>
+        <table class="table content-table fixed-table">
+            
+            <thead>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+            </thead>
+            <tbody>
+            {% for harvest in harvests %}
+            <tr>
+                <td>{{ harvest.id }}</td>
+                <td>{{ harvest.description }}</td>
+                <td>{{ harvest.start_date }}</td>
+                <td>{{ harvest.endind_date }}</td>
+            </tr>    
+            {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">Nueva Cosecha</button>
+    
+        <section id="create-form" class="h-100" hidden="true">
+    
+            <h3>Nueva Consecha</h3>
+    
+            <form method="POST" id="create-new-harvest" action="/harvest-data/create">
+            
+            <label>Descripcion de Cosecha</label>
+            <input class="form-control" type="text" name="description" placeholder="Cosecha Mes1 - Mes2" required/>                    
+            <label>Fecha de Inicio</label>
+            <input class="form-control" type="date" name="date_of_start"  required/>
+            <label>Fecha de Fin</label>
+            <input class="form-control" type="date" name="date_of_start"  required/>
+
+            
+            <button type="submit" class="btn btn-success btn-lg mb-1">Crear</button>
+            <a class="abord" onclick="hiddeForm()">Cancelar</a>
+            </form>
+    </section>
+
+{% endblock %}

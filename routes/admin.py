@@ -244,3 +244,9 @@ def delete_user(id):
     db.session.commit()
     session['management-status'] = "User Deleted"
     return redirect(url_for('admin.user_management'))
+
+@admin.route('/user-harvest')
+def user_harvest():
+    if( not verify_permissions(session, User, 'all') ):
+        return redirect(url_for('auth.index'))
+    return render_template('user-harvest.html', rol = session['rol'])
