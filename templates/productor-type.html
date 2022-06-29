@@ -18,6 +18,7 @@
     <td>{{ type.description }}</td>
     <td>{{ type.price }}</td>
     <td><button onclick="window.location.href=`/productor-type/edit-type/{{ type.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
+
     <td><button onclick='deleteConfirm( {{type.id}}, "Productor_type" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
   </tr>    
   {% endfor %}
