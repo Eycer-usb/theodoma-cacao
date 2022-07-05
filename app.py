@@ -8,9 +8,10 @@ and where the routes are registered
 
 from flask import Flask
 from routes.auth import auth
-from routes.admin import admin
+from routes.user_rol import user_rol
 from routes.user import user
-from routes.shopping_analyst import shp_analyst
+from routes.productor import productor_route
+from routes.productor_type import productor_type_route
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -23,8 +24,9 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     SQLAlchemy(app)
     app.register_blueprint(auth)
-    app.register_blueprint(admin)
-    app.register_blueprint(shp_analyst)
+    app.register_blueprint(user_rol)
+    app.register_blueprint(productor_route)
+    app.register_blueprint(productor_type_route)
     app.register_blueprint(user)
     app.secret_key = "#a@sKUGHkl[;][/=6095sKHGK-~gh`d=+p?*\ ~`z'.a&689Uh8bHahjashdbjHJKgsdsjaJKKJ"
 

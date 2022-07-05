@@ -25,10 +25,11 @@ class User(db.Model) :
     phone = db.Column(db.String(20), nullable = True)
     address = db.Column(db.String(150), nullable = True)
     user_rol_id = db.Column(db.Integer, db.ForeignKey('user_rol.id'))
+    F_Harvest = db.Column(db.Integer, db.ForeignKey('harvest.id'))
 
     # User Class Constructor
     def __init__(self, name, last_name, username, email,\
-         password, gender, date_of_birth, phone, address, user_rol_desc):
+         password, gender, date_of_birth, phone, address, user_rol_desc, F_Harvest):
         self.name = name
         self.last_name = last_name
         self.username = username
@@ -38,6 +39,7 @@ class User(db.Model) :
         self.phone = phone
         self.address = address
         self.user_rol_id = User_rol.getId(rol_description= user_rol_desc)
+        self.F_Harvest = F_Harvest
         self.set_password(password)
 
     # String representation or a User by its ID

@@ -3,9 +3,9 @@ from models.user import User
 from utils.db import db
 from utils.functions import *
 
-shp_analyst = Blueprint('shp_analyst', __name__)
+productor_route = Blueprint('productor_route', __name__)
 allowed_rols = ['admin', 'shopping-analyst']
-@shp_analyst.route('/productor-data')
+@productor_route.route('/productor-data')
 def productor():
     if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
@@ -20,12 +20,12 @@ def productor():
     return render_template('productor-data.html', status=status, \
             rol = session['rol'], productor_types = productor_types, productors = productors)
 
-@shp_analyst.route('/productor-data/search/<query>')
+@productor_route.route('/productor-data/search/<query>')
 def productor_search(query):
     pass
 
 
-@shp_analyst.route('/productor-data/create', methods = ['POST'])
+@productor_route.route('/productor-data/create', methods = ['POST'])
 def productor_create():
 
     if( not verify_permissions(session, User, allowed_rols) ):
@@ -44,22 +44,22 @@ def productor_create():
 
     if( not valid_cedula(cedula) ):
         session['management-status'] = "Invalid Cedula"
-        return redirect(url_for( 'shp_analyst.productor'))
+        return redirect(url_for( 'productor_route.productor'))
     elif( not valid_name(name) ):
         session["management-status"] = "Invalid Name"
-        return redirect(url_for( 'shp_analyst.productor'))
+        return redirect(url_for( 'productor_route.productor'))
     elif( not valid_name(last_name) ):
         session["management-status"] = "Invalid Last Name"
-        return redirect(url_for( 'shp_analyst.productor'))
+        return redirect(url_for( 'productor_route.productor'))
     elif( not valid_gender(gender) ):
         session["management-status"] = "Invalid Gender"
-        return redirect(url_for( 'shp_analyst.productor'))
+        return redirect(url_for( 'productor_route.productor'))
     elif( not valid_date(date_of_birth) ):
         session["management-status"] = "Invalid Date"
-        return redirect(url_for( 'shp_analyst.productor'))
+        return redirect(url_for( 'productor_route.productor'))
     elif ( not valid_productor_type( productor_type_description ) ):
         session["management-status"] = "Invalid Productor type"
-        return redirect(url_for( 'shp_analyst.productor'))
+        return redirect(url_for( 'productor_route.productor'))
 
     ## Create Productor
     new_productor = Productor(cedula, name, last_name,\
@@ -69,9 +69,9 @@ def productor_create():
     db.session.commit()
     session['management-status'] = "Created"
     
-    return redirect(url_for( 'shp_analyst.productor'))
+    return redirect(url_for( 'productor_route.productor'))
 
-@shp_analyst.route('/productor-data/delete/<id>')
+@productor_route.route('/productor-data/delete/<id>')
 def productor_delete(id):
     if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
@@ -79,9 +79,9 @@ def productor_delete(id):
     db.session.delete(productor)
     db.session.commit()
     session['management-status'] = "Productor Deleted"
-    return redirect(url_for('shp_analyst.productor'))
+    return redirect(url_for('productor_route.productor'))
 
-@shp_analyst.route('/productor-data/edit-productor/<id>')
+@productor_route.route('/productor-data/edit-productor/<id>')
 def edit_productor(id):
     if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
@@ -91,7 +91,7 @@ def edit_productor(id):
         rol = session['rol'], productor_types=types)
 
 
-@shp_analyst.route('/productor-data/edit-productor/save', methods = ['POST'])
+@productor_route.route('/productor-data/edit-productor/save', methods = ['POST'])
 def productor_update():
 
     if( not verify_permissions(session, User, allowed_rols) ):
@@ -110,15 +110,15 @@ def productor_update():
 
     if( not valid_cedula(cedula, True) ):
         session['management-status'] = "Invalid Cedula"
-        return redirect(url_for( 'shp_analyst.productor'))
+        return redirect(url_for( 'productor_route.productor'))
     elif( not valid_name(name) ):
         session["management-status"] = "Invalid Name"
     elif( not valid_date(date_of_birth) ):
         session["management-status"] = "Invalid Date"
-        return redirect(url_for( 'shp_analyst.productor'))
+        return redirect(url_for( 'productor_route.productor'))
     elif ( not valid_productor_type( productor_type_description ) ):
         session["management-status"] = "Invalid Productor type"
-        return redirect(url_for( 'shp_analyst.productor'))
+        return redirect(url_for( 'productor_route.productor'))
 
     id = request.form['id']
     productor = Productor.query.get(id)
@@ -134,68 +134,5 @@ def productor_update():
     productor.productor_type_id = Productor_type.getId(productor_type_description)
     db.session.commit()
     session['management-status'] = "Productor Updated"
-    return redirect(url_for('shp_analyst.productor'))
+    return redirect(url_for('productor_route.productor'))
     
-######################################
-
-@shp_analyst.route('/productor-type')
-def productor_type():
-
-    if( not verify_permissions(session, User, allowed_rols) ):
-        return redirect( url_for('auth.index') )
-    
-    productor_types = Productor_type.query.all()
-    if 'management-status' not in session:
-        return render_template('productor-type.html', status="",\
-            rol = session['rol'], productor_types = productor_types)
-    status = session['management-status']
-    session.pop('management-status', None)
-    return render_template('productor-type.html', status = status,\
-            rol = session['rol'], productor_types = productor_types)
-
-@shp_analyst.route('/productor-type/create', methods= ['POST'])
-def productor_type_create():
-    if( not verify_permissions(session, User, allowed_rols) ):
-        return redirect( url_for('auth.index') )
-    
-    description = request.form['description']
-    new_rol = Productor_type(description)
-    db.session.add(new_rol)
-    db.session.commit()
-    session['management-status'] = "Productor Type Created"
-    return redirect(url_for( 'shp_analyst.productor_type' ))
-
-@shp_analyst.route('/productor-type/search/<query>')
-def productor_type_search():
-    pass
-
-
-
-@shp_analyst.route('/productor-type/delete/<id>')
-def productor_type_delete(id):
-    if( not verify_permissions(session, User, allowed_rols) ):
-        return redirect(url_for('auth.index'))
-    productor_type = Productor_type.query.get(id)
-    db.session.delete(productor_type)
-    db.session.commit()
-    session['management-status'] = "Productor Type Deleted"
-    return redirect(url_for('shp_analyst.productor_type'))
-
-@shp_analyst.route('/productor-type/edit-type/<id>')
-def productor_type_edit(id):
-    if( not verify_permissions(session, User, allowed_rols) ):
-        return redirect(url_for('auth.index'))
-    productor_type = Productor_type.query.get(id)
-    return render_template("productor-type-edit-type.html", type = productor_type, \
-        rol = session['rol'])
-
-@shp_analyst.route('/productor-type/edit-type/save', methods=['POST'])
-def productor_type_update():
-    if( not verify_permissions(session, User, allowed_rols) ):
-        return redirect(url_for('auth.index'))
-    id = request.form['id']
-    type = Productor_type.query.get(id)
-    type.description = request.form['description']
-    db.session.commit()
-    session['management-status'] = "Updated"
-    return redirect(url_for('shp_analyst.productor_type'))
