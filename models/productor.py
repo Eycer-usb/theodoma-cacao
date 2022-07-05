@@ -23,12 +23,13 @@ class Productor(db.Model) :
     movil_phone = db.Column(db.String(20), nullable = True)
     address_1 = db.Column(db.String(150), nullable = True)
     address_2 = db.Column(db.String(150), nullable = True)
+    price_percentage = db.Column( db.Float, nullable = False )
     productor_type_id = db.Column(db.Integer, db.ForeignKey('productor_type.id'))
 
     # Every class most has its own constructor, isn't it ;)
     def __init__(self, cedula, name, last_name,\
         gender, date_of_birth, local_phone, movil_phone, address_1,\
-        address_2, productor_type_description):
+        address_2, price_percentage, productor_type_description):
         self.cedula = cedula
         self.name = name
         self.last_name = last_name
@@ -38,6 +39,7 @@ class Productor(db.Model) :
         self.movil_phone = movil_phone
         self.address_1 = address_1
         self.address_2 = address_2
+        self.price_percentage = price_percentage
         self.productor_type_id = Productor_type.getId(description = productor_type_description)
 
     # A productor is represented by the its unique id
