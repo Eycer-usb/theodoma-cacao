@@ -11,10 +11,12 @@ class Productor_type(db.Model):
     __tablename__ = 'productor_type'
     id = db.Column(db.Integer, primary_key = True)
     description = db.Column(db.String(50), nullable = False)
+    price = db.Column(db.String(4), nullable = False)
 
     # Class Constructor
-    def __init__(self, description):
+    def __init__(self, description, price=description):
         self.description = description
+        self.price = price
 
     # Given a productor type description, when is call return 
     # its id
