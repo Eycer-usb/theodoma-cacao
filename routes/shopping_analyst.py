@@ -159,7 +159,8 @@ def productor_type_create():
         return redirect( url_for('auth.index') )
     
     description = request.form['description']
-    new_rol = Productor_type(description)
+    price = request.form['price']
+    new_rol = Productor_type(description, price)
     db.session.add(new_rol)
     db.session.commit()
     session['management-status'] = "Productor Type Created"
@@ -168,8 +169,6 @@ def productor_type_create():
 @shp_analyst.route('/productor-type/search/<query>')
 def productor_type_search():
     pass
-
-
 
 @shp_analyst.route('/productor-type/delete/<id>')
 def productor_type_delete(id):
@@ -196,6 +195,7 @@ def productor_type_update():
     id = request.form['id']
     type = Productor_type.query.get(id)
     type.description = request.form['description']
+    type.price = request.form['price']
     db.session.commit()
     session['management-status'] = "Updated"
     return redirect(url_for('shp_analyst.productor_type'))
