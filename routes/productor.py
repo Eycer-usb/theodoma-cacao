@@ -1,3 +1,17 @@
+"""
+Routes for Productor Model
+
+Routes map
+
+/productor-data
+/productor-data/search/<query>
+/productor-data/create
+/productor-data/delete/<id>
+/productor-data/edit-productor/<id>
+/productor-data/edit-productor/save
+
+"""
+
 from flask import Blueprint, render_template, redirect, url_for, request, session
 from models.user import User
 from utils.db import db
@@ -5,6 +19,7 @@ from utils.functions import *
 
 productor_route = Blueprint('productor_route', __name__)
 allowed_rols = ['admin', 'shopping-analyst']
+
 @productor_route.route('/productor-data')
 def productor():
     if( not verify_permissions(session, User, allowed_rols) ):

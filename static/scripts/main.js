@@ -13,6 +13,9 @@ function deleteConfirm(id, table){
         else if(table == 'Productor_type'){
             window.location.href = `/productor-type/delete/${id}`            
         }
+        else if(table == 'Harvest'){
+            window.location.href = `/harvest/delete/${id}`
+        }
     };
 }
 

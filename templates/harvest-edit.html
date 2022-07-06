@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Editar Cosecha</h3>
+
+<form method="POST" id="edit-harvest" action="/harvest/update">
+
+  <input class="form-control" type="hidden" name="id" value="{{harvest.id}}" required/>                    
+  <label>Descripción</label>
+  <input class="form-control" type="text" name="description" value="{{ harvest.description }}" required/>                    
+  <label>Fecha de Inicio</label>
+  <input class="form-control" type="date" name="start_date" value="{{harvest.start_date}}" required/>
+  <label>Fecha de Fin</label>
+  <input class="form-control" type="date" name="end_date" value="{{harvest.end_date }}"  required/>
+  <label>Estatus</label>
+  <select class="form-select" name="status" form="create-new-harvest">
+    <option value="active">Activo</option>
+    <option value="stopped">Detenido</option>
+    <option value="closed">Finalizado</option>
+</select>
+  
+
+  <button type="submit" class="btn btn-success btn-lg mb-1">Guardar</button>
+  <a class="abord" onclick="window.location.href = `/harvest`">Cancelar</a>
+
+  </form>
+
+{% endblock %}

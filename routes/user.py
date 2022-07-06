@@ -17,6 +17,7 @@ from this import s
 from flask import Blueprint, render_template, redirect, url_for, request, session
 from utils.functions import *
 from models.user import User
+from models.harvest import Harvest
 from utils.db import db
 user = Blueprint('user', __name__)
 
@@ -38,13 +39,14 @@ def user_management():
 
     rols = User_rol.query.all()
     users = User.query.all()
+    harvests = Harvest.query.all()
     if 'management-status' not in session:
         return render_template('user-management.html', status="",\
-            rol = session['rol'], rols = rols, users = users)
+            rol = session['rol'], rols = rols, users = users,  harvests = harvests)
     status = session['management-status']
     session.pop('management-status', None)  
     return render_template('user-management.html', status=status, \
-        rol = session['rol'], rols=rols, users = users )
+        rol = session['rol'], rols=rols, users = users, harvests = harvests )
     
 # Create User
 @user.route('/user-management/create', methods = ['POST'])
@@ -114,8 +116,9 @@ def edit_user(id):
         return redirect(url_for('auth.index'))
     user = User.query.get(id)
     rols = User_rol.query.all()
+    harvests = Harvest.query.all()
     return render_template("user-management-edit-user.html", user = user, \
-        rol = session['rol'], rols=rols)
+        rol = session['rol'], rols=rols, harvests=harvests)
 
 # Save Edition User
 @user.route('/user-management/edit-user/save', methods = ["POST"])

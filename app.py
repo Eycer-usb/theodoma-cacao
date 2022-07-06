@@ -12,6 +12,7 @@ from routes.user_rol import user_rol
 from routes.user import user
 from routes.productor import productor_route
 from routes.productor_type import productor_type_route
+from routes.harvest import harvest_route
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -28,6 +29,7 @@ def create_app():
     app.register_blueprint(productor_route)
     app.register_blueprint(productor_type_route)
     app.register_blueprint(user)
+    app.register_blueprint(harvest_route)
     app.secret_key = "#a@sKUGHkl[;][/=6095sKHGK-~gh`d=+p?*\ ~`z'.a&689Uh8bHahjashdbjHJKgsdsjaJKKJ"
 
     return app

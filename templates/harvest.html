@@ -9,6 +9,10 @@
                 <th>Descripción</th>
                 <th>Inicio</th>
                 <th>Fin</th>
+                <th>Status</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+
             </thead>
             <tbody>
             {% for harvest in harvests %}
@@ -16,7 +20,10 @@
                 <td>{{ harvest.id }}</td>
                 <td>{{ harvest.description }}</td>
                 <td>{{ harvest.start_date }}</td>
-                <td>{{ harvest.endind_date }}</td>
+                <td>{{ harvest.end_date }}</td>
+                <td>{{ harvest.status }}</td>
+                <td><button onclick="window.location.href=`/harvest/edit/{{ harvest.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
+                <td><button onclick='deleteConfirm( {{ harvest.id}}, "Harvest" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
             </tr>    
             {% endfor %}
             </tbody>
@@ -27,14 +34,20 @@
     
             <h3>Nueva Consecha</h3>
     
-            <form method="POST" id="create-new-harvest" action="/harvest-data/create">
+            <form method="POST" id="create-new-harvest" action="/harvest/create">
             
             <label>Descripcion de Cosecha</label>
             <input class="form-control" type="text" name="description" placeholder="Cosecha Mes1 - Mes2" required/>                    
             <label>Fecha de Inicio</label>
-            <input class="form-control" type="date" name="date_of_start"  required/>
+            <input class="form-control" type="date" name="start_date"  required/>
             <label>Fecha de Fin</label>
-            <input class="form-control" type="date" name="date_of_start"  required/>
+            <input class="form-control" type="date" name="end_date"  required/>
+            <label>Status</label>
+            <select class="form-select" name="status" form="create-new-harvest">
+                <option value="active">Activo</option>
+                <option value="stopped">Detenido</option>
+                <option value="closed">Finalizado</option>
+            </select>
 
             
             <button type="submit" class="btn btn-success btn-lg mb-1">Crear</button>

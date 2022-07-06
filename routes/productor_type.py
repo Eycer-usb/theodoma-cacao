@@ -1,4 +1,17 @@
+"""
+Routes for Productor Type
 
+Routes map
+
+/productor-type
+/productor-type/create
+/productor-type/delete/<id>
+/productor-type/search/<query>
+/productor-type/edit-type/<id>
+/productor-type/edit-type/save
+
+
+"""
 
 from flask import Blueprint, render_template, redirect, url_for, request, session
 from models.user import User
@@ -29,11 +42,15 @@ def productor_type_create():
         return redirect( url_for('auth.index') )
     
     description = request.form['description']
-    new_rol = Productor_type(description)
+    price = float(request.form['price'])
+    if ( price >1 or price <0 ):
+        return redirect(url_for("productor_type_route.productor_type"))
+    new_rol = Productor_type(description, price)
     db.session.add(new_rol)
     db.session.commit()
     session['management-status'] = "Productor Type Created"
     return redirect(url_for( 'productor_type_route.productor_type' ))
+
 
 @productor_type_route.route('/productor-type/search/<query>')
 def productor_type_search():
@@ -65,6 +82,10 @@ def productor_type_update():
         return redirect(url_for('auth.index'))
     id = request.form['id']
     type = Productor_type.query.get(id)
+    price = float(request.form['price'])
+    if ( price >1 or price <0 ):
+        return redirect(url_for("productor_type_route.productor_type"))
+    type.price_percentage = price
     type.description = request.form['description']
     db.session.commit()
     session['management-status'] = "Updated"

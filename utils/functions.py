@@ -12,6 +12,7 @@ from models.user_rol import User_rol
 from models.productor import Productor
 from models.productor_type import Productor_type
 from models.user import User
+from models.harvest import Harvest
 
 # Standar String Name and Lastname validator
 def valid_name(name):
@@ -85,6 +86,15 @@ def valid_productor_type(productor_type_description):
     for x in query:
         types.append(x.description)
     return productor_type_description in types
+
+# Verify if a given description corresponds to a valid harvest
+def valid_harvest(harvest_id):
+    query = Harvest.query.get(harvest_id)
+    return query != None
+
+# Verify valid harvest status
+def valid_harvest_status(status):
+    return ( status in ['active', 'stopped', 'closed'] )
 
 # Clean the empty side spacing
 def clean_string(string):

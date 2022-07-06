@@ -19,8 +19,7 @@ class Harvest (db.Model):
     status = db.Column(db.String(10), nullable = False)
 
     # Class constructor
-    def __init__(self, id, description, start_date, end_date, status):
-        self.id = id
+    def __init__(self, description, start_date, end_date, status):
         self.description = description
         self.start_date = start_date
         self.end_date = end_date

@@ -16,16 +16,22 @@
         </thead>
         <tbody>
         {% for user in users %}
+        {% if user.username != "admin" %}
         <tr>
             <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.last_name }}</td>
             <td>{{ user.username }}</td>
             <td>{{ user.user_rol_id }}</td>
-            <td>{{ user.harvest }}</td>
+            {% for harvest in harvests %}
+                {% if harvest.id == user.F_Harvest %}
+                    <td>{{ harvest.description }}</td>
+                {% endif %}
+            {% endfor %}
             <td><button onclick="window.location.href=`/user-management/edit-user/{{ user.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
             <td><button onclick='deleteConfirm( {{user.id}}, "User" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
-        </tr>    
+        </tr>
+        {% endif %}   
         {% endfor %}
         </tbody>
     </table>
@@ -69,6 +75,13 @@
                 <option disabled>Seleccionar</option>
                 {% for rol in rols %}
                 <option value="{{ rol.description }}">{{ rol.description }}</option>
+                {% endfor %}
+            </select>
+            <label>Cosecha</label>
+            <select class="form-select" name ="harvest_id" form="create-new-user">
+                <option disabled>Seleccionar</option>
+                {% for harvest in harvests %}
+                <option value="{{ harvest.id }}">{{ harvest.description }}</option>
                 {% endfor %}
             </select>
 
