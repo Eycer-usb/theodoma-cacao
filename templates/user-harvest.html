@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
     <h2>Portafolio de Cosechas</h2>
-        <p>{{ status }}</p>
+    <form action="search" method="post" target="_blank">
+        <p>
+          Buscar: <input type="search" name="busqueda" placeholder="buscar">
+          <input type="submit" value="Buscar">  
+        </p>       
+      </form>
+    <p>{{ status }}</p>
         <table class="table content-table">
             
             <thead>
@@ -9,9 +15,11 @@
                 <th>Descripción</th>
                 <th>Inicio</th>
                 <th>Fin</th>
-                <th>Generar</th>
+                <th>Generar Compra</th>
                 <th>Modificar</th>
                 <th>Eliminar</th>
+                <th>Habilitar / Cerrar</th>
+                <th>Listar Compras</th>
             </thead>
             <tbody>
             {% for harvests in harvest %}
@@ -20,10 +28,12 @@
                 <td>{{ harvests.description }}</td>
                 <td>{{ harvests.start_date }}</td>
                 <td>{{ harvests.ended_date }}</td>
-                <td></button><i class="fa fa-list-alt" aria-hidden="true"></i></button></td>
+                <td><i class="fa fa-list-alt" aria-hidden="true"></i></td>
                 <td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
                 <td><i class="fa fa-trash-o" aria-hidden="true"></i></td>
-                
+                <td><i class="fa fa-play"></i></td>
+                <!--td><i class="fa fa-ban"></i></i></td-->  
+                <td><i class="fa fa-list-ul"></i></td>
             
             </tr>    
             {% endfor %}
