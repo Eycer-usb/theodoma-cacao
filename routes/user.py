@@ -13,7 +13,6 @@ Route Map:
 
 """
 
-from this import s
 from flask import Blueprint, render_template, redirect, url_for, request, session
 from utils.functions import *
 from models.user import User

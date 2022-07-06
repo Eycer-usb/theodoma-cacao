@@ -6,17 +6,16 @@ the purchase data and details
 """
 
 from utils.db import db
-from models.harvest import Harvest
-from models.productor import Productor
+
 
 class Purchase( db.Model ):
 
     # Purchase Attributes
     __tablename__ = 'purchase'
     id = db.Column( db.Integer, primary_key = True )
-    date = db.Column( db.String(10), nullable = False )
     F_Productor = db.Column( db.Integer, db.ForeignKey('productor.id'))
     F_Harvest = db.Column( db.Integer, db.ForeignKey( 'harvest.id' ) )
+    date = db.Column( db.String(10), nullable = False )
     cacao_type = db.Column( db.String, nullable=False )
     price_dolar= db.Column( db.Float, nullable=False )
     amount_dolar = db.Column( db.Float, nullable = False )

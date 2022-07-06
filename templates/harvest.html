@@ -12,7 +12,9 @@
                 <th>Status</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
-
+                <th></th>
+                <th></th>
+                <th></th>
             </thead>
             <tbody>
             {% for harvest in harvests %}
@@ -24,6 +26,9 @@
                 <td>{{ harvest.status }}</td>
                 <td><button onclick="window.location.href=`/harvest/edit/{{ harvest.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                 <td><button onclick='deleteConfirm( {{ harvest.id}}, "Harvest" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+                <td><button onclick='window.location.href=`/harvest/close/{{ harvest.id }}`'><i class="fa fa-stop" aria-hidden="true"></i></button></td>
+                <td><button onclick='window.location.href=`/harvest/activate/{{ harvest.id }}`'><i class="fa fa-play" aria-hidden="true"></i></button></td>
+                <td><button onclick='window.location.href=`/harvest/{{ harvest.id }}/purchase`'><i class="fa fa-file-text" aria-hidden="true"></i></i></button></td>
             </tr>    
             {% endfor %}
             </tbody>
@@ -45,7 +50,6 @@
             <label>Status</label>
             <select class="form-select" name="status" form="create-new-harvest">
                 <option value="active">Activo</option>
-                <option value="stopped">Detenido</option>
                 <option value="closed">Finalizado</option>
             </select>
 

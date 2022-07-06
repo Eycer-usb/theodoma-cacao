@@ -107,3 +107,20 @@ def delete(id):
     db.session.commit()
     session['management-status'] = "Harvest Deleted"
     return redirect(url_for('harvest_route.index'))
+
+
+@harvest_route.route("/harvest/activate/<harvest_id>")
+def activate_harvest(harvest_id):
+    harvest = Harvest.find(Harvest, harvest_id)
+    harvest.status = 'active'
+    db.session.add(harvest)
+    db.session.commit()
+    return redirect(url_for("harvest_route.index"))
+
+@harvest_route.route("/harvest/close/<harvest_id>")
+def close_harvest(harvest_id):
+    harvest = Harvest.find(Harvest, harvest_id)
+    harvest.status = 'closed'
+    db.session.add(harvest)
+    db.session.commit()
+    return redirect(url_for("harvest_route.index"))

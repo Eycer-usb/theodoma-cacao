@@ -13,6 +13,7 @@ from routes.user import user
 from routes.productor import productor_route
 from routes.productor_type import productor_type_route
 from routes.harvest import harvest_route
+from routes.purchase import purchase
 from flask_sqlalchemy import SQLAlchemy
 import os
 

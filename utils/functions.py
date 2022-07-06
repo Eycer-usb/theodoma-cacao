@@ -94,7 +94,7 @@ def valid_harvest(harvest_id):
 
 # Verify valid harvest status
 def valid_harvest_status(status):
-    return ( status in ['active', 'stopped', 'closed'] )
+    return ( status in ['active', 'closed'] )
 
 # Clean the empty side spacing
 def clean_string(string):
