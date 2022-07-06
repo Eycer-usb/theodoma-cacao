@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
     <h2>Portafolio de Cosechas</h2>
-
-    
         <p>{{ status }}</p>
-        <table class="table content-table fixed-table">
+        <table class="table content-table">
             
             <thead>
                 <th>ID</th>
@@ -16,12 +14,16 @@
                 <th>Eliminar</th>
             </thead>
             <tbody>
-            {% for harvest in harvests %}
+            {% for harvests in harvest %}
             <tr>
-                <td>{{ harvest.id }}</td>
-                <td>{{ harvest.description }}</td>
-                <td>{{ harvest.start_date }}</td>
-                <td>{{ harvest.ended_date }}</td>    
+                <td>{{ harvests.id }}</td>
+                <td>{{ harvests.description }}</td>
+                <td>{{ harvests.start_date }}</td>
+                <td>{{ harvests.ended_date }}</td>
+                <td></button><i class="fa fa-list-alt" aria-hidden="true"></i></button></td>
+                <td><i class="fa fa-pencil-square-o" aria-hidden="true"></i></td>
+                <td><i class="fa fa-trash-o" aria-hidden="true"></i></td>
+                
             
             </tr>    
             {% endfor %}
@@ -33,7 +35,7 @@
     
             <h3>Nueva Consecha</h3>
     
-            <form method="POST" id="create-new-harvest" action="/harvest-data/create">
+            <form method="POST" id="create-new-harvest" action="/harvest/create">
             
             <label>Descripcion de Cosecha</label>
             <input class="form-control" type="text" name="description" placeholder="Cosecha Mes1 - Mes2" required/>                    

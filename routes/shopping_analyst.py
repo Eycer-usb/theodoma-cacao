@@ -199,3 +199,9 @@ def productor_type_update():
     db.session.commit()
     session['management-status'] = "Updated"
     return redirect(url_for('shp_analyst.productor_type'))
+
+@shp_analyst.route('/user-shoppings')
+def user_shoppings():
+    if( not verify_permissions(session, User, 'all') ):
+        return redirect(url_for('auth.index'))
+    return render_template('user_shopping.html', rol = session['rol'])

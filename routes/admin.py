@@ -247,7 +247,7 @@ def delete_user(id):
 
 # Show users harvest #####################################################################
 @admin.route('/user-harvest')
-def user_harvest_management():
+def harvest_management():
     if( not verify_permissions(session, User) ):
         return redirect(url_for('auth.index'))
 
@@ -261,10 +261,11 @@ def user_harvest_management():
     return render_template('user-harvest.html', status = status,\
             rol = session['rol'], harvest = harvest)
 
-@admin.route('/user-harvest/create', methods = ['POST'])
-def user_harvest_create():
+@admin.route('/harvest/create', methods = ['POST'])
+def harvest_create():
     if( not verify_permissions(session, User) ):
         return redirect( url_for('auth.index') )
+
     description = request.form['description']
     start_date = request.form['start_date']
     ended_date = request.form['ended_date']
@@ -272,4 +273,5 @@ def user_harvest_create():
     db.session.add(new_harvest)
     db.session.commit()
     session['management-status'] = "harvest Created"
-    return redirect(url_for( 'admin.user_harvest_management' ))
+    return redirect(url_for( 'admin.harvest_management' ))
+
