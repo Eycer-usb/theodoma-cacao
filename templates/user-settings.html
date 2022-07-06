@@ -3,7 +3,7 @@
     <h2>Configuracion de Usuario</h2>
     <h3>Cambiar Contraseña</h3>
     <p>{{ status }}</p>
-    <form action="/user-settings/reset-password" method="post">
+    <form action="/user-settings/update-password" method="post">
         <div class="form-group">
           <label class="login-label">Usuario: {{ session['username'] }}</label>
           <input type="password" class="form-control" aria-describedby="password" placeholder="Introduzca su Contraseña Actual" name="old_password" required>

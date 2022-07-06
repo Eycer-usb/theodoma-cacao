@@ -35,8 +35,8 @@ def user_settings():
     return render_template('user-settings.html', rol = session['rol'], status=status)
 
 # User Reset Password
-@user.route("/user-settings/reset-password", methods=["POST"])
-def reset_password():
+@user.route("/user-settings/update-password", methods=["POST"])
+def update_password():
     if( not verify_permissions(session, User, 'all') ):
         return redirect(url_for('auth.index'))
     username = session['username']
