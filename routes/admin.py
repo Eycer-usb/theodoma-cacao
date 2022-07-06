@@ -14,14 +14,13 @@ Route Map:
 /user-management/edit-user/<id>
 /user-management/edit-user/save
 /user-management/delete/<id>
-
-
 """
 
 
 from crypt import methods
 from flask import Blueprint, render_template, redirect, url_for, request, session
 from models.user import User, User_rol
+from models.user_harvest import User_harvest
 from utils.db import db
 from utils.functions import *
 admin = Blueprint('admin', __name__)
@@ -32,7 +31,7 @@ User Rol routes
 
 """
 
-# Show Users
+# Show Users Rols #####################################################################
 @admin.route('/user-rol-management')
 def user_rol_management():
     if( not verify_permissions(session, User) ):
@@ -99,7 +98,7 @@ def delete_user_rol(id):
 """
 User routes
 """
-# Show Users
+# Show Users #####################################################################
 @admin.route('/user-management')
 def user_management():    
     if( not verify_permissions(session, User) ):
@@ -171,7 +170,7 @@ def user_create():
     
     return redirect(url_for( 'admin.user_management'))
 
-# Edit User
+# Edit User 
 @admin.route('/user-management/edit-user/<id>')
 def edit_user(id):
     if( not verify_permissions(session, User) ):
@@ -245,8 +244,32 @@ def delete_user(id):
     session['management-status'] = "User Deleted"
     return redirect(url_for('admin.user_management'))
 
+
+# Show users harvest #####################################################################
 @admin.route('/user-harvest')
-def user_harvest():
-    if( not verify_permissions(session, User, 'all') ):
+def user_harvest_management():
+    if( not verify_permissions(session, User) ):
         return redirect(url_for('auth.index'))
-    return render_template('user-harvest.html', rol = session['rol'])
+
+    harvest = User_harvest.query.all()
+    if 'management-status' not in session:
+        return render_template('user-harvest.html', status="",\
+            rol = session['rol'], harvest = harvest)
+
+    status = session['management-status']
+    session.pop('management-status', None)
+    return render_template('user-harvest.html', status = status,\
+            rol = session['rol'], harvest = harvest)
+
+@admin.route('/user-harvest/create', methods = ['POST'])
+def user_harvest_create():
+    if( not verify_permissions(session, User) ):
+        return redirect( url_for('auth.index') )
+    description = request.form['description']
+    start_date = request.form['start_date']
+    ended_date = request.form['ended_date']
+    new_harvest = User_harvest(description,start_date,ended_date)
+    db.session.add(new_harvest)
+    db.session.commit()
+    session['management-status'] = "harvest Created"
+    return redirect(url_for( 'admin.user_harvest_management' ))
