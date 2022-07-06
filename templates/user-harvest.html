@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
     <h2>Portafolio de Cosechas</h2>
+
+    
         <p>{{ status }}</p>
         <table class="table content-table fixed-table">
             
@@ -9,6 +11,9 @@
                 <th>Descripción</th>
                 <th>Inicio</th>
                 <th>Fin</th>
+                <th>Generar</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
             </thead>
             <tbody>
             {% for harvest in harvests %}
@@ -16,7 +21,8 @@
                 <td>{{ harvest.id }}</td>
                 <td>{{ harvest.description }}</td>
                 <td>{{ harvest.start_date }}</td>
-                <td>{{ harvest.endind_date }}</td>
+                <td>{{ harvest.ended_date }}</td>    
+            
             </tr>    
             {% endfor %}
             </tbody>
@@ -32,9 +38,9 @@
             <label>Descripcion de Cosecha</label>
             <input class="form-control" type="text" name="description" placeholder="Cosecha Mes1 - Mes2" required/>                    
             <label>Fecha de Inicio</label>
-            <input class="form-control" type="date" name="date_of_start"  required/>
+            <input class="form-control" type="date" name="start_date"  required/>
             <label>Fecha de Fin</label>
-            <input class="form-control" type="date" name="date_of_start"  required/>
+            <input class="form-control" type="date" name="ended_date"  required/>
 
             
             <button type="submit" class="btn btn-success btn-lg mb-1">Crear</button>

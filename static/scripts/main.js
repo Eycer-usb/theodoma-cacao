@@ -1,5 +1,5 @@
 function deleteConfirm(id, table){
-    let text = `Do you want to Delete this element? this action can not be undo.`
+    let text = `¿Seguro que desea eliminar este elemento? Esta accion no se puede deshacer`
     if(confirm(text)==true){
         if(table == 'User'){
             window.location.href =`/user-management/delete/${id}`;

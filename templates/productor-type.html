@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Tipos de Recolectores </h2>
+<h2>Tipos de Recolector</h2>
 <p>{{ status }}</p>
 <table class="table content-table">
   
@@ -36,7 +36,7 @@
       <label>Descripcion del Tipo de Recolector</label>
       <input class="form-control" type="text" name="description" placeholder="Productor X" required/> 
       <label>Precio (%)</label>
-      <input value="" type="number" step=".01"/>
+      <input class="form-control" value="" type="number" name="price" step=".01"/>
     </div>   
   <button type="submit" class="btn btn-success btn-lg mb-1">Crear</button>
   <a class="abord" onclick="hiddeForm()">Cancelar</a>
