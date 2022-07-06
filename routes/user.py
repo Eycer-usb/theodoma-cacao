@@ -28,7 +28,33 @@ user = Blueprint('user', __name__)
 def user_settings():
     if( not verify_permissions(session, User, 'all') ):
         return redirect(url_for('auth.index'))
-    return render_template('user-settings.html', rol = session['rol'])
+    status = ""
+    if ("management-status" in session):
+        status = session['management-status']
+        session.pop("management-status", None)
+    return render_template('user-settings.html', rol = session['rol'], status=status)
+
+# User Reset Password
+@user.route("/user-settings/reset-password", methods=["POST"])
+def reset_password():
+    if( not verify_permissions(session, User, 'all') ):
+        return redirect(url_for('auth.index'))
+    username = session['username']
+    old_password = request.form['old_password']
+    if( User.verify_password( User , username, old_password ) ):
+        new_password = request.form['new_password']
+        id = session['user_id']
+        user = User.query.get(id)
+        user.set_password(new_password)
+        db.session.add(user)
+        db.session.commit()
+        session['management-status'] = "Password Updated"
+    else:
+        session['management-status'] = "Incorrect Password"
+
+
+
+    return redirect(url_for("user.user_settings"))
 
 
 # Show Users

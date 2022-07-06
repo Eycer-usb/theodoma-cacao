@@ -28,13 +28,12 @@ class Purchase( db.Model ):
     observation = db. Column( db.String(255) )
 
     #Class Constuctor
-    def __init__( self, id, date, F_Productor, 
+    def __init__( self, date, F_Productor, 
                 F_Harvest, cacao_type, price_dolar,
                 amount_dolar, wetness_percentage,
                 waste_percentage, waste_kg, total_amont_kg,
-                total_dolar, observation,):
+                total_dolar, observation):
 
-        self.id = id
         self.date = date
         self.F_Productor = F_Productor
         self.F_Harvest = F_Harvest

@@ -67,3 +67,6 @@ class User(db.Model) :
         user_rol_id = User.query.filter_by(username = username).first().user_rol_id
         user_rol = User_rol.query.get(user_rol_id).description
         return user_rol
+    
+    def getId(self, username):
+        return User.query.filter_by(username = username).first().id

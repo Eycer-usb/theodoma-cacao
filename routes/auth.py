@@ -28,6 +28,7 @@ def login():
             return redirect(url_for('auth.index'))
         if( User.verify_password( User , username, password ) ):
             session['username'] = username
+            session['user_id'] = User.getId(User, username)
             session['rol'] = User.get_user_rol_by_username(User, username)
             return redirect(url_for('auth.index'))
         session['login_status'] = 'Incorrect Password'
