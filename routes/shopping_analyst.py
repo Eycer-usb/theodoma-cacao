@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, session
 from models.user import User
+from models.shp_data import Shopping_data
 from utils.db import db
 from utils.functions import *
 
@@ -200,8 +201,45 @@ def productor_type_update():
     session['management-status'] = "Updated"
     return redirect(url_for('shp_analyst.productor_type'))
 
+############################################################################################
+
 @shp_analyst.route('/user_shopping')
 def user_shopp():
-    if( not verify_permissions(session, User, 'all') ):
+    if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
-    return render_template('user_shopping.html', rol = session['rol'])
+
+    shp_data = Shopping_data.query.all()
+    tips_product = Productor_type.query.all()    
+    if 'management-status' not in session:
+        return render_template('user_shopping.html', status="",\
+            rol = session['rol'], shp_data = shp_data, tips_product = tips_product)
+    status = session['management-status']
+    session.pop('management-status', None)
+    return render_template('user_shopping.html', status = status,\
+            rol = session['rol'], shp_data = shp_data, tips_product = tips_product)
+
+
+    
+@shp_analyst.route('/shoppings/create', methods= ['POST'])
+def user_shopp_create():
+    if( not verify_permissions(session, User, allowed_rols) ):
+        return redirect( url_for('auth.index') )
+
+    fecha = request.form['fecha']
+    cedula = request.form['cedula']
+    tip_productor = request.form['productor_type']
+    clase= request.form['clase']
+    price = request.form['price']
+    cant= request.form['cant']
+    humed= request.form['humed']
+    merma= request.form['merma']
+    mermakg= request.form['mermakg']
+    cantot= request.form['cantot']
+    monto= request.form['monto']
+
+
+    new_shopping = Shopping_data(fecha, cedula, tip_productor, clase, price, cant, humed, merma, mermakg, cantot, monto)
+    db.session.add(new_shopping)
+    db.session.commit()
+    session['management-status'] = "Shoppings Created"
+    return redirect(url_for( 'shp_analyst.user_shopp' ))

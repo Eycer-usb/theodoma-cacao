@@ -103,16 +103,16 @@ User routes
 def user_management():    
     if( not verify_permissions(session, User) ):
         return redirect(url_for('auth.index'))
-
     rols = User_rol.query.all()
     users = User.query.all()
+    harvest = User_harvest.query.all()
     if 'management-status' not in session:
         return render_template('user-management.html', status="",\
-            rol = session['rol'], rols = rols, users = users)
+            rol = session['rol'], rols = rols, users = users, harvest=harvest)
     status = session['management-status']
     session.pop('management-status', None)  
     return render_template('user-management.html', status=status, \
-        rol = session['rol'], rols=rols, users = users )
+        rol = session['rol'], rols=rols, users = users, harvest= harvest )
     
 # Create User
 @admin.route('/user-management/create', methods = ['POST'])
@@ -132,6 +132,7 @@ def user_create():
     phone = request.form['phone']
     address = request.form['address']
     user_rol_desc = request.form['user_rol']
+    user_harvest_descrip = request.form['user_harvest']
     
     # Verify if correct respons 
     if( not valid_name(name) ):
@@ -163,7 +164,7 @@ def user_create():
         return redirect(url_for( 'admin.user_management'))
 
     # Create New User
-    new_user = User(name, last_name, username, email, password, gender, date_of_birth, phone, address, user_rol_desc)
+    new_user = User(name, last_name, username, email, password, gender, date_of_birth, phone, address, user_rol_desc, user_harvest_descrip)
     db.session.add(new_user)
     db.session.commit()
     session['management-status'] = "Created"
@@ -177,8 +178,9 @@ def edit_user(id):
         return redirect(url_for('auth.index'))
     user = User.query.get(id)
     rols = User_rol.query.all()
+    harvest = User_harvest.query.all()
     return render_template("user-management-edit-user.html", user = user, \
-        rol = session['rol'], rols=rols)
+        rol = session['rol'], rols=rols, harvest=harvest)
 
 # Save Edition User
 @admin.route('/user-management/edit-user/save', methods = ["POST"])
@@ -226,8 +228,8 @@ def update_user():
     user.address = request.form['address']
     user.gender = request.form['gender']
     user.user_rol = request.form['user_rol']
+    user_harvest_descrip = request.form['user_harvest']
     user.set_password(request.form['password'])
-
 
     db.session.commit()
     session['management-status'] = "User Updated"
@@ -275,3 +277,34 @@ def harvest_create():
     session['management-status'] = "harvest Created"
     return redirect(url_for( 'admin.harvest_management' ))
 
+@admin.route('/harvest/edit/<id>')
+def harvest_edit(id):
+    if( not verify_permissions(session, User) ):
+        return redirect(url_for('auth.index'))
+    harvest = User_harvest.query.get(id)
+    return render_template("user-harvest-edit.html", editing_harvest = harvest, \
+        rol = session['rol'])
+
+# Save Edition        
+@admin.route("/harvest/edit-harvest/save", methods = ['POST'])
+def harvest_update():
+    if( not verify_permissions(session, User) ):
+        return redirect(url_for('auth.index'))
+    id = request.form['id']
+    editing_harvest = User_harvest.query.get(id)
+    editing_harvest.description = request.form['description']
+    editing_harvest.start_date = request.form['start_date']
+    editing_harvest.ended_date = request.form['ended_date']
+    db.session.commit()
+    session['management-status'] = "Harvest Updated"
+    return redirect(url_for('admin.harvest_management'))
+
+@admin.route('/harvest/delete/<id>')
+def harvest_delete(id):
+    if( not verify_permissions(session, User) ):
+        return redirect(url_for('auth.index'))
+    harvest = User_harvest.query.get(id)
+    db.session.delete(harvest)
+    db.session.commit()
+    session['management-status'] = "Harvest Deleted"
+    return redirect(url_for('admin.harvest_management'))

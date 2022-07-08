@@ -8,6 +8,7 @@ A User can use the system based in it's rol
 
 from utils.db import db
 from models.user_rol import User_rol
+from models.user_harvest import User_harvest
 from flask_bcrypt import generate_password_hash, check_password_hash
 
 class User(db.Model) :
@@ -25,10 +26,11 @@ class User(db.Model) :
     phone = db.Column(db.String(20), nullable = True)
     address = db.Column(db.String(150), nullable = True)
     user_rol_id = db.Column(db.Integer, db.ForeignKey('user_rol.id'))
+    user_harvest_desc = db.Column(db.Integer, db.ForeignKey('user_harvest.description'))
 
     # User Class Constructor
     def __init__(self, name, last_name, username, email,\
-         password, gender, date_of_birth, phone, address, user_rol_desc):
+         password, gender, date_of_birth, phone, address, user_rol_desc,user_harvest_descrip):
         self.name = name
         self.last_name = last_name
         self.username = username
@@ -38,6 +40,7 @@ class User(db.Model) :
         self.phone = phone
         self.address = address
         self.user_rol_id = User_rol.getId(rol_description= user_rol_desc)
+        self.user_harvest_desc = User_harvest.getId(description= user_harvest_descrip)
         self.set_password(password)
 
     # String representation or a User by its ID

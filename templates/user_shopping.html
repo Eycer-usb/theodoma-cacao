@@ -1,4 +1,93 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>Datos de Compra</h2>
+    <h2>Cosecha XX-XX</h2>
+    <h2>Datos de la Compra</h2>
+
+    <p>{{ status }}</p>
+        <table class="table content-table">
+            
+            <thead>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Cédula</th>
+                <th>Tipo de Recolector</th>
+                <th>Clase de   Cacao</th>
+                <th>Precio ($)</th>
+                <th>Cantidad (Kg)</th>
+                <th>Humed.(%)</th>
+                <th>Merma (%)</th>
+                <th>Merma (Kg)</th>
+                <th>Cantidad Total(Kg)</th>
+                <th>Monto($)</th>
+            </thead>
+            <tbody>
+            {% for shop in shp_data %}
+            <tr>
+                <td>{{ shop.id }}</td>
+                <td>{{ shop.date }}</td>
+                <td>{{ shop.cedula }}</td>
+                <td>{{ shop.tipo_productor}}</td>
+                <td>{{ shop.class }}</td>
+                <td>{{ shop.price }}</td>
+                <td>{{ shop.cant }}</td>
+                <td>{{ shop.humed }}</td>
+                <td>{{ shop.merma}}</td>
+                <td>{{ shop.mermakg }}</td>
+                <td>{{ shop.cantot }}</td>
+                <td>{{ shop.monto }}</td>
+                <td>{{ shop.observaciones }}</td>
+            </tr>    
+            {% endfor %}
+            </tbody>
+        </table>
+     
+        <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">Nueva Cosecha</button>
+    
+        <section id="create-form" class="h-100" hidden="true">
+    
+            <h3>Datos de la Compra</h3>
+
+            <form method="POST" id="create-new-shopping" action="/shoppings/create">            
+    
+            <label>Fecha</label>
+            <input class="form-control" type="date" name="fecha" required/>                    
+            <label>Cedula</label>
+            <input class="form-control" type="text" name="cedula"  required/>
+
+            <!--end FOR-->
+            <label>Tipo de Recolector</label>
+            <select class="form-select" name="productor_type" form="create-new-shopping">
+                <option disabled>Seleccionar</option>
+                {% for type in tips_product %}
+                <option value="{{ type.description }}">{{ type.description }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Clase</label>
+            <input class="form-control" type="text" name="clase"  required/>
+
+        <!--Referencia a TypeRecolector -- FOR-->
+            <label>Precio($)</label>
+            <input class="form-control" type="text" name="price"  required/>
+        <!--end FOR-->
+
+            <label>Cantidad(Kg)</label>
+            <input class="form-control" type="text" name="cant" required/>
+            <label>Humedad(%)</label>
+            <input class="form-control" type="text" name="humed"  required/>
+            <label>Merma(%)</label>
+            <input class="form-control" type="text" name="merma"  required/>
+            <label>Merma(Kg)</label>
+            <input class="form-control" type="text" name="mermakg"  required/>
+            <label>Cantidad Total(Kg)</label>
+            <input class="form-control" type="text" name="cantot"  required/>
+            <label>Monto($)</label>
+            <input class="form-control" type="text" name="monto"  required/>
+            
+        
+            <button type="submit" class="btn btn-success btn-lg mb-1">Crear</button>
+            <a class="abord" onclick="hiddeForm()">Cancelar</a>
+            </form>
+    </section>
+
 {% endblock %}

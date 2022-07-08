@@ -43,7 +43,14 @@
                             <option value="{{ rol.description }}">{{ rol.description }}</option>
                             {% endfor %}
                         </select>
-        
+                        
+                        <label>Cosecha</label>
+                        <select class="form-select" name="user_harvest" form="edit-user">
+                            <option disabled>Seleccionar</option>
+                            {% for harvests in harvest %}
+                            <option value="{{ harvests.description }}">{{ harvests.description }}</option>
+                            {% endfor %}
+                        </select>
             
                     <button type="submit" class="btn btn-success btn-lg mb-1">Guardar</button>
                     <a class="abord" href="/user-management">Cancelar</a>
