@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
     <h2>Perfiles de Usuario</h2>
-    
-    <form action="search" method="post" target="_blank">
+
+    <form action="/user_management/search" method="post" target="_blank">
         <p>
           Buscar: <input type="search" name="busqueda" placeholder="buscar">
         </p>       
@@ -28,8 +28,13 @@
             <td>{{ user.name }}</td>
             <td>{{ user.last_name }}</td>
             <td>{{ user.username }}</td>
-            <td>{{ user.user_rol_id }}</td>
+            {% for rol in rols %}
+                {% if rol.id == user.user_rol_id %}
+                    <td>{{ rol.description }} </td>
+                {% endif %}
+            {% endfor %}
             <td>{{ user.user_harvest_desc }}</td>
+            
             <td><button onclick="window.location.href=`/user-management/edit-user/{{ user.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
             <td><button onclick='deleteConfirm( {{user.id}}, "User" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
         </tr>    

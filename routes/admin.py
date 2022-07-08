@@ -113,7 +113,11 @@ def user_management():
     session.pop('management-status', None)  
     return render_template('user-management.html', status=status, \
         rol = session['rol'], rols=rols, users = users, harvest= harvest )
-    
+
+@admin.route('/user_management/search/<query>')
+def user_search(query):
+    pass
+
 # Create User
 @admin.route('/user-management/create', methods = ['POST'])
 def user_create():
