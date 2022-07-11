@@ -40,3 +40,37 @@ function hiddeForm(){
     element = document.getElementById("create-form");
     element.hidden = true
 }
+
+
+/*
+Al ejecutarse la funcion searchEngine()
+se buscara el tbody con id = table-body-data
+para filtrar sus datos segun el valor del 
+input con id = search-bar
+
+Si se desea usar en otras vistas solamente es necesario 
+ejecutar esta funcion con la etiqueta onkeyup="searchEngine()" en
+el input con id = search-bar y la funcion filtrara los datos
+de la tabla con id = table-body-data
+*/
+function searchEngine()
+{
+    console.log("Ejecutandose")
+    var input, filter, tbody, tr, td, textValue;
+    input = document.getElementById("search-bar");
+    filter = input.value.toUpperCase();
+    tbody = document.getElementById("table-body-data");
+    tr = tbody.getElementsByTagName("tr")
+    for( var i = 0; i < tr.length; i++ )
+    {
+        td = tr[i].getElementsByTagName("td");
+        tr[i].style.display = "none";
+        for( var j = 0; j < td.length; j++ ) {
+            txtValue = td[j].textContent || td[j].innerText
+            if ( txtValue.toUpperCase().indexOf(filter) > -1 ) {
+                tr[i].style.display = "";
+            }
+        }        
+    }
+
+}

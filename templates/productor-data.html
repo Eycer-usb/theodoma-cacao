@@ -2,11 +2,9 @@
 {% block content %}
 <h2>Lista de Recolectores</h2>
 
-<form action="search" method="post" target="_blank">
     <p>
-      Buscar: <input type="search" name="busqueda" placeholder="buscar">
+      Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
     </p>       
-</form>
 
 <p>{{ status }}</p>
     <table class="table content-table fixed-table">
@@ -26,7 +24,7 @@
             <th>Editar</th>
             <th>Eliminar</th>
         </thead>
-        <tbody>
+        <tbody id = "table-body-data">
         {% for productor in productors %}
         <tr>
             <td>{{ productor.id }}</td>
