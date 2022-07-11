@@ -237,9 +237,58 @@ def user_shopp_create():
     cantot= request.form['cantot']
     monto= request.form['monto']
 
+    if( not valid_date(fecha) ):
+        session["management-status"] = "Invalid Date"
+        return redirect(url_for( 'shp_analyst.user_shopp'))
+    if( not valid_cedula(cedula) ):
+        session['management-status'] = "Invalid Cedula"
+        return redirect(url_for( 'shp_analyst.user_shopp'))
 
     new_shopping = Shopping_data(fecha, cedula, tip_productor, clase, price, cant, humed, merma, mermakg, cantot, monto)
     db.session.add(new_shopping)
     db.session.commit()
     session['management-status'] = "Shoppings Created"
     return redirect(url_for( 'shp_analyst.user_shopp' ))
+
+@shp_analyst.route('/shoppings/edit/<id>')
+def user_shopp_edit(id):
+    if( not verify_permissions(session, User, allowed_rols) ):
+        return redirect(url_for('auth.index'))
+
+    shp_data = Shopping_data.query.get(id)
+    tips_product = Productor_type.query.all()    
+    return render_template("user_shopping-edit.html", editing_shopping = shp_data,\
+        rol = session['rol'], tips_product = tips_product)
+
+@shp_analyst.route("/shoppings/edit/save", methods = ['POST'])
+def user_shopp_update():
+    if( not verify_permissions(session, User, allowed_rols) ):
+        return redirect(url_for('auth.index'))
+
+    id = request.form['id']
+    editing_shopping = Shopping_data.query.get(id)
+    editing_shopping.fecha = request.form['fecha']
+    editing_shopping.cedula = request.form['cedula']
+    editing_shopping.tip_productor = request.form['productor_type']
+    editing_shopping.clase= request.form['clase']
+    editing_shopping.price = request.form['price']
+    editing_shopping.cant= request.form['cant']
+    editing_shopping.humed= request.form['humed']
+    editing_shopping.merma= request.form['merma']
+    editing_shopping.mermakg= request.form['mermakg']
+    editing_shopping.cantot= request.form['cantot']
+    editing_shopping.monto= request.form['monto']
+
+    db.session.commit()
+    session['management-status'] = "Shopping Updated"
+    return redirect(url_for('shp_analyst.user_shopp'))
+
+@shp_analyst.route('/shopp/delete/<id>')
+def user_shop_delete(id):
+    if( not verify_permissions(session, User, allowed_rols) ):
+        return redirect(url_for('auth.index'))
+    shp_data = Shopping_data.query.get(id)
+    db.session.delete(shp_data)
+    db.session.commit()
+    session['management-status'] = "Compra Eliminada"
+    return redirect(url_for('shp_analyst.user_shopp'))

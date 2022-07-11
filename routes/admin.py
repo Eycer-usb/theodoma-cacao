@@ -281,6 +281,16 @@ def harvest_create():
     session['management-status'] = "harvest Created"
     return redirect(url_for( 'admin.harvest_management' ))
 
+
+    # Verify if correct respons 
+    if( not valid_date(start_date) ):
+        session["management-status"] = "Invalid Date"
+        return redirect(url_for( 'admin.harvest_management'))
+    elif( not valid_date(ended_date) ):
+        session["management-status"] = "Invalid Date"
+        return redirect(url_for( 'admin.harvest_management'))
+
+
 @admin.route('/harvest/edit/<id>')
 def harvest_edit(id):
     if( not verify_permissions(session, User) ):
@@ -294,6 +304,14 @@ def harvest_edit(id):
 def harvest_update():
     if( not verify_permissions(session, User) ):
         return redirect(url_for('auth.index'))
+
+    if( not valid_date(request.form['start_date']) ):
+        session["management-status"] = "Invalid Date"
+        return redirect(url_for( 'admin.harvest_management'))
+    if( not valid_date(request.form['ended_date']) ):
+        session["management-status"] = "Invalid Date"
+        return redirect(url_for( 'admin.harvest_management'))
+
     id = request.form['id']
     editing_harvest = User_harvest.query.get(id)
     editing_harvest.description = request.form['description']
