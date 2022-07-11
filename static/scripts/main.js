@@ -16,6 +16,9 @@ function deleteConfirm(id, table){
         else if(table == 'User_harvest'){
             window.location.href = `/harvest/delete/${id}`            
         }
+        else if(table == 'shp_data'){
+            window.location.href = `/shopp/delete/${id}`            
+        }
 
     };
 }
@@ -47,7 +50,6 @@ Al ejecutarse la funcion searchEngine()
 se buscara el tbody con id = table-body-data
 para filtrar sus datos segun el valor del 
 input con id = search-bar
-
 Si se desea usar en otras vistas solamente es necesario 
 ejecutar esta funcion con la etiqueta onkeyup="searchEngine()" en
 el input con id = search-bar y la funcion filtrara los datos
