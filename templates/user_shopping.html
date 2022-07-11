@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>Cosecha XX-XX</h2>
-    <h2>Datos de la Compra</h2>
+    <h2>Datos de las Compras</h2>
+
+    <p>
+        Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
+    </p>       
+
 
     <p>{{ status }}</p>
         <table class="table content-table">
@@ -20,14 +24,20 @@
                 <th>Cantidad Total(Kg)</th>
                 <th>Monto($)</th>
             </thead>
-            <tbody>
+            <tbody id="table-body-data">
             {% for shop in shp_data %}
             <tr>
                 <td>{{ shop.id }}</td>
-                <td>{{ shop.date }}</td>
+                <td>{{ shop.fecha}}</td>
                 <td>{{ shop.cedula }}</td>
+
+                <!--{% for type in tips_product %}
+                    {% if type.id == shop.tipo_productor %}
+                        <td>{{ type.description }} </td>
+                    {% endif %}
+                {% endfor %}-->
                 <td>{{ shop.tipo_productor}}</td>
-                <td>{{ shop.class }}</td>
+                <td>{{ shop.clase }}</td>
                 <td>{{ shop.price }}</td>
                 <td>{{ shop.cant }}</td>
                 <td>{{ shop.humed }}</td>
@@ -36,12 +46,15 @@
                 <td>{{ shop.cantot }}</td>
                 <td>{{ shop.monto }}</td>
                 <td>{{ shop.observaciones }}</td>
+                <td><button onclick="window.location.href=`/shoppings/edit/{{ shop.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
+                <td><button onclick='deleteConfirm( {{shop.id}}, "shp_data" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+
             </tr>    
             {% endfor %}
             </tbody>
         </table>
      
-        <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">Nueva Cosecha</button>
+        <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">Nueva Compra</button>
     
         <section id="create-form" class="h-100" hidden="true">
     
@@ -54,7 +67,6 @@
             <label>Cedula</label>
             <input class="form-control" type="text" name="cedula"  required/>
 
-            <!--end FOR-->
             <label>Tipo de Recolector</label>
             <select class="form-select" name="productor_type" form="create-new-shopping">
                 <option disabled>Seleccionar</option>

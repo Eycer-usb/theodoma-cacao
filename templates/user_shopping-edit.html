@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Modificar Compra</h3>
+
+<form method="POST" id="edit-shopping" action="/shoppings/edit/save">
+
+  <div class="form-group">
+    <input type="hidden" name = "id" value="{{ editing_shopping.id }}" />
+    <label>Fecha</label>
+    <input class="form-control" type="date" name="fecha" value="{{ editing_shopping.fecha }}" required/>
+    <label>cedula</label>
+    <input class="form-control" type="text" name="cedula" value="{{ editing_shopping.cedula }}" required/>
+
+    <label>Tipo de Recolector</label>
+    <select class="form-select" name="productor_type" form="edit-shopping">
+        <option disabled>Seleccionar</option>
+        {% for type in tips_product %}
+        <option value="{{ type.description }}">{{ type.description }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Clase</label>
+    <input class="form-control" type="text" name="clase" value="{{ editing_shopping.clase }}" required/>
+    <label>Precio</label>
+    <input class="form-control" type="text" name="price" value="{{ editing_shopping.price }}" required/>
+    <label>Cantidad</label>
+    <input class="form-control" type="text" name="cant" value="{{ editing_shopping.cant }}" required/>
+    <label>Humedad</label>
+    <input class="form-control" type="text" name="humed" value="{{ editing_shopping.humed }}" required/>
+    <label>Merma</label>
+    <input class="form-control" type="text" name="merma" value="{{ editing_shopping.merma }}" required/>
+    <label>Merma</label>
+    <input class="form-control" type="text" name="mermakg" value="{{ editing_shopping.mermakg }}" required/>
+    <label>Cantidad Total</label>
+    <input class="form-control" type="text" name="cantot" value="{{ editing_shopping.cantot }}" required/>
+    <label>Monto</label>
+    <input class="form-control" type="text" name="monto" value="{{ editing_shopping.monto }}" required/>
+
+
+</div>  
+<button type="submit" class="btn btn-success btn-lg mb-1">Guardar</button>
+<a class="abord" href="/user_shopping">Cancelar</a>
+
+</form>
+{% endblock %}

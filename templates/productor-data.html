@@ -3,8 +3,9 @@
 <h2>Lista de Recolectores</h2>
 
     <p>
-      Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
+        Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
     </p>       
+
 
 <p>{{ status }}</p>
     <table class="table content-table fixed-table">
@@ -24,7 +25,7 @@
             <th>Editar</th>
             <th>Eliminar</th>
         </thead>
-        <tbody id = "table-body-data">
+        <tbody id= "table-body-data">
         {% for productor in productors %}
         <tr>
             <td>{{ productor.id }}</td>
@@ -37,6 +38,7 @@
             <td>{{ productor.movil_phone }}</td>
             <td>{{ productor.address_1 }}</td>
             <td>{{ productor.address_2 }}</td>
+            
             {% for type in productor_types %}
             {% if type.id == productor.productor_type_id %}
             <td>{{ type.description }} </td>
@@ -75,9 +77,9 @@
         <label>Género</label>
         <select class="form-select" name="gender" form="create-new-productor">
             <option value="" disabled>Seleccionar</option>
-            <option value="male">Masculino</option>
-            <option value="female">Femenino</option>
-            <option value="other">Otro</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Otro">Otro</option>
         </select>
         <label>Tipo de Recolector</label>
         <select class="form-select" name="productor_type" form="create-new-productor">

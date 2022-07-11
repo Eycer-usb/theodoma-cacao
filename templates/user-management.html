@@ -2,11 +2,10 @@
 {% block content %}
     <h2>Perfiles de Usuario</h2>
 
-        <p>
-          Buscar: <input type="search" id="search-bar" onkeyup="searchEngine()" name="busqueda" placeholder="Buscar">
-        </p>       
+    <p>
+        Buscar: <input type="search" id="search-bar" onkeyup="searchEngine()" name="busqueda" placeholder="Buscar">
+    </p>   
     
-
     <p>{{ status }}</p>
     <table class="table content-table">
         
@@ -33,7 +32,7 @@
                 {% endif %}
             {% endfor %}
             <td>{{ user.user_harvest_desc }}</td>
-            
+
             <td><button onclick="window.location.href=`/user-management/edit-user/{{ user.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
             <td><button onclick='deleteConfirm( {{user.id}}, "User" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
         </tr>    
@@ -71,9 +70,9 @@
           <label>Género</label>
             <select class="form-select" name="gender" form="create-new-user">
                 <option value="" disabled>Seleccionar </option>
-                <option value="male">Masculino</option>
-                <option value="female">Femenino</option>
-                <option value="other">Otro</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
             </select>
             <label>Rol de Usuario</label>
             <select class="form-select" name="user_rol" form="create-new-user">
