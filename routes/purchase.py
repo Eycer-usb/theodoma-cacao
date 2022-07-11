@@ -26,6 +26,7 @@ def index(harvest_id):
 
 @purchase.route('/harvest/<harvest_id>/purchase/create', method=["POST"])
 def create(harvest_id):
+    
     return redirect(url_for("purchase.index"))
 
 @purchase.route('/harvest/<harvest_id>/purchase/<purchase_id>/edit', method=["GET"])
