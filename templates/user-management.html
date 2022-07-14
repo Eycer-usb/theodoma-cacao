@@ -31,7 +31,12 @@
                     <td>{{ rol.description }} </td>
                 {% endif %}
             {% endfor %}
-            <td>{{ user.user_harvest_desc }}</td>
+
+            {% for harvests in harvest %}
+            {% if harvests.id == user.user_harvest_desc %}
+                <td>{{ harvests.description }} </td>
+            {% endif %}
+        {% endfor %}
 
             <td><button onclick="window.location.href=`/user-management/edit-user/{{ user.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
             <td><button onclick='deleteConfirm( {{user.id}}, "User" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>

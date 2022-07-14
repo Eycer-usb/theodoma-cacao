@@ -12,6 +12,8 @@ from models.user_rol import User_rol
 from models.productor import Productor
 from models.productor_type import Productor_type
 from models.user import User
+from models.user_harvest import User_harvest
+from models.shp_data import Shopping_data
 
 # Standar String Name and Lastname validator
 def valid_name(name):
@@ -41,14 +43,13 @@ def valid_password(password):
 
 # Only exist two gender, if not agree you have the other option
 def valid_gender(gender):
-    return gender in [ "male", "female", 'other' ]
+    return gender in [ "Masculino", "Femenino", 'Otro' ]
 
 # Verify a date string in 3 differents formats
 def valid_date(date):
     pat1 = "^(?:3[01]|[12][0-9]|0?[1-9])([\-/.])(0?[1-9]|1[0-2])([\-/.])\d{4}$"
     pat2 = "^(?:0?[1-9]|1[0-2])([\-/.])(3[01]|[12][0-9]|0?[1-9])([\-/.])\d{4}$"
     pat3 = "^\d{4}([\-/.])(0?[1-9]|1[0-2])([\-/.])(3[01]|[12][0-9]|0?[1-9])$"
-
     return re.fullmatch(pat1, date) or re.fullmatch(pat2, date) or re.fullmatch(pat3, date)
 
 # No restriction needed for address yet
@@ -89,3 +90,13 @@ def valid_productor_type(productor_type_description):
 # Clean the empty side spacing
 def clean_string(string):
     return string.strip()
+
+
+def valid_price(price):
+    return True
+
+def valid_date_end(ended_date,start_date):
+    if start_date < ended_date:
+        return True
+    else: 
+        return False

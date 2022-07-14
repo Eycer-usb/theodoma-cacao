@@ -161,6 +161,12 @@ def productor_type_create():
     
     description = request.form['description']
     price = request.form['price']
+
+    if( not valid_price(price) ):
+        session["management-status"] = "Invalid price"
+        return redirect(url_for( 'shp_analyst.productor_type'))
+
+
     new_rol = Productor_type(description, price)
     db.session.add(new_rol)
     db.session.commit()
