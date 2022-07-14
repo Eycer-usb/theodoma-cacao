@@ -275,6 +275,17 @@ def harvest_create():
     description = request.form['description']
     start_date = request.form['start_date']
     ended_date = request.form['ended_date']
+
+    if( not valid_date(request.form['start_date']) ):
+        session["management-status"] = "Invalid Date"
+        return redirect(url_for( 'admin.harvest_management'))
+    if( not valid_date(request.form['ended_date']) ):
+        session["management-status"] = "Invalid Date"
+        return redirect(url_for( 'admin.harvest_management'))
+    if( not valid_date_end(request.form['ended_date'], request.form['start_date'])):
+        session["management-status"] = "Invalid Date End"
+        return redirect(url_for( 'admin.harvest_management'))
+
     new_harvest = User_harvest(description,start_date,ended_date)
     db.session.add(new_harvest)
     db.session.commit()
@@ -311,6 +322,10 @@ def harvest_update():
     if( not valid_date(request.form['ended_date']) ):
         session["management-status"] = "Invalid Date"
         return redirect(url_for( 'admin.harvest_management'))
+    if( not valid_date_end(request.form['ended_date'], request.form['start_date'])):
+        session["management-status"] = "Invalid Date End"
+        return redirect(url_for( 'admin.harvest_management'))
+
 
     id = request.form['id']
     editing_harvest = User_harvest.query.get(id)

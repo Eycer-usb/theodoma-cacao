@@ -8,7 +8,7 @@
     <input type="hidden" name = "id" value="{{ editing_shopping.id }}" />
     <label>Fecha</label>
     <input class="form-control" type="date" name="fecha" value="{{ editing_shopping.fecha }}" required/>
-    <label>cedula</label>
+    <label>Cédula</label>
     <input class="form-control" type="text" name="cedula" value="{{ editing_shopping.cedula }}" required/>
 
     <label>Tipo de Recolector</label>
@@ -21,19 +21,19 @@
 
     <label>Clase</label>
     <input class="form-control" type="text" name="clase" value="{{ editing_shopping.clase }}" required/>
-    <label>Precio</label>
-    <input class="form-control" type="text" name="price" value="{{ editing_shopping.price }}" required/>
-    <label>Cantidad</label>
+    <label>Precio ($)</label>
+    <input class="form-control" value="{{ editing_shopping.price }}" type="number" name="price" step=".01"/>
+    <label>Cantidad(Kg)</label>
     <input class="form-control" type="text" name="cant" value="{{ editing_shopping.cant }}" required/>
-    <label>Humedad</label>
+    <label>Humedad(%)</label>
     <input class="form-control" type="text" name="humed" value="{{ editing_shopping.humed }}" required/>
-    <label>Merma</label>
+    <label>Merma(%)</label>
     <input class="form-control" type="text" name="merma" value="{{ editing_shopping.merma }}" required/>
-    <label>Merma</label>
+    <label>Merma(Kg)</label>
     <input class="form-control" type="text" name="mermakg" value="{{ editing_shopping.mermakg }}" required/>
-    <label>Cantidad Total</label>
+    <label>Cantidad Total(Kg)</label>
     <input class="form-control" type="text" name="cantot" value="{{ editing_shopping.cantot }}" required/>
-    <label>Monto</label>
+    <label>Monto($)</label>
     <input class="form-control" type="text" name="monto" value="{{ editing_shopping.monto }}" required/>
 
 

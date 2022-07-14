@@ -211,6 +211,22 @@ def user_shopp():
     shp_data = Shopping_data.query.all()
     tips_product = Productor_type.query.all()    
     if 'management-status' not in session:
+        return render_template('user_shopping-list.html', status="",\
+            rol = session['rol'], shp_data = shp_data, tips_product = tips_product)
+    status = session['management-status']
+    session.pop('management-status', None)
+    return render_template('user_shopping-list.html', status = status,\
+            rol = session['rol'], shp_data = shp_data, tips_product = tips_product)
+
+
+@shp_analyst.route('/user_shopping1')
+def user_shopp1():
+    if( not verify_permissions(session, User, allowed_rols) ):
+        return redirect(url_for('auth.index'))
+
+    shp_data = Shopping_data.query.all()
+    tips_product = Productor_type.query.all()    
+    if 'management-status' not in session:
         return render_template('user_shopping.html', status="",\
             rol = session['rol'], shp_data = shp_data, tips_product = tips_product)
     status = session['management-status']
@@ -218,8 +234,9 @@ def user_shopp():
     return render_template('user_shopping.html', status = status,\
             rol = session['rol'], shp_data = shp_data, tips_product = tips_product)
 
-
     
+
+
 @shp_analyst.route('/shoppings/create', methods= ['POST'])
 def user_shopp_create():
     if( not verify_permissions(session, User, allowed_rols) ):

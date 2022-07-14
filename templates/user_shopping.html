@@ -1,63 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>Datos de las Compras</h2>
-
-    <p>
-        Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
-    </p>       
-
-
-    <p>{{ status }}</p>
-        <table class="table content-table">
-            
-            <thead>
-                <th>ID</th>
-                <th>Fecha</th>
-                <th>Cédula</th>
-                <th>Tipo de Recolector</th>
-                <th>Clase de   Cacao</th>
-                <th>Precio ($)</th>
-                <th>Cantidad (Kg)</th>
-                <th>Humed.(%)</th>
-                <th>Merma (%)</th>
-                <th>Merma (Kg)</th>
-                <th>Cantidad Total(Kg)</th>
-                <th>Monto($)</th>
-            </thead>
-            <tbody id="table-body-data">
-            {% for shop in shp_data %}
-            <tr>
-                <td>{{ shop.id }}</td>
-                <td>{{ shop.fecha}}</td>
-                <td>{{ shop.cedula }}</td>
-
-                <!--{% for type in tips_product %}
-                    {% if type.id == shop.tipo_productor %}
-                        <td>{{ type.description }} </td>
-                    {% endif %}
-                {% endfor %}-->
-                <td>{{ shop.tipo_productor}}</td>
-                <td>{{ shop.clase }}</td>
-                <td>{{ shop.price }}</td>
-                <td>{{ shop.cant }}</td>
-                <td>{{ shop.humed }}</td>
-                <td>{{ shop.merma}}</td>
-                <td>{{ shop.mermakg }}</td>
-                <td>{{ shop.cantot }}</td>
-                <td>{{ shop.monto }}</td>
-                <td>{{ shop.observaciones }}</td>
-                <td><button onclick="window.location.href=`/shoppings/edit/{{ shop.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
-                <td><button onclick='deleteConfirm( {{shop.id}}, "shp_data" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
-
-            </tr>    
-            {% endfor %}
-            </tbody>
-        </table>
+    <h2>Generar Compra</h2>
      
-        <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">Nueva Compra</button>
-    
-        <section id="create-form" class="h-100" hidden="true">
-    
             <h3>Datos de la Compra</h3>
 
             <form method="POST" id="create-new-shopping" action="/shoppings/create">            
@@ -80,7 +24,7 @@
 
         <!--Referencia a TypeRecolector -- FOR-->
             <label>Precio($)</label>
-            <input class="form-control" type="text" name="price"  required/>
+            <input class="form-control" type="number" name="price" step=".01"/>            
         <!--end FOR-->
 
             <label>Cantidad(Kg)</label>
