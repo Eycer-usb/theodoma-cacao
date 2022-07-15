@@ -31,6 +31,7 @@ def create_app():
     app.register_blueprint(productor_type_route)
     app.register_blueprint(user)
     app.register_blueprint(harvest_route)
+    app.register_blueprint(purchase)
     app.secret_key = "#a@sKUGHkl[;][/=6095sKHGK-~gh`d=+p?*\ ~`z'.a&689Uh8bHahjashdbjHJKgsdsjaJKKJ"
 
     return app

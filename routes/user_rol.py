@@ -35,11 +35,11 @@ def user_rol_management():
     rols = User_rol.query.all()
     if 'management-status' not in session:
         return render_template('user-rol-management.html', status="",\
-            rol = session['rol'], rols = rols)
+            rols = rols)
     status = session['management-status']
     session.pop('management-status', None)
     return render_template('user-rol-management.html', status = status,\
-            rol = session['rol'], rols = rols)
+            rols = rols)
 
 # Create User Rol
 @user_rol.route('/user-rol-management/create', methods = ['POST'])
@@ -61,8 +61,7 @@ def edit_rol(id):
     if( not verify_permissions(session, User) ):
         return redirect(url_for('auth.index'))
     rol = User_rol.query.get(id)
-    return render_template("user-rol-management-edit-rol.html", editing_rol = rol, \
-        rol = session['rol'])
+    return render_template("user-rol-management-edit-rol.html", editing_rol = rol)
 
 # Save Edition        
 @user_rol.route("/user-rol-management/edit-rol/save", methods = ['POST'])

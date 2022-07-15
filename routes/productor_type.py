@@ -30,11 +30,11 @@ def productor_type():
     productor_types = Productor_type.query.all()
     if 'management-status' not in session:
         return render_template('productor-type.html', status="",\
-            rol = session['rol'], productor_types = productor_types)
+            productor_types = productor_types)
     status = session['management-status']
     session.pop('management-status', None)
     return render_template('productor-type.html', status = status,\
-            rol = session['rol'], productor_types = productor_types)
+            productor_types = productor_types)
 
 @productor_type_route.route('/productor-type/create', methods= ['POST'])
 def productor_type_create():
@@ -73,8 +73,7 @@ def productor_type_edit(id):
     if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
     productor_type = Productor_type.query.get(id)
-    return render_template("productor-type-edit-type.html", type = productor_type, \
-        rol = session['rol'])
+    return render_template("productor-type-edit-type.html", type = productor_type)
 
 @productor_type_route.route('/productor-type/edit-type/save', methods=['POST'])
 def productor_type_update():

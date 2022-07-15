@@ -1,27 +1,115 @@
 {% extends "base.html" %}
 {% block content %}
+    <h1>Cosecha: {{harvest.description}}</h1>
+    <h2>Datos de las Compras</h2>
 
-<h3></h3>
+    <p>
+        Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
+    </p>       
 
-<form method="POST" id="edit-harvest" action="/harvest/update">
 
-  <input class="form-control" type="hidden" name="id" value="{{harvest.id}}" required/>                    
-  <label>Descripción</label>
-  <input class="form-control" type="text" name="description" value="{{ harvest.description }}" required/>                    
-  <label>Fecha de Inicio</label>
-  <input class="form-control" type="date" name="start_date" value="{{harvest.start_date}}" required/>
-  <label>Fecha de Fin</label>
-  <input class="form-control" type="date" name="end_date" value="{{harvest.end_date }}"  required/>
-  <label>Estatus</label>
-  <select class="form-select" name="status" form="create-new-harvest">
-    <option value="active">Activo</option>
-    <option value="closed">Finalizado</option>
-</select>
-  
+    <p>{{ status }}</p>
+        <table class="table content-table">
+            
+            <thead>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Cédula</th>
+                <th>Tipo de Recolector</th>
+                <th>Clase de Cacao</th>
+                <th>Precio ($)</th>
+                <th>Cantidad (Kg)</th>
+                <th>Humed.(%)</th>
+                <th>Merma (%)</th>
+                <th>Merma (Kg)</th>
+                <th>Cantidad Total(Kg)</th>
+                <th>Monto($)</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </thead>
+            <tbody id="table-body-data">
+            {% for i in purchases %}
+            <tr>
+                <td>{{ i.id }}</td>
+                <td>{{ i.date }}</td>
+                {% for prod in productors %}
+                    {% if prod.id == i.F_Productor %}
+                        <td>{{ prod.cedula }} </td>
+                        {% for type in productor_types %}
+                          {% if type.id == prod.productor_type_id %}
+                            <td>{{ type.description }} </td>
+                          {%endif%}
+                        {%endfor%}
+                    {% endif %}
 
-  <button type="submit" class="btn btn-success btn-lg mb-1">Guardar</button>
-  <a class="abord" onclick="window.location.href = `/harvest`">Cancelar</a>
+                {% endfor %}
+                <td>{{ i.cacao_type }}</td>
+                <td>{{ i.price_dolar }}</td>
+                <td>{{ i.amount_kg }}</td>
+                <td>{{ i.wetness_percentage }}</td>
+                <td>{{ i.waste_percentage}}</td>
+                <td>{{ i.waste_kg }}</td>
+                <td>{{ i.total_amount_kg }}</td>
+                <td>{{ i.total_dolar }}</td>
+                <td>{{ i.observation }}</td>
+                <td><button onclick="window.location.href=`/harvest/{{harvest.id}}/purchase/{{i.id}}/edit`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
+                <td><button onclick='deleteConfirm2( {{i.id}}, "Purchase", {{harvest.id}} )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
 
-  </form>
+            </tr>    
+            {% endfor %}
+            </tbody>
+        </table>
+     
+        <button type="button" data-toggle="modal" data-target="#modal-{{harvest.id}}"class="btn btn-success btn-lg mb-1">Nueva Compra</button>
+        <a class="abord" href="/harvest">Cancelar</a>
+        <!-- Modal -->
+        <div class="modal fade" id="modal-{{harvest.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nueva Compra {{ harvest.description }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="modal-form" action="/harvest/{{harvest.id}}/purchase/create">
+                        <input name = "harvest-id"  type="hidden" value="{{harvest.id}}">
+                        <label>Clase de Cacao</label>
+                        <input class="form-control" type="text" name="cacao-type" required/>
+                        <label>Precio ($)</label>
+                        <input class="form-control" type="number" min="0" step="0.1" name="price-dolar" required/>
+                        <label>Cantidad (Kg)</label>
+                        <input class="form-control" type="number" min="0" step="0.1" name="amount-kg" required/>
+                        <label>Humedad (%)</label>
+                        <input class="form-control" type="number" min="0" step="0.1" name="wetness-percentage" required/>
+                        <label>Merma (%)</label>
+                        <input class="form-control" type="number" min="0" step="0.1" name="waste-percentage" required/>
+                        <label>Merma (Kg)</label>
+                        <input class="form-control" type="number" min="0" step="0.1" name="waste-kg" required/>
+                        <label>Cantidad Total (Kg)</label>
+                        <input class="form-control" type="number" min="0" step="0.1" name="total-kg" required/>
+                        <label>Total ($)</label>
+                        <input class="form-control" type="number" min="0" step="0.1" name="total-dolar" required/>
+                        <label>Seleccione el Recolector</label>
+                        <div class="form-group form-select">
+                            <select name="productor-id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                            {% for productor in productors %}
+                                    <option value="{{ productor.id }}" >{{productor.cedula}}, {{productor.name}}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                        <label>Observaciones</label>
+                        <textarea form="modal-form" name="observation" class="form-control" rows="3" ></textarea>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" form="modal-form" class="btn btn-primary">Generar Compra</button>
+                </div>
+            </div>
+            </div>
+        </div>
 
 {% endblock %}

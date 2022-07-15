@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Roles de Usuario</h2>
+<p>
+  Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
+</p> 
 <p>{{ status }}</p>
 <table class="table content-table">
   
@@ -11,7 +14,7 @@
       <th>Editar</th>
       <th>Eliminar</th>
   </thead>
-  <tbody>
+  <tbody id="table-body-data">
   {% for rol in rols %}
   <tr>
     <td>{{ rol.id }}</td>

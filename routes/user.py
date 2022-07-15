@@ -31,7 +31,7 @@ def user_settings():
     if ("management-status" in session):
         status = session['management-status']
         session.pop("management-status", None)
-    return render_template('user-settings.html', rol = session['rol'], status=status)
+    return render_template('user-settings.html', status=status)
 
 # User Reset Password
 @user.route("/user-settings/update-password", methods=["POST"])
@@ -67,11 +67,11 @@ def user_management():
     harvests = Harvest.query.all()
     if 'management-status' not in session:
         return render_template('user-management.html', status="",\
-            rol = session['rol'], rols = rols, users = users,  harvests = harvests)
+            rols = rols, users = users,  harvests = harvests)
     status = session['management-status']
     session.pop('management-status', None)  
     return render_template('user-management.html', status=status, \
-        rol = session['rol'], rols=rols, users = users, harvests = harvests )
+        rols=rols, users = users, harvests = harvests )
     
 # Create User
 @user.route('/user-management/create', methods = ['POST'])
@@ -143,7 +143,7 @@ def edit_user(id):
     rols = User_rol.query.all()
     harvests = Harvest.query.all()
     return render_template("user-management-edit-user.html", user = user, \
-        rol = session['rol'], rols=rols, harvests=harvests)
+        rols=rols, harvests=harvests)
 
 # Save Edition User
 @user.route('/user-management/edit-user/save', methods = ["POST"])

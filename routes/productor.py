@@ -29,11 +29,11 @@ def productor():
     productors = Productor.query.all()
     if 'management-status' not in session:
         return render_template('productor-data.html', status="",\
-            rol = session['rol'], productor_types = productor_types, productors = productors)
+            productor_types = productor_types, productors = productors)
     status = session['management-status']
     session.pop('management-status', None)  
     return render_template('productor-data.html', status=status, \
-            rol = session['rol'], productor_types = productor_types, productors = productors)
+            productor_types = productor_types, productors = productors)
 
 @productor_route.route('/productor-data/search/<query>')
 def productor_search(query):
@@ -103,7 +103,7 @@ def edit_productor(id):
     productor = Productor.query.get(id)
     types = Productor_type.query.all()
     return render_template("productor-data-edit-productor.html", productor = productor, \
-        rol = session['rol'], productor_types=types)
+        productor_types=types)
 
 
 @productor_route.route('/productor-data/edit-productor/save', methods = ['POST'])

@@ -90,3 +90,7 @@ table {
 td {
     word-wrap:break-word;
     }
+
+.modal {
+    color: black;
+}

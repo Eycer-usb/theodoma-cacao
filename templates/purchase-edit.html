@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Modificar Compra</h3>
+
+<form method="POST" id="form-update-purchase" action="/harvest/{{harvest.id}}/purchase/update">
+    <input name="id" type="hidden" value="{{purchase.id}}">
+    <input name = "harvest-id"  type="hidden" value="{{purchase.F_Harvest}}">
+    <input name = "date" type="hidden" value="{{purchase.date}}">
+    <label>Clase de Cacao</label>
+    <input class="form-control" type="text" name="cacao-type" value="{{purchase.cacao_type}}" required/>
+    <label>Precio ($)</label>
+    <input class="form-control" type="number" min="0" step="0.1" name="price-dolar" value="{{purchase.price_dolar}}" required/>
+    <label>Cantidad (Kg)</label>
+    <input class="form-control" type="number" min="0" step="0.1" name="amount-kg" value="{{purchase.amount_kg}}" required/>
+    <label>Humedad (%)</label>
+    <input class="form-control" type="number" min="0" step="0.1" name="wetness-percentage" value="{{purchase.wetness_percentage}}"required/>
+    <label>Merma (%)</label>
+    <input class="form-control" type="number" min="0" step="0.1" name="waste-percentage" value="{{purchase.waste_percentage}}" required/>
+    <label>Merma (Kg)</label>
+    <input class="form-control" type="number" min="0" step="0.1" name="waste-kg" value="{{purchase.waste_kg}}"required/>
+    <label>Cantidad Total (Kg)</label>
+    <input class="form-control" type="number" min="0" step="0.1" name="total-kg" value="{{purchase.total_amount_kg}}" required/>
+    <label>Total ($)</label>
+    <input class="form-control" type="number" min="0" step="0.1" name="total-dolar" value="{{purchase.total_dolar}}" required/>
+    <label>Seleccione el Recolector</label>
+    <div class="form-group form-select">
+        <select name="productor-id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+        {% for productor in productors %}
+                <option value="{{ productor.id }}" {% if productor.id == purchase.F_Productor %}selected{%endif%}>{{productor.cedula}}, {{productor.name}}</option>
+        {% endfor %}
+        </select>
+    </div>
+    <label>Observaciones</label>
+    <textarea form="form-update-purchase" name="observation" class="form-control" rows="3" >{{purchase.observation}}</textarea>
+</form>
+
+
+<button type="submit" class="btn btn-success btn-lg mb-1" form = "form-update-purchase">Guardar</button>
+<a class="abord" href="/harvest/{{harvest.id}}/purchase">Cancelar</a>
+
+{% endblock %}
