@@ -43,6 +43,13 @@
                             <option value="{{ rol.description }}">{{ rol.description }}</option>
                             {% endfor %}
                         </select>
+                        <label>Cosecha</label>
+                        <select class="form-select" name ="harvest_id" form="edit-user">
+                            <option disabled>Seleccionar</option>
+                            {% for harvest in harvests %}
+                            <option value="{{ harvest.id }}">{{ harvest.description }}</option>
+                            {% endfor %}
+                        </select>
         
             
                     <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button>

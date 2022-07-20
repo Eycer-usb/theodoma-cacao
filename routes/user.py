@@ -179,7 +179,7 @@ def update_user():
     elif ( not valid_user_rol(request.form["user_rol"]) ):
         session["management-status"] = "Invalid User Rol"
         return redirect(url_for( 'user.user_management'))
-    elif ( not valid_harvest(F_Harvest) ):
+    elif ( not valid_harvest(request.form["harvest_id"]) ):
         session["management-status"] = "Invalid Harvest"
         return redirect(url_for( 'user.user_management'))
 

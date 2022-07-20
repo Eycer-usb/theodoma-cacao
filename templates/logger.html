@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Logger de Eventos</h3>
+<p>
+    Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
+</p>
+<table class="table content-table fixed-table">
+            
+    <thead>
+        <th>ID</th>
+        <th>Evento</th>
+        <th>Modulo</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+    </thead>
+    <tbody id = table-body-data>
+    {% for register in registers %}
+    <tr>
+        <td>{{ register.id }}</td>
+        <td>{{ register.event }}</td>
+        <td>{{ register.module }}</td>
+        <td>{{ register.date }}</td>
+        <td>{{ register.time }}</td>
+    </tr>                
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
