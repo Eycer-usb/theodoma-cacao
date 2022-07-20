@@ -31,7 +31,7 @@ AFTER DELETE
 ON harvest
 BEGIN
 	INSERT INTO logger (event, module, date, time)
-	VALUES ("BORRAR", "CASECHA", date(julianday('now')),
+	VALUES ("BORRAR", "COSECHA", date(julianday('now')),
 	time(julianday('now')) ); 
 END;
 
@@ -40,7 +40,7 @@ AFTER INSERT
 ON harvest
 BEGIN
 	INSERT INTO logger (event, module, date, time)
-	VALUES ("INSERTAR", "CASECHA", date(julianday('now')),
+	VALUES ("INSERTAR", "COSECHA", date(julianday('now')),
 	time(julianday('now')) ); 
 END;
 
@@ -49,7 +49,7 @@ AFTER UPDATE
 ON harvest
 BEGIN
 	INSERT INTO logger (event, module, date, time)
-	VALUES ("ACTUALIZAR", "CASECHA", date(julianday('now')),
+	VALUES ("ACTUALIZAR", "COSECHA", date(julianday('now')),
 	time(julianday('now')) ); 
 END;
 
