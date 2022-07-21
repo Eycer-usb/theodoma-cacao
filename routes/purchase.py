@@ -43,9 +43,12 @@ def create(harvest_id):
     cant = request.form['amount-kg']
     humed = request.form['wetness-percentage']
     merma = request.form['waste-percentage']
-    mermakg = request.form['waste-kg']
-    total_amount_kg= request.form['total-kg']
-    monto = request.form['total-dolar']
+
+    merma1 = float(merma)/100
+    mermakg = float(cant)*float(merma1)
+
+    total_amount_kg= float(cant)-float(mermakg)
+    monto = float(price)*float(total_amount_kg)
     observation = request.form['observation']
     new_shopping = Purchase(date=date, F_Productor=productor_id,\
         F_Harvest=harvest_id, cacao_type=cacao_type, price_dolar=price,\
@@ -88,9 +91,11 @@ def update(harvest_id):
     purchase.amount_kg = request.form['amount-kg']
     purchase.wetness_percentage = request.form['wetness-percentage']
     purchase.waste_percentage = request.form['waste-percentage']
-    purchase.waste_kg = request.form['waste-kg']
-    purchase.total_amount_kg= request.form['total-kg']
-    purchase.total_dolar = request.form['total-dolar']
+
+    merma1 = float(purchase.waste_percentage)/100
+    purchase.waste_kg = float(purchase.amount_kg)*float(merma1)
+    purchase.total_amount_kg= float(purchase.amount_kg)-float(purchase.waste_kg)
+    purchase.total_dolar = float(purchase.price_dolar)*float(purchase.total_amount_kg)
     purchase.observation = request.form['observation']
     db.session.add(purchase)
     db.session.commit()

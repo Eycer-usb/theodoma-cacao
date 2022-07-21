@@ -43,7 +43,7 @@ def productor_type_create():
     
     description = request.form['description']
     price = float(request.form['price'])
-    if ( price >1 or price <0 ):
+    if ( price <= 0 ):
         return redirect(url_for("productor_type_route.productor_type"))
     new_rol = Productor_type(description, price)
     db.session.add(new_rol)
@@ -73,19 +73,19 @@ def productor_type_edit(id):
     if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
     productor_type = Productor_type.query.get(id)
-    return render_template("productor-type-edit-type.html", type = productor_type)
+    return render_template("productor-type-edit-type.html", types = productor_type)
 
 @productor_type_route.route('/productor-type/edit-type/save', methods=['POST'])
 def productor_type_update():
     if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
     id = request.form['id']
-    type = Productor_type.query.get(id)
-    price = float(request.form['price'])
-    if ( price >1 or price <0 ):
+    types = Productor_type.query.get(id)
+    types.description = request.form['description']
+    types.price_percentage = float(request.form['price_percentage'])
+    if ( types.price_percentage <= 0 ):
         return redirect(url_for("productor_type_route.productor_type"))
-    type.price_percentage = price
-    type.description = request.form['description']
+
     db.session.commit()
     session['management-status'] = "Updated"
     return redirect(url_for('productor_type_route.productor_type'))

@@ -15,7 +15,6 @@
                 <th>ID</th>
                 <th>Fecha</th>
                 <th>Cédula</th>
-                <th>Tipo de Recolector</th>
                 <th>Clase de Cacao</th>
                 <th>Precio ($)</th>
                 <th>Cantidad (Kg)</th>
@@ -24,7 +23,6 @@
                 <th>Merma (Kg)</th>
                 <th>Cantidad Total(Kg)</th>
                 <th>Monto($)</th>
-                <th></th>
                 <th></th>
                 <th></th>
             </thead>
@@ -36,14 +34,14 @@
                 {% for prod in productors %}
                     {% if prod.id == i.F_Productor %}
                         <td>{{ prod.cedula }} </td>
-                        {% for type in productor_types %}
+                        <!--{% for type in productor_types %}
                           {% if type.id == prod.productor_type_id %}
                             <td>{{ type.description }} </td>
                           {%endif%}
-                        {%endfor%}
+                        {%endfor%}-->
                     {% endif %}
-
                 {% endfor %}
+                
                 <td>{{ i.cacao_type }}</td>
                 <td>{{ i.price_dolar }}</td>
                 <td>{{ i.amount_kg }}</td>
@@ -86,12 +84,6 @@
                         <input class="form-control" type="number" min="0" step="0.1" name="wetness-percentage" required/>
                         <label>Merma (%)</label>
                         <input class="form-control" type="number" min="0" step="0.1" name="waste-percentage" required/>
-                        <label>Merma (Kg)</label>
-                        <input class="form-control" type="number" min="0" step="0.1" name="waste-kg" required/>
-                        <label>Cantidad Total (Kg)</label>
-                        <input class="form-control" type="number" min="0" step="0.1" name="total-kg" required/>
-                        <label>Total ($)</label>
-                        <input class="form-control" type="number" min="0" step="0.1" name="total-dolar" required/>
                         <label>Seleccione el Recolector</label>
                         <div class="form-group form-select">
                             <select name="productor-id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
