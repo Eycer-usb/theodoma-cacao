@@ -8,16 +8,17 @@ function deleteConfirm(id, table){
             window.location.href =`/user-rol-management/delete/${id}`;
         }
         else if(table == 'Productor'){
-            window.location.href = `/productor-data/delete/${id}`
+            window.location.href = `/productor-data/delete/${id}`;
         }
         else if(table == 'Productor_type'){
-            window.location.href = `/productor-type/delete/${id}`            
+            window.location.href = `/productor-type/delete/${id}`;            
         }
         else if(table == 'Harvest'){
-            window.location.href = `/harvest/delete/${id}`            
+            window.location.href = `/harvest/delete/${id}`;            
         }
-        
-
+        else if(table == 'Logger'){
+            window.location.href = `/logger/delete/${id}`;            
+        }
     };
 }
 
@@ -48,6 +49,7 @@ function hiddeForm(){
     element = document.getElementById("create-form");
     element.hidden = true
 }
+
 
 
 /*
