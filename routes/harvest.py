@@ -10,7 +10,7 @@ allowed_rols = ['admin']
 # Index page display all Harvest and create form
 @harvest_route.route('/harvest')
 def index():
-    if( not verify_permissions(session, User, allowed_rols + ['shopping-analyst']) ):
+    if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
     harvests = Harvest.query.all()
     productors = Productor.query.all()
@@ -21,6 +21,22 @@ def index():
         status = status,\
         harvests = harvests, productors=productors )
     return render_template("harvest.html",\
+        status = "",\
+        harvests = harvests, productors=productors )
+
+@harvest_route.route('/harvest-show')
+def showIndex():
+    if( not verify_permissions(session, User, allowed_rols + ['shopping-analyst']) ):
+        return redirect(url_for('auth.index'))
+    harvests = Harvest.query.all()
+    productors = Productor.query.all()
+    if ( 'management-status' in session ):
+        status = session['management-status']
+        session.pop('management-status', None)
+        return render_template("show-harvest.html",\
+        status = status,\
+        harvests = harvests, productors=productors )
+    return render_template("show-harvest.html",\
         status = "",\
         harvests = harvests, productors=productors )
 
@@ -45,6 +61,10 @@ def create():
     elif (not valid_harvest_status(status) ):
         session['management-status'] = "Invalid harvest status"
         return redirect(url_for('harvest_route.index'))
+    elif (not valid_ended(start_date, end_date)): 
+        session['management-status'] = "Invalid Date"
+        return redirect(url_for('harvest_route.index'))
+
 
     new_harvest = Harvest(description, start_date, end_date, status)
     db.session.add(new_harvest)
@@ -86,6 +106,9 @@ def update():
     elif (not valid_harvest_status(status) ):
         session['management-status'] = "Invalid harvest status"
         return redirect(url_for('harvest_route.index'))
+    elif (not valid_ended(start_date, end_date)): 
+        session['management-status'] = "Invalid Date"
+        return redirect(url_for('harvest_route.index'))
 
     harvest = Harvest.find(Harvest,id)
     harvest.description = description
@@ -111,7 +134,7 @@ def delete(id):
 
 @harvest_route.route("/harvest/activate/<harvest_id>")
 def activate_harvest(harvest_id):
-    if( not verify_permissions(session, User, allowed_rols) ):
+    if( not verify_permissions(session, User, allowed_rols + ['shopping-analyst']) ):
         return redirect(url_for('harvest_route.index'))
     harvest = Harvest.find(Harvest, harvest_id)
     harvest.status = 'active'
@@ -121,7 +144,7 @@ def activate_harvest(harvest_id):
 
 @harvest_route.route("/harvest/close/<harvest_id>")
 def close_harvest(harvest_id):
-    if( not verify_permissions(session, User, allowed_rols) ):
+    if( not verify_permissions(session, User, allowed_rols + ['shopping-analyst']) ):
         return redirect(url_for('harvest_route.index'))
     harvest = Harvest.find(Harvest, harvest_id)
     harvest.status = 'closed'

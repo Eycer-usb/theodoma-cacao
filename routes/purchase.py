@@ -26,9 +26,15 @@ def index(harvest_id):
     productors = Productor.query.all()
     productor_types = Productor_type.query.all()
     status = ""
+
+    total_cantidad = sum(purchase.total_amount_kg for purchase in purchases)
+    print(total_cantidad)
+    total_monto = sum(purchase.total_dolar for purchase in purchases)
+    print(total_monto)
+
     if 'management-status' in session: status = session['management-status']
     return render_template("purchase.html", harvest=harvest, purchases=purchases,
-    productors=productors, productor_types= productor_types, status=status)
+    productors=productors, productor_types= productor_types, status=status, total_cantidad=total_cantidad, total_monto=total_monto)
 
 @purchase.route('/harvest/<harvest_id>/purchase/create', methods=["POST"])
 def create(harvest_id):
@@ -39,30 +45,58 @@ def create(harvest_id):
     harvest_id = request.form['harvest-id']
     productor_id = request.form['productor-id']
     cacao_type= request.form['cacao-type']
-    price = request.form['price-dolar']
+    price = float(request.form['price-dolar'])
     cant = request.form['amount-kg']
     humed = request.form['wetness-percentage']
     merma = request.form['waste-percentage']
-
     merma1 = float(merma)/100
     mermakg = float(cant)*float(merma1)
 
-    total_amount_kg= float(cant)-float(mermakg)
-    monto = float(price)*float(total_amount_kg)
-    observation = request.form['observation']
-    new_shopping = Purchase(date=date, F_Productor=productor_id,\
+    greenAlmond = True if request.form.get("greenAlmond") == "on" else False
+    if (greenAlmond):
+        print("entra if")
+        merma2 = mermakg*2    
+        total_amount_kg= float(cant)-float(merma2)
+        monto = float(price)*float(total_amount_kg)
+        observation = request.form['observation']
+        new_shopping = Purchase(date=date, F_Productor=productor_id,\
         F_Harvest=harvest_id, cacao_type=cacao_type, price_dolar=price,\
             amount_kg=cant, wetness_percentage=humed, waste_percentage=merma,\
                  waste_kg=mermakg, total_amount_kg=total_amount_kg,\
                     total_dolar=monto, observation=observation )
-    harvest = Harvest.query.get(harvest_id)
-    if harvest.status == 'active':
-        db.session.add(new_shopping)
-        db.session.commit()
-        session['management-status'] = "Compra Creada"
-    else:
-        session['management-status'] = "Cosecha Cerrada"
-    return redirect(url_for("harvest_route.index"))
+
+        
+        harvest = Harvest.query.get(harvest_id)
+        if harvest.status == 'active':
+            db.session.add(new_shopping)
+            db.session.commit()
+            session['management-status'] = "Compra Creada"
+        else:
+            session['management-status'] = "Cosecha Cerrada"
+        return redirect(url_for("harvest_route.index"))
+
+
+    else: 
+        print("entra else")
+        mermakg = float(cant)*float(merma1)
+        total_amount_kg= float(cant)-float(mermakg)
+        monto = float(price)*float(total_amount_kg)
+        observation = request.form['observation']
+
+        new_shopping = Purchase(date=date, F_Productor=productor_id,\
+        F_Harvest=harvest_id, cacao_type=cacao_type, price_dolar=price,\
+            amount_kg=cant, wetness_percentage=humed, waste_percentage=merma,\
+                 waste_kg=mermakg, total_amount_kg=total_amount_kg,\
+                    total_dolar=monto, observation=observation )
+
+        harvest = Harvest.query.get(harvest_id)
+        if harvest.status == 'active':
+            db.session.add(new_shopping)
+            db.session.commit()
+            session['management-status'] = "Compra Creada"
+        else:
+            session['management-status'] = "Cosecha Cerrada"
+        return redirect(url_for("harvest_route.index"))
 
 @purchase.route('/harvest/<harvest_id>/purchase/<purchase_id>/edit', methods=["GET"])
 def edit(harvest_id, purchase_id):
@@ -91,7 +125,6 @@ def update(harvest_id):
     purchase.amount_kg = request.form['amount-kg']
     purchase.wetness_percentage = request.form['wetness-percentage']
     purchase.waste_percentage = request.form['waste-percentage']
-
     merma1 = float(purchase.waste_percentage)/100
     purchase.waste_kg = float(purchase.amount_kg)*float(merma1)
     purchase.total_amount_kg= float(purchase.amount_kg)-float(purchase.waste_kg)
@@ -111,6 +144,3 @@ def delete(purchase_id, harvest_id):
     db.session.commit()
     session['management-status'] = "Compra Eliminada"
     return redirect(url_for("purchase.index", harvest_id=harvest_id))
-
-
-
