@@ -14,7 +14,7 @@ from routes.productor import productor_route
 from routes.productor_type import productor_type_route
 from routes.harvest import harvest_route
 from routes.purchase import purchase
-from routes.logger import app as logger
+from routes.logger import logg as logger
 from flask_sqlalchemy import SQLAlchemy
 import os
 

@@ -52,6 +52,12 @@ def valid_date(date):
 
     return re.fullmatch(pat1, date) or re.fullmatch(pat2, date) or re.fullmatch(pat3, date)
 
+def valid_ended(start_date, end_date):
+    if (end_date > start_date): 
+        return end_date
+    else: 
+        print("fecha invalida")
+
 # No restriction needed for address yet
 def valid_address(address):
     return True
