@@ -14,3 +14,6 @@ class Logger(db.Model):
         self.module = module
         self.date = date
         self.time = time
+
+    def getId(event):
+        return Logger.query.filter_by(event=event).first().id
