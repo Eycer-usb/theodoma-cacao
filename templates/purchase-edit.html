@@ -9,13 +9,13 @@
     <label>Clase de Cacao</label>
     <input class="form-control" type="text" name="cacao-type" value="{{purchase.cacao_type}}" required/>
     <label>Precio ($)</label>
-    <input class="form-control" type="number" min="0" step="0.1" name="price-dolar" value="{{purchase.price_dolar}}" required/>
+    <input class="form-control" type="number" min="0" step=".01" name="price-dolar" value="{{purchase.price_dolar}}" required/>
     <label>Cantidad (Kg)</label>
-    <input class="form-control" type="number" min="0" step="0.1" name="amount-kg" value="{{purchase.amount_kg}}" required/>
+    <input class="form-control" type="number" min="0" step=".01" name="amount-kg" value="{{purchase.amount_kg}}" required/>
     <label>Humedad (%)</label>
-    <input class="form-control" type="number" min="0" step="0.1" name="wetness-percentage" value="{{purchase.wetness_percentage}}"required/>
+    <input class="form-control" type="number" min="0" step=".01" name="wetness-percentage" value="{{purchase.wetness_percentage}}"required/>
     <label>Merma (%)</label>
-    <input class="form-control" type="number" min="0" step="0.1" name="waste-percentage" value="{{purchase.waste_percentage}}" required/>
+    <input class="form-control" type="number" min="0" step=".01" name="waste-percentage" value="{{purchase.waste_percentage}}" required/>
     <label>Seleccione el Recolector</label>
     <div class="form-group form-select">
         <select name="productor-id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">

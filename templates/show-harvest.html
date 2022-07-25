@@ -13,11 +13,11 @@
                 <th>Inicio</th>
                 <th>Fin</th>
                 <th>Status</th>
-                <th>Modificar</th>
-                <th>Eliminar</th>
-                <th>Listar Compras</th>
-                <th>Habilitar/ Cerrar</th>
-                <th>Generar Compra</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
             </thead>
             <tbody id = table-body-data>
             {% for harvest in harvests %}
@@ -38,7 +38,6 @@
                     <td></td>
                 {% endif %}
             </tr>                
-            
             <!-- Modal -->
 
             <div class="modal fade" id="modal-{{harvest.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -73,13 +72,8 @@
                             </div>
                             <label>Observaciones</label>
                             <textarea form="modal-form" name="observation" class="form-control" rows="3" ></textarea>
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="almond" name="greenAlmond">
-                                    <label class="form-check-label" for="checkAlmond">Almendra Verde</label>
-                                </div>
-                            </div>
-    
+                            
+                            <label><input type="checkbox" id="cbox1" name="almond" value="first_checkbox">Almendra Verde</label><br>
 
                         </form>
                     </div>
@@ -93,29 +87,5 @@
             {% endfor %}
             </tbody>
         </table>
-        <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">Nueva Cosecha</button>
-    
-        <section id="create-form" class="h-100" hidden="true">
-    
-            <h3>Nueva Consecha</h3>
-    
-            <form method="POST" id="create-new-harvest" action="/harvest/create">
-            
-            <label>Descripcion de Cosecha</label>
-            <input class="form-control" type="text" name="description" placeholder="Cosecha Mes1 - Mes2" required/>
-            <label>Fecha de Inicio</label>
-            <input class="form-control" type="date" name="start_date"  required/>
-            <label>Fecha de Fin</label>
-            <input class="form-control" type="date" name="end_date"  required/>
-            <label>Status</label>
-            <select class="form-select" name="status" form="create-new-harvest">
-                <option value="active">Activo</option>
-                <option value="closed">Finalizado</option>
-            </select>
-
-            <button type="submit" class="btn btn-success btn-lg mb-1">Crear</button>
-            <a class="abord" onclick="hiddeForm()">Cancelar</a>
-            </form>
-    </section>
 
 {% endblock %}

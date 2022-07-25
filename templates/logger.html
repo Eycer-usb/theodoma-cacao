@@ -5,13 +5,15 @@
     Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
 </p>
 <table class="table content-table fixed-table">
-            
+      
     <thead>
         <th>ID</th>
         <th>Evento</th>
         <th>Modulo</th>
         <th>Fecha</th>
         <th>Hora</th>
+        <th>Detalles</th>
+        <th>Eliminar</th>
     </thead>
     <tbody id = table-body-data>
     {% for register in registers %}
@@ -21,6 +23,8 @@
         <td>{{ register.module }}</td>
         <td>{{ register.date }}</td>
         <td>{{ register.time }}</td>
+        <td><i class="fa fa-search" aria-hidden="true"></i></td>
+        <td><button onclick='deleteConfirm( {{register.id}}, "Logger" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
     </tr>                
     {% endfor %}
     </tbody>
