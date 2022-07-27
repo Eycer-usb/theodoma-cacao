@@ -28,10 +28,9 @@ def index(harvest_id):
     status = ""
 
     total_cantidad = sum(purchase.total_amount_kg for purchase in purchases)
-    print(total_cantidad)
-    total_monto = sum(purchase.total_dolar for purchase in purchases)
-    print(total_monto)
 
+    total_monto = ("{0:.2f}".format(sum(purchase.total_dolar for purchase in purchases)))
+    
     if 'management-status' in session: status = session['management-status']
     return render_template("purchase.html", harvest=harvest, purchases=purchases,
     productors=productors, productor_types= productor_types, status=status, total_cantidad=total_cantidad, total_monto=total_monto)

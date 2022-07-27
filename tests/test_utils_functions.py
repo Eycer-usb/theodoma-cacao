@@ -61,12 +61,53 @@ class TestUtilsFunctions(unittest.TestCase):
             self.assertFalse( valid_cedula( "V1234567" , True) )
             self.assertFalse( valid_cedula( "V-123456789" , True) )
         
+    def test_valid_ended(self):
+        app = create_app()
+        with app.app_context():
+            self.assertTrue( valid_ended( "12/01/2022" , "12/02/2022") )
+            self.assertTrue( valid_ended( "12/01/2021" , "12/01/2022") )
+            self.assertFalse( valid_ended( "12/01/2022" , "12/01/2021") )
+    
     def test_valid_productor_type(self):
         app = create_app()
         with app.app_context():
-            self.assertTrue( valid_productor_type( "Productor 1" ) )
+            self.assertTrue( valid_productor_type("Productor 1I"))
+            self.assertFalse( valid_productor_type( "Productor 1" ) )
+
+    def test_valid_harvest(self):
+        app = create_app()
+        with app.app_context():
+            self.assertTrue( validate_harvest( "Cosecha i" ) )
+            self.assertTrue( validate_harvest( "Cosecha 2" ) )
+            self.assertTrue( validate_harvest( "Cosecha Jun 22 - Jul 22" ) )
+            self.assertFalse( validate_harvest( "Lorem" ) )
 
 
+    def test_valid_harvest_status(self):
+        self.assertTrue( valid_harvest_status( "active" ) )
+        self.assertTrue( valid_harvest_status( "closed" ) )
+        self.assertFalse( valid_harvest_status( "other" ) )
+
+
+    def test_valid_user_name(self):
+        self.assertTrue( valid_user( "Analista" ) )
+        self.assertTrue( valid_user( "Eros" ) )
+        self.assertTrue( valid_user( "administrador" ) )
+        self.assertFalse( valid_user( "other" ) )
+        self.assertFalse( valid_user( "vendedor" ) )
+
+    def test_valid_purchase(self):
+        app = create_app()
+        with app.app_context():
+            self.assertTrue( valid_purchase( "Seco" ) )
+            self.assertTrue( valid_purchase( "Fermentado" ) )
+            self.assertFalse( valid_purchase( "Lorem" ) )
+
+    def test_valid_productor(self):
+        app = create_app()
+        with app.app_context():
+            self.assertTrue( valid_productor( "Alan" ) )
+            self.assertFalse( valid_productor( "Lorem" ) )
 
 if __name__ == '__main__':
     unittest.main()

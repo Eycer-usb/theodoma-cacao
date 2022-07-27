@@ -5,14 +5,14 @@ Here are the validators functions
 and utility functions
 
 """
-
-
 import re
 from models.user_rol import User_rol
 from models.productor import Productor
 from models.productor_type import Productor_type
 from models.user import User
 from models.harvest import Harvest
+from models.logger import Logger
+from models.purchase import Purchase
 
 # Standar String Name and Lastname validator
 def valid_name(name):
@@ -62,15 +62,6 @@ def valid_ended(start_date, end_date):
 def valid_address(address):
     return True
 
-# Verify if a user rol string is correct or not 
-# if is not register in the database return false 
-def valid_user_rol(user_rol_desc):
-    query = User_rol.query.all()
-    rols = []
-    for x in query:
-        rols.append(x.description)
-    return user_rol_desc in rols
-
 # Verify Permissions   
 def verify_permissions(session, User, allowed=['admin']):    
     return 'username' in session and \
@@ -84,6 +75,18 @@ def valid_cedula(cedula, update=False):
     pat = "^[VE]-\d{8}$"
     return re.fullmatch(pat, cedula) and not is_register
 
+#------------------------User Rol-----------------------------------------
+
+# Verify if a user rol string is correct or not 
+# if is not register in the database return false 
+def valid_user_rol(user_rol_desc):
+    query = User_rol.query.all()
+    rols = []
+    for x in query:
+        rols.append(x.description)
+    return user_rol_desc in rols
+
+#------------------------ProductorType-----------------------------------------
 # Verify if a productor type string is correct or not 
 # if is not register in the database return false
 def valid_productor_type(productor_type_description):
@@ -93,14 +96,78 @@ def valid_productor_type(productor_type_description):
         types.append(x.description)
     return productor_type_description in types
 
+#------------------------Productor-----------------------------------------
+def valid_productor(product):
+    query = Productor.query.all()
+    productor = []
+    for x in query:
+        productor.append(x.name)
+    return product in productor
+
+#------------------------User-----------------------------------------
+def valid_user(user_name):
+    query = User.query.all()
+    users = []
+    for x in query:
+        users.append(x.name)
+    return user_name in users
+
+
+#------------------------Harvest-----------------------------------------
 # Verify if a given description corresponds to a valid harvest
 def valid_harvest(harvest_id):
     query = Harvest.query.get(harvest_id)
     return query != None
 
+def validate_harvest(harvest_description):
+    query = Harvest.query.all()
+    harvests = []
+    for x in query:
+        harvests.append(x.description)
+    return harvest_description in harvests
+
 # Verify valid harvest status
 def valid_harvest_status(status):
     return ( status in ['active', 'closed'] )
+
+
+
+#------------------------Event-----------------------------------------
+def valid_event(event):
+    query = Logger.query.all()
+    events = []
+    for x in query:
+        events.append(x.event)
+    return event in events
+
+def valid_event_module(event):
+    query = Logger.query.all()
+    events = []
+    for x in query:
+        events.append(x.module)
+    return event in events
+
+#------------------------Purchase-----------------------------------------
+def valid_purchase(shopp):
+    query = Purchase.query.all()
+    purch = []
+    for x in query:
+        purch.append(x.cacao_type)
+    return shopp in purch
+
+def valid_purchase_produc(shopp):
+    query = Purchase.query.all()
+    purch = []
+    for x in query:
+        purch.append(x.F_Productor)
+    return shopp in purch
+
+def valid_purchase_harvest(shopp):
+    query = Purchase.query.all()
+    purch = []
+    for x in query:
+        purch.append(x.F_Harvest)
+    return shopp in purch
 
 # Clean the empty side spacing
 def clean_string(string):

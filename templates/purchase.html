@@ -7,19 +7,6 @@
         Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
     </p>       
 
-    <form class="row g-3">
-        <div class="col-md-3">
-          <label class="form-label">Fecha Creación Desde</label>
-          <input type="date" class="form-control" id="creationDateFromCampaign" value="2021-01-01" />
-          <label class="form-label">Fecha Creación Hasta</label>
-          <input type="date" class="form-control" id="creationDateToCampaign" value="2021-02-01" />
-        <div class="col-12" style="width: 100%; text-align: center;">
-          <button type="submit" class="btn btn-primary">Buscar</button>
-        </div>
-      </form>
-    
-
-
     <p>{{ status }}</p>
         <table class="table content-table" id="miTabla">
             
@@ -81,7 +68,7 @@
         </table>
      
         <button type="button" data-toggle="modal" data-target="#modal-{{harvest.id}}"class="btn btn-success btn-lg mb-1">Nueva Compra</button>
-        <a class="abord" href="/harvest">Cancelar</a>
+        <a class="abord" href="/harvest" onclick="hiddeForm()">Regresar</a>
 
         <!-- Modal -->
         
