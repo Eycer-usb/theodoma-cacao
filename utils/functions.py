@@ -14,6 +14,7 @@ from models.harvest import Harvest
 from models.logger import Logger
 from models.purchase import Purchase
 
+
 # Standar String Name and Lastname validator
 def valid_name(name):
     pat = "^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$"
@@ -57,6 +58,12 @@ def valid_ended(start_date, end_date):
         return end_date
     else: 
         print("fecha invalida")
+
+def valid_date_purchase(start_date, end_date, date):
+    if (start_date >= date >= start_date):
+        return date
+    else: 
+        print("fecha fuera de rangos")
 
 # No restriction needed for address yet
 def valid_address(address):

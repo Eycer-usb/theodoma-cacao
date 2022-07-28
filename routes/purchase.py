@@ -51,6 +51,11 @@ def create(harvest_id):
     merma1 = float(merma)/100
     mermakg = float(cant)*float(merma1)
 
+    """if( not valid_date_purchase(date) ):
+        session['management-status'] = "Fecha fuera de rangos"
+        return redirect(url_for('purchase.index'))
+        """
+
     greenAlmond = True if request.form.get("greenAlmond") == "on" else False
     if (greenAlmond):
         print("entra if")
