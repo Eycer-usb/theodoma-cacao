@@ -14,6 +14,7 @@ from routes.productor import productor_route
 from routes.productor_type import productor_type_route
 from routes.harvest import harvest_route
 from routes.purchase import purchase
+from routes.financing import financing
 from routes.logger import logg as logger
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -34,6 +35,7 @@ def create_app():
     app.register_blueprint(harvest_route)
     app.register_blueprint(purchase)
     app.register_blueprint(logger)
+    app.register_blueprint(financing)
     app.secret_key = "#a@sKUGHkl[;][/=6095sKHGK-~gh`d=+p?*\ ~`z'.a&689Uh8bHahjashdbjHJKgsdsjaJKKJ"
 
     return app

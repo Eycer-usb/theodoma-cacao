@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Cosecha: {{harvest.description}}</h1>
+    <h2>Lista de Recolecores Fnanciados</h2>
+
+    <p>
+        Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
+    </p>       
+
+    <p>{{ status }}</p>
+        <table class="table content-table" id="miTabla">
+            
+            <thead>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Cédula</th>
+                <th>Apellidos</th>
+                <th>Nombres</th>
+                <th>Telefono Local</th>
+                <th>Telefono Celular</th>
+                <th>Direccion</th>
+                <th>Tipo de Recolector</th>
+                <th>No. Letra de Cambio</th>
+                <th>F. De Vencimiento</th>
+                <th>Pagó</th>
+
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Recolectores Beneficiados:</th>
+                    <!--td colspan="2">{{total_cantidad}}</td-->
+                    <th></th><th></th><th></th>
+                </tr> 
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos Cancelados</th>
+                    <!--td colspan="2">{{ total_monto }}</td-->
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos No Cancelados:</th>
+                    <!--td colspan="2">{{ total_monto }}</td-->
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos con Plazos Vencidos</th>
+                    <!--td colspan="2">{{ total_monto }}</td-->
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Monto Total Cancelado($):</th>
+                    <!--td colspan="2">{{ total_monto }}</td-->
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Monto Total No Calcelado ($):</th>
+                    <!--td colspan="2">{{ total_monto }}</td-->
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Monto Total Financiado($):</th>
+                    <!--td colspan="2">{{ total_monto }}</td-->
+                    <th></th><th></th><th></th>
+                </tr>
+
+            </thead>
+        </table>    
+
+
+
+
+{%endblock%}

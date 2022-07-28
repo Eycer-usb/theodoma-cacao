@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <h2>Portafolio de Cosechas</h2>
-    <p>
+    <p align="right">
         Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
     </p> 
         <p>{{ status }}</p>
@@ -16,8 +16,10 @@
                 <th>Modificar</th>
                 <th>Eliminar</th>
                 <th>Listar Compras</th>
+                <th></th>
                 <th>Habilitar/ Cerrar</th>
                 <th>Generar Compra</th>
+
             </thead>
             <tbody id = table-body-data>
             {% for harvest in harvests %}
@@ -30,6 +32,7 @@
                 <td><button onclick="window.location.href=`/harvest/edit/{{ harvest.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                 <td><button onclick='deleteConfirm( {{ harvest.id }}, "Harvest" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
                 <td><button onclick='window.location.href=`/harvest/{{ harvest.id }}/purchase`'><i class="fa fa-file-text-o" aria-hidden="true"></i></i></button></td>
+                <td><button onclick='window.location.href=`/harvest/{{ harvest.id }}/financing`'><i class="fa fa-coins" aria-hidden="true"></i></i></button></td>
                 {% if harvest.status == "active" %}
                     <td><button onclick='window.location.href=`/harvest/close/{{ harvest.id }}`'><i class="fa fa-stop" aria-hidden="true"></i></button></td>
                     <td><button type="button" class="" data-toggle="modal" data-target="#modal-{{harvest.id}}"><i class="fa fa-plus-square-o" aria-hidden="true"></i></i></button></td>
