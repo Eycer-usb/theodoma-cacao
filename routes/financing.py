@@ -2,10 +2,25 @@ from flask import Blueprint, render_template, redirect, url_for, request, sessio
 from utils.functions import *
 from utils.db import db
 from models.financing import Financing
+
 from datetime import datetime
+from models.harvest import Harvest
 
 financing = Blueprint('financing', __name__)
 allowed_rols = ['admin', 'shopping-analyst']
+
+
+# Index page display all Harvest and create form
+@financing.route('/harvestFinancing')
+def harvestFinancing():
+    if( not verify_permissions(session, User, allowed_rols) ):
+        return redirect(url_for('auth.index'))
+    harvests = Harvest.query.all()
+    if ( 'management-status' in session ):
+        status = session['management-status']
+        session.pop('management-status', None)
+        return render_template("harvestFinancing.html", harvests = harvests)
+    return render_template("harvestFinancing.html", harvests = harvests)
 
 @financing.route('/harvest/<harvest_id>/financing', methods=['GET'])
 def index(harvest_id):
@@ -15,10 +30,12 @@ def index(harvest_id):
         financing = Financing.query.filter_by(F_Harvest = harvest_id)
         productors = Productor.query.all()
         productor_types = Productor_type.query.all()
-        status = ""
+
+        """total_monto = ("{0:.2f}".format(sum(finance.amount for finance in financing)))"""
+
         if 'management-status' in session: status = session['management-status']
         return render_template("financing.html", harvest=harvest, financing = financing,
-                productors=productors, productor_types= productor_types, status=status)
+                productors=productors, productor_types= productor_types)
 
 @financing.route('/harvest/<harvest_id>/financing/create', methods=["POST"])
 def create(harvest_id):
@@ -38,11 +55,40 @@ def create(harvest_id):
         F_Harvest=harvest_id, letter_number=letter_number, expiration_date=expiration_date,\
             amount=amount, payment=payment, observations = observations)
 
+    db.session.add(new_finance)
+    db.session.commit()
+    session['management-status'] = "Financiamiento Creado"
+    return redirect(url_for("financing.harvestFinancing"))
+
+
+@financing.route('/harvest/<harvest_id>/financing/<financing_id>/edit', methods=["GET"])
+def edit(harvest_id, financing_id):
+    if( not verify_permissions(session, User, allowed_rols) ):
+        return redirect(url_for('auth.index'))
+    financing = Financing.query.get(financing_id)
+    productor_types = Productor_type.query.all()
+    productors = Productor.query.all()
     harvest = Harvest.query.get(harvest_id)
-    if harvest.status == 'active':
-        db.session.add(new_finance)
-        db.session.commit()
-        session['management-status'] = "Compra Creada"
-    else:
-        session['management-status'] = "Cosecha Cerrada"
-    return redirect(url_for("harvest_route.index"))
+    return render_template("financing-edit.html", financing = financing, productor_types=productor_types,
+        productors=productors, harvest = harvest)
+
+
+@financing.route('/harvest/<harvest_id>/financing/update', methods=["POST"])
+def update(harvest_id):
+    print("--------------------------------------------------------update")
+    if( not verify_permissions(session, User, allowed_rols) ):
+        return redirect( url_for('auth.index') )
+    id = request.form['id']
+    financing = Financing.query.get(id)
+    financing.date = request.form['date']
+    financing.F_Harvest = request.form['harvest-id']
+    financing.F_Productor = request.form['productor-id']
+    financing.letter_number= request.form['letter_number']
+    financing.expiration_date = request.form['expiration_date']
+    financing.amount = float(request.form['amount'])
+    financing.payment = request.form['payment']
+    financing.observations = request.form['observations']
+    db.session.add(financing)
+    db.session.commit()
+    session['management-status'] = "Financiamiento Editado"
+    return redirect(url_for("financing.index", harvest_id = harvest_id))
