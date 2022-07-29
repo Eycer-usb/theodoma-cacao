@@ -22,47 +22,135 @@
                 <th>Tipo de Recolector</th>
                 <th>No. Letra de Cambio</th>
                 <th>F. De Vencimiento</th>
+                <th>Monto</th>
                 <th>Pagó</th>
-
-                <tr>
-                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Recolectores Beneficiados:</th>
-                    <!--td colspan="2">{{total_cantidad}}</td-->
-                    <th></th><th></th><th></th>
-                </tr> 
-                <tr>
-                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos Cancelados</th>
-                    <!--td colspan="2">{{ total_monto }}</td-->
-                    <th></th><th></th><th></th>
-                </tr>
-                <tr>
-                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos No Cancelados:</th>
-                    <!--td colspan="2">{{ total_monto }}</td-->
-                    <th></th><th></th><th></th>
-                </tr>
-                <tr>
-                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos con Plazos Vencidos</th>
-                    <!--td colspan="2">{{ total_monto }}</td-->
-                    <th></th><th></th><th></th>
-                </tr>
-                <tr>
-                    <th scope="row" colspan="9" style="text-align: right;">Monto Total Cancelado($):</th>
-                    <!--td colspan="2">{{ total_monto }}</td-->
-                    <th></th><th></th><th></th>
-                </tr>
-                <tr>
-                    <th scope="row" colspan="9" style="text-align: right;">Monto Total No Calcelado ($):</th>
-                    <!--td colspan="2">{{ total_monto }}</td-->
-                    <th></th><th></th><th></th>
-                </tr>
-                <tr>
-                    <th scope="row" colspan="9" style="text-align: right;">Monto Total Financiado($):</th>
-                    <!--td colspan="2">{{ total_monto }}</td-->
-                    <th></th><th></th><th></th>
-                </tr>
+                <th>Observaciones</th>
 
             </thead>
-        </table>    
+            <tbody id="table-body-data">
+            {% for i in financing %}
+            <tr>
+                <td>{{ i.id }}</td>
+                <td>{{ i.date }}</td>
+                {% for prod in productors %}
+                    {% if prod.id == i.F_Productor %}
+                        <td>{{ prod.cedula }} </td>
+                        {% for prod in productors %}
+                            {% if prod.id == i.F_Productor %}
+                                <td>{{ prod.last_name }} </td>
+                                {% for prod in productors %}
+                                    {% if prod.id == i.F_Productor %}
+                                        <td>{{ prod.name }} </td>
+                                        {% for prod in productors %}
+                                            {% if prod.id == i.F_Productor %}
+                                                <td>{{ prod.local_phone }} </td>
+                                                {% for prod in productors %}
+                                                    {% if prod.id == i.F_Productor %}
+                                                        <td>{{ prod.movil_phone }} </td>  
+                                                        {% for prod in productors %}
+                                                            {% if prod.id == i.F_Productor %}
+                                                                <td>{{ prod.address_1 }} </td>  
+                                                                {% for type in productor_types %}
+                                                                    {% if type.id == prod.productor_type_id %}
+                                                                        <td>{{ type.description }} </td>
+                                                                    {%endif%}
+                                                              {%endfor%}
+                                                            {%endif%}
+                                                        {%endfor%}                                  
+                                                    {%endif%}
+                                                {%endfor%}
+                                            {%endif%}
+                                        {%endfor%}
+                                    {%endif%}
+                                {%endfor%}
+                            {%endif%}
+                        {%endfor%}
+                    {%endif%}
+                {%endfor%}
+                
+                <td>{{ i.letter_number }}</td>
+                <td>{{ i.expiration_date }}</td>
+                <td>{{ i.amount }}</td>
+                <td>{{ i.payment}}</td>
+                <td>{{ i.observations }}</td>
+                {% endfor %}
+            </tbody>
 
+            <tr>
+                <th scope="row" colspan="9" style="text-align: right;">Cantidad de Recolectores Beneficiados:</th>
+                <!--td colspan="2">{{total_cantidad}}</td-->
+                <th></th><th></th><th></th>
+            </tr> 
+            <tr>
+                <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos Cancelados</th>
+                <!--td colspan="2">{{ total_monto }}</td-->
+                <th></th><th></th><th></th>
+            </tr>
+            <tr>
+                <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos No Cancelados:</th>
+                <!--td colspan="2">{{ total_monto }}</td-->
+                <th></th><th></th><th></th>
+            </tr>
+            <tr>
+                <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos con Plazos Vencidos</th>
+                <!--td colspan="2">{{ total_monto }}</td-->
+                <th></th><th></th><th></th>
+            </tr>
+            <tr>
+                <th scope="row" colspan="9" style="text-align: right;">Monto Total Cancelado($):</th>
+                <!--td colspan="2">{{ total_monto }}</td-->
+                <th></th><th></th><th></th>
+            </tr>
+            <tr>
+                <th scope="row" colspan="9" style="text-align: right;">Monto Total No Calcelado ($):</th>
+                <!--td colspan="2">{{ total_monto }}</td-->
+                <th></th><th></th><th></th>
+            </tr>
+            <tr>
+                <th scope="row" colspan="9" style="text-align: right;">Monto Total Financiado($):</th>
+                <!--td colspan="2">{{ total_monto }}</td-->
+                <th></th><th></th><th></th>
+            </tr>
+        </table>
+
+        <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">Nuevo Financiamiento</button>
+    
+        <section id="create-form" class="h-100" hidden="true">
+    
+            <h3>Nuevo Financiamiento</h3>
+    
+            <form method="POST" id="create-new-financing" action="/harvest/{{harvest.id}}/financing/create">
+            <input name = "harvest-id"  type="hidden" value="{{harvest.id}}">
+            <label>Seleccione el Recolector</label>
+            <select name="productor-id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                {% for productor in productors %}
+                        <option value="{{ productor.id }}" >{{productor.cedula}}, {{productor.name}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label>Numero de Letra</label>
+            <input class="form-control" type="text" name="letter_number" placeholder="Numero de Letra de Cambio" required/>
+            <label>Fecha de Expiracion</label>
+            <input class="form-control" type="date" name="expiration_date"  required/>
+            <label>Monto</label>
+            <input class="form-control" type="text" name="amount"  required/>
+            <br>
+            <label>Pagó</label>
+            <select class="form-select" name="payment" form="create-new-financing">
+                <option value="" disabled>Seleccionar </option>
+                <option value="male">Si</option>
+                <option value="female">No</option>
+            </select>    
+            <br>
+            <label>Observaciones</label>
+            <input class="form-control" type="text" name="observations"  required/>
+
+
+            <button type="submit" class="btn btn-success btn-lg mb-1">Crear</button>
+            <a class="abord" onclick="hiddeForm()">Cancelar</a>
+            </form>
+    </section>
+        
 
 
 
