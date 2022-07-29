@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
     <h2>Perfiles de Usuarios</h2>
-    <p>
+    <p align="right">        
         Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
-    </p> 
+    </p>       
+
       <p>{{ status }}</p>
     <table class="table content-table">
         
@@ -69,9 +70,9 @@
           <label>Género</label>
             <select class="form-select" name="gender" form="create-new-user">
                 <option value="" disabled>Seleccionar </option>
-                <option value="male">Masculino</option>
-                <option value="female">Femenino</option>
-                <option value="other">Otro</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
             </select>
             <label>Rol de Usuario</label>
             <select class="form-select" name="user_rol" form="create-new-user">

@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Recolectores</h2>
-<p>
+<p align="right">
     Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
-</p> 
-      <p>{{ status }}</p>
+</p>       
+
+<p>{{ status }}</p>
     <table class="table content-table fixed-table">
         
         <thead>
@@ -73,9 +74,9 @@
         <label>Género</label>
         <select class="form-select" name="gender" form="create-new-productor">
             <option value="" disabled>Seleccionar</option>
-            <option value="male">Masculino</option>
-            <option value="female">Femenino</option>
-            <option value="other">Otro</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Otro">Otro</option>
         </select>
         <label>Tipo de Recolector</label>
         <select class="form-select" name="productor_type" form="create-new-productor">

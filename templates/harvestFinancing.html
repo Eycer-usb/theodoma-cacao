@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Financiamientos de Cosechas</h2>
+
+<p>{{ status }}</p>
+    <table class="table content-table">
+
+    <thead>
+        <th>Cosecha</th>
+        <th>Financiamientos</th>
+    </thead>
+    <tbody id="table-body-data">
+        {% for harvest in harvests %}
+            <tr>
+                <td>{{ harvest.description }}</td>
+                <td><button onclick='window.location.href=`/harvest/{{ harvest.id }}/financing`'><i class="fa fa-usd" aria-hidden="true"></i></button></td>            
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}

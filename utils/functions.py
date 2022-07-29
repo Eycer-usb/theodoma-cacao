@@ -43,7 +43,7 @@ def valid_password(password):
 
 # Only exist two gender, if not agree you have the other option
 def valid_gender(gender):
-    return gender in [ "male", "female", 'other' ]
+    return gender in [ "Masculino", "Femenino", 'Otro' ]
 
 # Verify a date string in 3 differents formats
 def valid_date(date):

@@ -3,9 +3,14 @@
     <h1>Cosecha: {{harvest.description}}</h1>
     <h2>Lista de Recolecores Financiados</h2>
 
-    <p>
+    <p align="right">
+        
         Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
+        &nbsp&nbsp&nbsp&nbsp
+        <!-------------------- HACER FUNCION DE IMPRIMIR ------------>
+        </button><i class="fa fa-print" aria-hidden="true"></i></button> <>
     </p>       
+
 
     <p>{{ status }}</p>
         <table class="table content-table" id="miTabla">
@@ -107,7 +112,7 @@
             </tr>
             <tr>
                 <th scope="row" colspan="9" style="text-align: right;">Monto Total Financiado($):</th>
-                <!--td colspan="2">{{ total }}</td-->
+                <td colspan="2">{{ total_monto }}</td>
                 <th></th><th></th><th></th>
             </tr>
         </table>
