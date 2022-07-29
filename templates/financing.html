@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>Cosecha: {{harvest.description}}</h1>
-    <h2>Lista de Recolecores Fnanciados</h2>
+    <h2>Lista de Recolecores Financiados</h2>
 
     <p>
         Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
@@ -24,7 +24,6 @@
                 <th>F. De Vencimiento</th>
                 <th>Monto</th>
                 <th>Pagó</th>
-                <th>Observaciones</th>
 
             </thead>
             <tbody id="table-body-data">
@@ -72,13 +71,13 @@
                 <td>{{ i.expiration_date }}</td>
                 <td>{{ i.amount }}</td>
                 <td>{{ i.payment}}</td>
-                <td>{{ i.observations }}</td>
+                <td><button onclick="window.location.href=`/harvest/{{harvest.id}}/financing/{{i.id}}/edit`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                 {% endfor %}
             </tbody>
 
             <tr>
                 <th scope="row" colspan="9" style="text-align: right;">Cantidad de Recolectores Beneficiados:</th>
-                <!--td colspan="2">{{total_cantidad}}</td-->
+                <!--td colspan="2">{{total_recolectores}}</td-->
                 <th></th><th></th><th></th>
             </tr> 
             <tr>
@@ -108,7 +107,7 @@
             </tr>
             <tr>
                 <th scope="row" colspan="9" style="text-align: right;">Monto Total Financiado($):</th>
-                <!--td colspan="2">{{ total_monto }}</td-->
+                <!--td colspan="2">{{ total }}</td-->
                 <th></th><th></th><th></th>
             </tr>
         </table>
@@ -129,17 +128,17 @@
             </select>
             <br>
             <label>Numero de Letra</label>
-            <input class="form-control" type="text" name="letter_number" placeholder="Numero de Letra de Cambio" required/>
+            <input class="form-control" type="number" name="letter_number" placeholder="Numero de Letra de Cambio" required/>
             <label>Fecha de Expiracion</label>
             <input class="form-control" type="date" name="expiration_date"  required/>
             <label>Monto</label>
-            <input class="form-control" type="text" name="amount"  required/>
+            <input class="form-control" type="number" min="0" step=".001" name="amount"  required/>
             <br>
             <label>Pagó</label>
             <select class="form-select" name="payment" form="create-new-financing">
                 <option value="" disabled>Seleccionar </option>
-                <option value="male">Si</option>
-                <option value="female">No</option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
             </select>    
             <br>
             <label>Observaciones</label>

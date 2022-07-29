@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Editar Financiamiento</h1>
+
+        <form method="POST" id="edit-financing" action="/harvest/{{harvest.id}}/financing/update">
+            <input name="id" type="hidden" value="{{financing.id}}">
+            <input name = "harvest-id"  type="hidden" value="{{financing.F_Harvest}}">
+            <input name = "date" type="hidden" value="{{financing.date}}">
+        
+            <label>Seleccione el Recolector</label>
+            <select name="productor-id" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                {% for productor in productors %}
+                <option value="{{ productor.id }}" {% if productor.id == financing.F_Productor %}selected{%endif%}>{{productor.cedula}}, {{productor.name}}</option>
+                {% endfor %}
+            </select>
+            <br>
+            <label>Numero de Letra</label>
+            <input class="form-control" type="number" name="letter_number" value="{{financing.letter_number}}" placeholder="Numero de Letra de Cambio" required/>
+            <label>Fecha de Expiracion</label>
+            <input class="form-control" type="date" name="expiration_date" value="{{financing.expiration_date}}" required/>
+            <label>Monto</label>
+            <input class="form-control" type="number" min="0" step=".001" name="amount" value="{{financing.amount}}" required/>
+            <br>
+            <label>Pagó</label>
+            <select class="form-select" name="payment" form="edit-financing">
+                <option value="" disabled>Seleccionar </option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+            </select>    
+            <br>
+            <label>Observaciones</label>
+            <input class="form-control" type="text" name="observations" value="{{financing.observations}}" required/>
+
+
+            <button type="submit" class="btn btn-success btn-lg mb-1">Crear</button>
+            <a class="abord" onclick="hiddeForm()">Cancelar</a>
+            </form>
+    </section>
+        
+
+
+
+{%endblock%}
