@@ -53,12 +53,10 @@ def create(harvest_id):
 
     """if( not valid_date_purchase(date) ):
         session['management-status'] = "Fecha fuera de rangos"
-        return redirect(url_for('purchase.index'))
-        """
+        return redirect(url_for('purchase.index'))"""
 
     greenAlmond = True if request.form.get("greenAlmond") == "on" else False
     if (greenAlmond):
-        print("entra if")
         merma2 = mermakg*2    
         total_amount_kg= float(cant)-float(merma2)
         monto = float(price)*float(total_amount_kg)

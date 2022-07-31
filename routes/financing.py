@@ -9,7 +9,6 @@ from models.harvest import Harvest
 financing = Blueprint('financing', __name__)
 allowed_rols = ['admin', 'shopping-analyst']
 
-
 # Index page display all Harvest and create form
 @financing.route('/harvestFinancing')
 def harvestFinancing():
@@ -31,11 +30,11 @@ def index(harvest_id):
         productors = Productor.query.all()
         productor_types = Productor_type.query.all()
 
-        """total_monto = ("{0:.2f}".format(sum(finance.amount for finance in financing)))"""
+        total_monto = ("{0:.2f}".format(sum(finance.amount for finance in financing)))
 
         if 'management-status' in session: status = session['management-status']
         return render_template("financing.html", harvest=harvest, financing = financing,
-                productors=productors, productor_types= productor_types)
+                productors=productors, productor_types= productor_types, total_monto =total_monto)
 
 @financing.route('/harvest/<harvest_id>/financing/create', methods=["POST"])
 def create(harvest_id):
@@ -46,15 +45,12 @@ def create(harvest_id):
     date = datetime.today().strftime('%Y-%m-%d')
     harvest_id = request.form['harvest-id']
     productor_id = request.form['productor-id']
-    letter_number = request.form['letter_number']
+    letter_number = int(request.form['letter_number'])
     expiration_date = request.form['expiration_date']
     amount = float(request.form['amount'])
     payment = request.form['payment']
     observations = request.form['observations']
-    new_finance = Financing(date=date, F_Productor=productor_id,\
-        F_Harvest=harvest_id, letter_number=letter_number, expiration_date=expiration_date,\
-            amount=amount, payment=payment, observations = observations)
-
+    
     db.session.add(new_finance)
     db.session.commit()
     session['management-status'] = "Financiamiento Creado"
@@ -75,7 +71,6 @@ def edit(harvest_id, financing_id):
 
 @financing.route('/harvest/<harvest_id>/financing/update', methods=["POST"])
 def update(harvest_id):
-    print("--------------------------------------------------------update")
     if( not verify_permissions(session, User, allowed_rols) ):
         return redirect( url_for('auth.index') )
     id = request.form['id']

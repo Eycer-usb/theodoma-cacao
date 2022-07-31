@@ -16,11 +16,11 @@ class Financing( db.Model ):
     date = db.Column( db.String(10), nullable = False )
     F_Productor = db.Column( db.Integer, db.ForeignKey('productor.id'))
     F_Harvest = db.Column( db.Integer, db.ForeignKey( 'harvest.id' ) )
-    letter_number = db.Column( db.String(10), nullable = False )
+    letter_number = db.Column( db.Integer, nullable = False )
     expiration_date = db.Column( db.String(10), nullable = False )
-    amount = db. Column( db.String(20) )
-    payment = db. Column( db.String(20) )
-    observations = db. Column( db.String(50) )
+    amount = db. Column( db.Float, nullable = False )
+    payment = db. Column(db.String(10), nullable = False )
+    observations = db. Column( db.String(100), nullable = False )
 
     #Class Constuctor
     def __init__( self, date, F_Productor, F_Harvest, letter_number,
