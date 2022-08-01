@@ -11,7 +11,17 @@
                 <th>Concepto</th>
                 <th>Monto</th>
             </thead>
-        </table>
-{%endblock%}
 
-
+    <tbody id = table-body-data>
+    {% for bank in banks %}
+    <tr>
+        <td>{{ bank.id }}</td>
+        <td>{{ bank.date }}</td>
+        <td>{{ bank.time }}</td>
+        <td>{{ bank.description }}</td>
+        <td>{{ bank.amount }}</td>
+    </tr>                
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
