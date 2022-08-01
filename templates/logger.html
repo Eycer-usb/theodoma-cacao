@@ -3,8 +3,12 @@
 <h3>Logger de Eventos</h3>
 <p>
     Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
+    &nbsp&nbsp&nbsp&nbsp
+    <!-------------------- HACER FUNCION DE IMPRIMIR ------------>
+    <button onclick='print("Logger", "miTabla")'><i class="fa fa-print" aria-hidden="true"></i></button>
+
 </p>
-<table class="table content-table fixed-table">
+<table class="table content-table fixed-table" id="miTabla">
       
     <thead>
         <th>ID</th>
