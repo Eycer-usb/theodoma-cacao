@@ -16,3 +16,8 @@ class Bank(db.Model):
         self.time = time
         self.description = description
         self.amount = amount
+
+
+    def find(self, id):
+        return Bank.query.get(id)
+        
