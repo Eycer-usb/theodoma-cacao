@@ -7,7 +7,15 @@
         Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
         &nbsp&nbsp&nbsp&nbsp
         <button onclick='print("Bank", "miTabla")'><i class="fa fa-print" aria-hidden="true"></i></button>
-    </p>       
+    </p>
+    
+    {% if session['rol'] in ['admin', 'shopping-manager'] %}
+    <h5>Agregar Credito</h5>
+    <form action="/bank/add-credit" method="post">
+        <input type="number" step="0.01" name="amount">
+        <input type="submit" value="+">
+    </form>
+    {% endif %}
 
     <p>{{ status }}</p>
     <table class="table content-table" id="miTabla">            
@@ -30,8 +38,7 @@
         </tr>                
         {% endfor %}
         <tr>
-            <th scope="row" colspan="9" style="text-align: right;">Suma Total:</th>
-            <td colspan="2">{{total_cantidad}}</td>
+            <th scope="row" colspan="5" style="text-align: right;">Suma Total: {{total_cantidad}}</th>
         </tr> 
     </tbody>
     </table>

@@ -14,6 +14,7 @@ from utils.functions import *
 from utils.db import db
 from models.purchase import Purchase
 from datetime import datetime
+from models.bank import Bank
 purchase = Blueprint('purchase', __name__)
 allowed_rols = ['admin', 'shopping-analyst']
 
@@ -70,7 +71,11 @@ def create(harvest_id):
         
         harvest = Harvest.query.get(harvest_id)
         if harvest.status == 'active':
+            date = datetime.today().strftime('%Y-%m-%d')
+            time = datetime.now().strftime("%H:%M:%S")
+            new_debit = Bank(-monto, date, time, "Debito por Compra (-)", -monto )
             db.session.add(new_shopping)
+            db.session.add(new_debit)
             db.session.commit()
             session['management-status'] = "Compra Creada"
         else:
@@ -93,7 +98,11 @@ def create(harvest_id):
 
         harvest = Harvest.query.get(harvest_id)
         if harvest.status == 'active':
+            date = datetime.today().strftime('%Y-%m-%d')
+            time = datetime.now().strftime("%H:%M:%S")
+            new_debit = Bank(-monto, date, time, "Debito por Compra (-)", -monto )
             db.session.add(new_shopping)
+            db.session.add(new_debit)
             db.session.commit()
             session['management-status'] = "Compra Creada"
         else:
@@ -119,6 +128,10 @@ def update(harvest_id):
         return redirect( url_for('auth.index') )
     id = request.form['id']
     purchase = Purchase.query.get(id)
+    date = datetime.today().strftime('%Y-%m-%d')
+    time = datetime.now().strftime("%H:%M:%S")
+    new_credit = Bank(purchase.total_dolar, date, time, "Credito por Actualizacion de Compra (+)", purchase.total_dolar )
+    db.session.add(new_credit)
     purchase.date = request.form['date']
     purchase.F_Harvest = request.form['harvest-id']
     purchase.F_Productor = request.form['productor-id']
@@ -132,9 +145,11 @@ def update(harvest_id):
     purchase.total_amount_kg= float(purchase.amount_kg)-float(purchase.waste_kg)
     purchase.total_dolar = float(purchase.price_dolar)*float(purchase.total_amount_kg)
     purchase.observation = request.form['observation']
+    new_debit = Bank(-purchase.total_dolar, date, time, "Debito por Actualizacion de Compra (-)", -purchase.total_dolar )
+    db.session.add(new_credit)
     db.session.add(purchase)
     db.session.commit()
-    session['management-status'] = "Purchase Created"
+    session['management-status'] = "Purchase Updated"
     return redirect(url_for("purchase.index", harvest_id=harvest_id))
 
 @purchase.route('/harvest/<harvest_id>/purchase/<purchase_id>/delete')
@@ -142,6 +157,10 @@ def delete(purchase_id, harvest_id):
     if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
     shp_data = Purchase.query.get(purchase_id)
+    date = datetime.today().strftime('%Y-%m-%d')
+    time = datetime.now().strftime("%H:%M:%S")
+    new_credit = Bank(shp_data.total_dolar, date, time, "Credito por Devolucion de Compra (+)", shp_data.total_dolar )
+    db.session.add(new_credit)
     db.session.delete(shp_data)
     db.session.commit()
     session['management-status'] = "Compra Eliminada"
