@@ -146,7 +146,7 @@ def update(harvest_id):
     purchase.total_dolar = float(purchase.price_dolar)*float(purchase.total_amount_kg)
     purchase.observation = request.form['observation']
     new_debit = Bank(-purchase.total_dolar, date, time, "Debito por Actualizacion de Compra (-)", -purchase.total_dolar )
-    db.session.add(new_credit)
+    db.session.add(new_debit)
     db.session.add(purchase)
     db.session.commit()
     session['management-status'] = "Purchase Updated"
