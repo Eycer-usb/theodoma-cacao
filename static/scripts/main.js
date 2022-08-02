@@ -97,19 +97,5 @@ con la etiqueta onclick='print("table", "tittle")'
 en el input table = nombre de la tabla de la Base de datos
 y tittle sera id = mitabla
 */
-function print(table, tittle) {
-    var idTable=document.getElementById(tittle);
-    var dbase = document.getElementById(table);
-    var idTable = openWind.document.getElementById(tittle);
-    var rank = idTable.rows;
-    var i = 12
-    if (idTable.rank[0].length > 12) {
-        for (var j = 0; j < rank.length; j++) {
-        rank[j].delete(i);   
-        }
-    }
-    console.log(dbase)
-    openwWind.print();
+function print(table,tittle) {
 }
-
-

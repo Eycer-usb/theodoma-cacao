@@ -2,26 +2,37 @@
 {% block content %}
     <h1>Banco</h1>
 
-    <p>{{ status }}</p>
-        <table class="table content-table" id="miTabla">            
-            <thead>
-                <th>ID</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Concepto</th>
-                <th>Monto</th>
-            </thead>
+    <p align="right">
+        
+        Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
+        &nbsp&nbsp&nbsp&nbsp
+        <button onclick='print("Bank", "miTabla")'><i class="fa fa-print" aria-hidden="true"></i></button>
+    </p>       
 
-    <tbody id = table-body-data>
-    {% for bank in banks %}
-    <tr>
-        <td>{{ bank.id }}</td>
-        <td>{{ bank.date }}</td>
-        <td>{{ bank.time }}</td>
-        <td>{{ bank.description }}</td>
-        <td>{{ bank.amount }}</td>
-    </tr>                
-    {% endfor %}
+    <p>{{ status }}</p>
+    <table class="table content-table" id="miTabla">            
+        <thead>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Concepto</th>
+            <th>Monto</th>
+        </thead>
+
+        <tbody id = table-body-data>
+        {% for bank in banks %}
+        <tr>
+            <td>{{ bank.id }}</td>
+            <td>{{ bank.date }}</td>
+            <td>{{ bank.time }}</td>
+            <td>{{ bank.description }}</td>
+            <td>{{ bank.amount }}</td>
+        </tr>                
+        {% endfor %}
+        <tr>
+            <th scope="row" colspan="9" style="text-align: right;">Suma Total:</th>
+            <td colspan="2">{{total_cantidad}}</td>
+        </tr> 
     </tbody>
-</table>
+    </table>
 {% endblock %}
