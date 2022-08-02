@@ -89,13 +89,81 @@ function searchEngine()
 
 
 /*
-Al ejecutarse la funcion print(table, tittle)
+Al ejecutarse la funcion print(table, title)
 se buscara la tabla con el nombre especificado 
-y el tittle sera el id de la tabla que se imprimira 
+y el title sera el id de la tabla que se imprimira 
 Para utilizarla solo es necesario ejecutar la funcion 
 con la etiqueta onclick='print("table", "tittle")'
 en el input table = nombre de la tabla de la Base de datos
-y tittle sera id = mitabla
+y title sera id = mitabla
 */
-function print(table,tittle) {
+function print(table,title) {
 }
+
+
+/*
+Se Implementan las funciones a ejecutar al
+cargar la vista de /harvest/{id}/financing
+Estas funciones corresponden a los calculos 
+en el tfoot
+*/
+
+function obtenerCantidadDeRecolectores( id_destino, table_id){
+    var campo = document.getElementById(id_destino);
+    var tabla = document.getElementById(table_id);
+    tr = tabla.getElementsByTagName("tr");
+    var ans = tr.length;
+    campo.innerHTML = ans;
+};
+
+
+ function obtenerCantidadYTotalFinanciamiento( id_financ, id_total, tabla_id,
+                                                col_status, status, col_monto ){
+    tbody = document.getElementById(tabla_id);
+    filas = tbody.getElementsByTagName("tr");
+    total = 0;
+    cantidad = 0;
+    for( var i = 0; i < filas.length; i++ )
+    {
+        let celdas = filas[i].getElementsByTagName("td");
+        if ( celdas[col_status-1].textContent ==status ) {
+            cantidad ++;
+            total += parseInt(celdas[col_monto-1].textContent);            
+        }      
+    }
+    document.getElementById(id_financ).innerHTML = cantidad;
+    document.getElementById(id_total).innerHTML = total;
+};
+
+function obtenerPlazosVencidos( id_destino, tabla_id, col_plazos ){
+    tbody = document.getElementById(tabla_id);
+    filas = tbody.getElementsByTagName("tr");
+    cantidad = 0;
+    date = new Date();
+    let dia = date.getDate()
+    let mes = date.getMonth() + 1
+    let anio = date.getFullYear()
+    var actual = `${anio}-${mes}-${dia}`;
+    for( var i = 0; i < filas.length; i++ )
+    {
+        let celdas = filas[i].getElementsByTagName("td");
+        let fecha_a_verificar = celdas[col_plazos-1].textContent;
+        if ( fecha_a_verificar < actual ) {
+            cantidad ++;
+        }      
+    }
+    document.getElementById(id_destino).innerHTML = cantidad;
+};
+
+function obtenerTotalFinaciamientos(id_destino, tabla_id, col_total ){
+    tbody = document.getElementById(tabla_id);
+    filas = tbody.getElementsByTagName("tr");
+    total = 0;
+    for( var i = 0; i < filas.length; i++ )
+    {
+        let celdas = filas[i].getElementsByTagName("td");
+        let monto = parseInt(celdas[col_total-1].textContent);
+        total += monto;
+    }
+    document.getElementById(id_destino).innerHTML = total;
+};

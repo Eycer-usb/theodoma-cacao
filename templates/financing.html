@@ -30,6 +30,7 @@
                 <th>F. De Vencimiento</th>
                 <th>Monto</th>
                 <th>Pagó</th>
+                <th></th>
 
             </thead>
             <tbody id="table-body-data">
@@ -39,35 +40,15 @@
                 <td>{{ i.date }}</td>
                 {% for prod in productors %}
                     {% if prod.id == i.F_Productor %}
-                        <td>{{ prod.cedula }} </td>
-                        {% for prod in productors %}
-                            {% if prod.id == i.F_Productor %}
-                                <td>{{ prod.last_name }} </td>
-                                {% for prod in productors %}
-                                    {% if prod.id == i.F_Productor %}
-                                        <td>{{ prod.name }} </td>
-                                        {% for prod in productors %}
-                                            {% if prod.id == i.F_Productor %}
-                                                <td>{{ prod.local_phone }} </td>
-                                                {% for prod in productors %}
-                                                    {% if prod.id == i.F_Productor %}
-                                                        <td>{{ prod.movil_phone }} </td>  
-                                                        {% for prod in productors %}
-                                                            {% if prod.id == i.F_Productor %}
-                                                                <td>{{ prod.address_1 }} </td>  
-                                                                {% for type in productor_types %}
-                                                                    {% if type.id == prod.productor_type_id %}
-                                                                        <td>{{ type.description }} </td>
-                                                                    {%endif%}
-                                                              {%endfor%}
-                                                            {%endif%}
-                                                        {%endfor%}                                  
-                                                    {%endif%}
-                                                {%endfor%}
-                                            {%endif%}
-                                        {%endfor%}
-                                    {%endif%}
-                                {%endfor%}
+                        <td>{{ prod.cedula }} </td>    
+                        <td>{{ prod.last_name }} </td> 
+                        <td>{{ prod.name }} </td>       
+                        <td>{{ prod.local_phone }} </td>
+                        <td>{{ prod.movil_phone }} </td>                   
+                        <td>{{ prod.address_1 }} </td>  
+                        {% for type in productor_types %}
+                            {% if type.id == prod.productor_type_id %}
+                                <td>{{ type.description }} </td>
                             {%endif%}
                         {%endfor%}
                     {%endif%}
@@ -81,41 +62,43 @@
                 {% endfor %}
             </tbody>
 
-            <tr>
-                <th scope="row" colspan="9" style="text-align: right;">Cantidad de Recolectores Beneficiados:</th>
-                <td colspan="2">{{total_cantidad}}</td>
-                <th></th><th></th><th></th>
-            </tr> 
-            <tr>
-                <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos Cancelados</th>
-                <!--td colspan="2">{{ total_monto }}</td-->
-                <th></th><th></th><th></th>
-            </tr>
-            <tr>
-                <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos No Cancelados:</th>
-                <!--td colspan="2">{{ total_monto }}</td-->
-                <th></th><th></th><th></th>
-            </tr>
-            <tr>
-                <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos con Plazos Vencidos</th>
-                <!--td colspan="2">{{ total_monto }}</td-->
-                <th></th><th></th><th></th>
-            </tr>
-            <tr>
-                <th scope="row" colspan="9" style="text-align: right;">Monto Total Cancelado($):</th>
-                <!--td colspan="2">{{ total_monto }}</td-->
-                <th></th><th></th><th></th>
-            </tr>
-            <tr>
-                <th scope="row" colspan="9" style="text-align: right;">Monto Total No Calcelado ($):</th>
-                <!--td colspan="2">{{ total_monto }}</td-->
-                <th></th><th></th><th></th>
-            </tr>
-            <tr>
-                <th scope="row" colspan="9" style="text-align: right;">Monto Total Financiado($):</th>
-                <td colspan="2">{{ total_monto }}</td>
-                <th></th><th></th><th></th>
-            </tr>
+            <tfoot>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Recolectores Beneficiados:</th>
+                    <td id="recolectores-beneficiados" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr> 
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos Cancelados</th>
+                    <td id="financiamientos-cancelados" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos No Cancelados:</th>
+                    <td id="financiamientos-no-cancelados" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos con Plazos Vencidos</th>
+                    <td id="plazo-vencido" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Monto Total Cancelado($):</th>
+                    <td id="total-cancelado" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Monto Total No Calcelado ($):</th>
+                    <td id="total-no-cancelado" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Monto Total Financiado($):</th>
+                    <td id="total" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr>
+            </tfoot>
         </table>
 
         <button type="submit" onclick="showForm()" class="btn btn-success btn-lg mb-1">Nuevo Financiamiento</button>
@@ -156,7 +139,24 @@
             </form>
     </section>
         
-
-
-
 {%endblock%}
+
+{% block scripts %}
+
+<script>
+    
+$( document ).ready(function() {
+    obtenerCantidadDeRecolectores( "recolectores-beneficiados",
+    "table-body-data");
+    obtenerCantidadYTotalFinanciamiento( "financiamientos-cancelados", 
+    "total-cancelado", "table-body-data", 13, "Si", 12 );
+    obtenerCantidadYTotalFinanciamiento( "financiamientos-no-cancelados",
+    "total-no-cancelado", "table-body-data", 13, "No", 12 );
+    obtenerPlazosVencidos( "plazo-vencido", "table-body-data", 11 );
+    obtenerTotalFinaciamientos("total", "table-body-data", 12 );
+});
+
+
+</script>
+
+{% endblock %}

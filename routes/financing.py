@@ -7,7 +7,7 @@ from datetime import datetime
 from models.harvest import Harvest
 
 financing = Blueprint('financing', __name__)
-allowed_rols = ['admin', 'shopping-analyst']
+allowed_rols = ['admin', 'shopping-manager']
 
 # Index page display all Harvest and create form
 @financing.route('/harvestFinancing')
@@ -30,12 +30,11 @@ def index(harvest_id):
         productors = Productor.query.all()
         productor_types = Productor_type.query.all()
 
-        total_monto = ("{0:.2f}".format(sum(finance.amount for finance in financing)))
-
         if 'management-status' in session: status = session['management-status']
         return render_template("financing.html", harvest=harvest, financing = financing,
-                productors=productors, productor_types= productor_types, total_monto =total_monto)
+                productors=productors, productor_types= productor_types)
 
+allowed_rols = ['admin']
 @financing.route('/harvest/<harvest_id>/financing/create', methods=["POST"])
 def create(harvest_id):
 
@@ -50,7 +49,8 @@ def create(harvest_id):
     amount = float(request.form['amount'])
     payment = request.form['payment']
     observations = request.form['observations']
-    
+    new_finance = Financing( date, productor_id, harvest_id, letter_number,
+                            expiration_date, amount, payment, observations )
     db.session.add(new_finance)
     db.session.commit()
     session['management-status'] = "Financiamiento Creado"
