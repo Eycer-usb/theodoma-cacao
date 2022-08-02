@@ -13,9 +13,11 @@ def index():
         return redirect(url_for('auth.index'))
     banks = Bank.query.all()
 
+    total_cantidad = sum(bank.amount for bank in banks)
+
     if 'management-status' not in session:
         return render_template('bank.html', status="",\
-            banks = banks)
+            banks = banks, total_cantidad=total_cantidad)
     status = session['management-status']
     session.pop('management-status', None)
-    return render_template("bank.html", banks=banks)
+    return render_template("bank.html", banks=banks, total_cantidad=total_cantidad)

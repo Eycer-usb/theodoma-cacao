@@ -146,4 +146,3 @@ def delete(purchase_id, harvest_id):
     db.session.commit()
     session['management-status'] = "Compra Eliminada"
     return redirect(url_for("purchase.index", harvest_id=harvest_id))
-

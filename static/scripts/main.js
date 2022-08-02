@@ -87,7 +87,6 @@ function searchEngine()
 
 }
 
-
 /*
 Al ejecutarse la funcion print(table, title)
 se buscara la tabla con el nombre especificado 
@@ -95,9 +94,9 @@ y el title sera el id de la tabla que se imprimira
 Para utilizarla solo es necesario ejecutar la funcion 
 con la etiqueta onclick='print("table", "tittle")'
 en el input table = nombre de la tabla de la Base de datos
-y title sera id = mitabla
-*/
-function print(table,title) {
+y tittle sera id = mitabla*/
+
+function generatePDF() {
 }
 
 
