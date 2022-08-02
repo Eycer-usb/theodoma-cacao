@@ -29,7 +29,8 @@ def index(harvest_id):
         financing = Financing.query.filter_by(F_Harvest = harvest_id)
         productors = Productor.query.all()
         productor_types = Productor_type.query.all()
-
+        
+        
         total_monto = ("{0:.2f}".format(sum(finance.amount for finance in financing)))
 
         if 'management-status' in session: status = session['management-status']
