@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Cosecha: {{harvest.description}}</h1>
+    <h2>Lista de Recolecores Financiados</h2>
+
+    <p align="right">
+        
+        Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
+        &nbsp&nbsp&nbsp&nbsp
+        <!-------------------- HACER FUNCION DE IMPRIMIR ------------>
+        <button><a onclick="javascript:generatePDF('miTabla');"><i class="fa fa-print" aria-hidden="true"></i></a></button>
+
+    </p>  
+     
+    <p>{{ status }}</p>
+        <table class="table content-table" id="miTabla">
+            
+            <thead>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Cédula</th>
+                <th>Apellidos</th>
+                <th>Nombres</th>
+                <th>Telefono Local</th>
+                <th>Telefono Celular</th>
+                <th>Direccion</th>
+                <th>Tipo de Recolector</th>
+                <th>No. Letra de Cambio</th>
+                <th>F. De Vencim.</th>
+                <th>Monto</th>
+                <th>Pagó</th>
+                
+            </thead>
+            <tbody id="table-body-data">
+            {% for i in financing %}
+            <tr>
+                <td>{{ i.id }}</td>
+                <td>{{ i.date }}</td>
+                {% for prod in productors %}
+                    {% if prod.id == i.F_Productor %}
+                        <td>{{ prod.cedula }} </td>    
+                        <td>{{ prod.last_name }} </td> 
+                        <td>{{ prod.name }} </td>       
+                        <td>{{ prod.local_phone }} </td>
+                        <td>{{ prod.movil_phone }} </td>                   
+                        <td>{{ prod.address_1 }} </td>  
+                        {% for type in productor_types %}
+                            {% if type.id == prod.productor_type_id %}
+                                <td>{{ type.description }} </td>
+                            {%endif%}
+                        {%endfor%}
+                    {%endif%}
+                {%endfor%}
+                
+                <td>{{ i.letter_number }}</td>
+                <td>{{ i.expiration_date }}</td>
+                <td>{{ i.amount }}</td>
+                <td>{{ i.payment}}</td>
+            </tr>    
+            {% endfor %}
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Recolectores Beneficiados:</th>
+                    <td id="recolectores-beneficiados" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr> 
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos Cancelados</th>
+                    <td id="financiamientos-cancelados" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos No Cancelados:</th>
+                    <td id="financiamientos-no-cancelados" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Cantidad de Financiamientos con Plazos Vencidos</th>
+                    <td id="plazo-vencido" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Monto Total Cancelado($):</th>
+                    <td id="total-cancelado" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Monto Total No Calcelado ($):</th>
+                    <td id="total-no-cancelado" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th scope="row" colspan="9" style="text-align: right;">Monto Total Financiado($):</th>
+                    <td id="total" colspan="2">0</td>
+                    <th></th><th></th><th></th>
+                </tr>
+            </tfoot>
+        </table>
+        
+{%endblock%}
+
+{% block scripts %}
+
+<script>
+    
+$( document ).ready(function() {
+    obtenerCantidadDeRecolectores( "recolectores-beneficiados",
+    "table-body-data");
+    obtenerCantidadYTotalFinanciamiento( "financiamientos-cancelados", 
+    "total-cancelado", "table-body-data", 13, "Si", 12 );
+    obtenerCantidadYTotalFinanciamiento( "financiamientos-no-cancelados",
+    "total-no-cancelado", "table-body-data", 13, "No", 12 );
+    obtenerPlazosVencidos( "plazo-vencido", "table-body-data", 11 );
+    obtenerTotalFinaciamientos("total", "table-body-data", 12 );
+});
+
+
+</script>
+
+{% endblock %}

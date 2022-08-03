@@ -16,7 +16,7 @@ from models.purchase import Purchase
 from datetime import datetime
 from models.bank import Bank
 purchase = Blueprint('purchase', __name__)
-allowed_rols = ['admin', 'shopping-analyst']
+allowed_rols = ['admin', 'shopping-analyst', 'shopping-manager']
 
 @purchase.route('/harvest/<harvest_id>/purchase', methods=['GET'])
 def index(harvest_id):

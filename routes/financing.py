@@ -6,7 +6,7 @@ from datetime import datetime
 from models.bank import Bank
 
 financing = Blueprint('financing', __name__)
-allowed_rols = ['admin', 'shopping-analyst']
+allowed_rols = ['admin', 'shopping-analyst', 'shopping-manager']
 
 # Index page display all Harvest and create form
 @financing.route('/harvestFinancing')
@@ -19,6 +19,20 @@ def harvestFinancing():
         session.pop('management-status', None)
         return render_template("harvestFinancing.html", harvests = harvests)
     return render_template("harvestFinancing.html", harvests = harvests)
+
+@financing.route('/harvest/<harvest_id>/financingShow', methods=['GET'])
+def financingShow(harvest_id):
+        if( not verify_permissions(session, User, allowed_rols) ):
+                return redirect(url_for('auth.index'))
+        harvest = Harvest.find(Harvest, harvest_id)
+        financing = Financing.query.filter_by(F_Harvest = harvest_id)
+        productors = Productor.query.all()
+        productor_types = Productor_type.query.all()
+
+        if 'management-status' in session: status = session['management-status']
+        return render_template("financingShow.html", harvest=harvest, financing = financing,
+                productors=productors, productor_types= productor_types)
+
 
 @financing.route('/harvest/<harvest_id>/financing', methods=['GET'])
 def index(harvest_id):

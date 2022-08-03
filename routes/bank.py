@@ -5,7 +5,7 @@ from models.bank import Bank
 from datetime import datetime
 
 bank = Blueprint('bank', __name__)
-allowed_rols = ['admin', 'shopping-analyst']
+allowed_rols = ['admin', 'shopping-analyst', 'shopping-manager']
 
 @bank.route('/bank')
 def index():

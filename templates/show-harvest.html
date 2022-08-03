@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <h2>Portafolio de Cosechas</h2>
-    <p>
+    <p align="right">
         Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
     </p> 
         <p>{{ status }}</p>
@@ -13,11 +13,9 @@
                 <th>Inicio</th>
                 <th>Fin</th>
                 <th>Status</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th>Listar Compra</th>
+                <th>Financiamientos</th>
+                <th>Generar Compra</th>
             </thead>
             <tbody id = table-body-data>
             {% for harvest in harvests %}
@@ -27,14 +25,11 @@
                 <td>{{ harvest.start_date }}</td>
                 <td>{{ harvest.end_date }}</td>
                 <td>{{ harvest.status }}</td>
-                <td><button onclick="window.location.href=`/harvest/edit/{{ harvest.id }}`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
-                <td><button onclick='deleteConfirm( {{ harvest.id }}, "Harvest" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
                 <td><button onclick='window.location.href=`/harvest/{{ harvest.id }}/purchase`'><i class="fa fa-file-text-o" aria-hidden="true"></i></i></button></td>
+                <td><button onclick="window.location.href=`/harvest/{{ harvest.id }}/financingShow`"><i class="fa fa-usd" aria-hidden="true"></i></button></td>            
                 {% if harvest.status == "active" %}
-                    <td><button onclick='window.location.href=`/harvest/close/{{ harvest.id }}`'><i class="fa fa-stop" aria-hidden="true"></i></button></td>
                     <td><button type="button" class="" data-toggle="modal" data-target="#modal-{{harvest.id}}"><i class="fa fa-plus-square-o" aria-hidden="true"></i></i></button></td>
                 {% else %}
-                    <td><button onclick='window.location.href=`/harvest/activate/{{ harvest.id }}`'><i class="fa fa-play" aria-hidden="true"></i></button></td>
                     <td></td>
                 {% endif %}
             </tr>                

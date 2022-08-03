@@ -5,7 +5,7 @@ from utils.db import db
 from utils.functions import *
 
 harvest_route = Blueprint('harvest_route', __name__)
-allowed_rols = ['admin']
+allowed_rols = ['admin', 'shopping-analyst', 'shopping-manager']
 
 # Index page display all Harvest and create form
 @harvest_route.route('/harvest')
