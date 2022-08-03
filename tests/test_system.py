@@ -165,13 +165,80 @@ class TestSystem(unittest.TestCase):
         self.assertEqual(200, res.status_code)
         self.assertIn( b"Theodoma Cacao", res.data )
 
-    #------------------UPDATE PASSWOD---------------------#
+    #------------------UPDATE PASSWORD---------------------#
 
     def test_update_password(self):
         self.client.post('/login', data=dict(username='admin', password='admin'))
         res = self.client.get('/')
         self.assertIn( b"Bienvenido", res.data )
+        self.client.post('/user-settings/update-password', data =
+                            dict( new_password="temp", old_password="admin" ) )
+        self.client.get('/logout')
+        self.client.post('/login', data=dict(username='admin', password='temp'))
+        res = self.client.get('/')
+        self.assertIn( b"Bienvenido", res.data )
+        self.client.post('/user-settings/update-password', data =
+                            dict( old_password="temp", new_password="admin" ) )
+        self.client.get('/logout')
+
+    #-----------------USER LIST------------------------------#
+    def test_get_users_list(self):
+        self.client.post('/login', data=dict(username='admin', password='admin'))
+        res = self.client.get('/user-management')
+        self.assertEqual(200, res.status_code)
+        self.assertIn( b"Perfiles de Usuarios", res.data )
+        self.client.get('/logout')
+
+    def test_new_user_form(self):
+        self.client.post('/login', data=dict(username='admin', password='admin'))
+        res = self.client.get('/user-management')
+        self.assertEqual(200, res.status_code)
+        self.assertIn( b"Crear Nuevo Usuario", res.data )
+        self.client.get('/logout')
+
+    def test_create_delete_user(self):
+
+        data = {
+            "name": "User Test",
+            "last_name": "User Last Name",
+            "username": "testUsername",
+            "email": "user@tests.eycer",
+            "password": "testPassword",
+            "phone": "04141234567",
+            "date_of_birth": "2022-08-03",
+            "address": "",
+            "gender": "Masculino",
+            "user_rol": "admin",
+            "harvest_id": "1" 
+        }
+
+        self.client.post('/login', data=dict(username='admin', password='admin'))
+        self.client.post('/user-management/create', data = data)
+        self.client.get('/logout')
+        self.client.post('/login', data=dict(username='testUsername',
+                        password='testPassword'))
+        res = self.client.get('/')
+        self.assertEqual(200, res.status_code)
+        self.assertIn( b"Bienvenido", res.data )
+        self.client.get('/logout')
+        self.client.post('/login', data=dict(username='admin', password='admin'))
+        with self.app.app_context():
+            id = User.query.filter_by(username="testUsername").first().id
+            self.client.get("/user-management/delete/" + str(id))
+        self.client.get('/logout')
         
+
+
+    
+        
+
+
+
+
+    
+
+    
+
 
 
 
