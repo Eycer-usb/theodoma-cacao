@@ -9,13 +9,26 @@
         <button><a onclick="javascript:generatePDF('miTabla');"><i class="fa fa-print" aria-hidden="true"></i></a></button>
     </p>
     
-    {% if session['rol'] in ['admin', 'shopping-manager'] %}
-    <h5>Agregar Credito</h5>
-    <form action="/bank/add-credit" method="post">
-        <input type="number" step="0.01" name="amount">
-        <input type="submit" value="+">
-    </form>
-    {% endif %}
+    <table>
+        <tr>
+            <td>
+                {% if session['rol'] in ['admin', 'shopping-manager'] %}
+                <h5>Agregar Credito</h5>
+                <form action="/bank/add-credit" method="post">
+                    <input type="number" step="0.01" name="amount">
+                    <input type="submit" value="+">
+                </form>
+                {% endif %}
+            </td>
+            <td>
+                <h5>Filtrar por Rango</h5>
+                <input type="date" id="from-date">
+                <input type="date" id="to-date">
+                <button onclick="filterByDate('table-body-data', 'from-date', 'to-date', 2)">Ir</button>
+            </td>
+        </tr>
+    </table>
+    
 
     <p>{{ status }}</p>
     <table class="table content-table" id="miTabla">            

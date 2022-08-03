@@ -71,7 +71,7 @@ de la tabla con id = table-body-data
 */
 function searchEngine()
 {
-    console.log("Ejecutandose")
+    console.log("Ejecutando Busqueda")
     var input, filter, tbody, tr, td, textValue;
     input = document.getElementById("search-bar");
     filter = input.value.toUpperCase();
@@ -172,4 +172,47 @@ y tittle sera id = mitabla*/
 
 function generatePDF(miTabla) {
     window.print()
+}
+
+
+/*
+Filtro Por fecha
+*/
+
+function filterByDate( table_id, from_id, to_id, col_date){
+
+    console.log("Ejecutando Fitro por Fecha")
+    from_date = new Date(document.getElementById(from_id).value)
+    to_date = new Date(document.getElementById(to_id).value)
+    from = ( from_date.getFullYear() + '-' + 
+    (from_date.getMonth() + 1).toString().padStart(2, '0') + '-' +
+    (from_date.getDate()+1).toString().padStart(2, '0')
+    );
+    to = ( to_date.getFullYear() + '-' + 
+    (to_date.getMonth() + 1).toString().padStart(2, '0') + '-' +
+    (to_date.getDate()+1).toString().padStart(2, '0')
+    );
+
+    var tbody, tr, td, txtValue;
+    tbody = document.getElementById(table_id);
+    filas = tbody.getElementsByTagName("tr");
+    for( var i = 0; i < filas.length; i++ )
+    {
+        var cols = filas[i].getElementsByTagName("td");
+        filas[i].style.display = "none";
+        if( cols.length > col_date ) {
+            txtValue = cols[col_date-1].textContent;
+            if ( filas.length > col_date && (from <= txtValue) && (txtValue <= to) ) {
+                filas[i].style.display = "";
+            }
+        }
+    }
+    
+    // Reiniciar tabla
+    if( from == "NaN-NaN-NaN" || to == "NaN-NaN-NaN" ){
+        for( var i = 0; i < filas.length; i++ ){
+            filas[i].style.display = "";
+        }
+    }
+
 }

@@ -196,6 +196,7 @@ class TestSystem(unittest.TestCase):
         self.assertIn( b"Crear Nuevo Usuario", res.data )
         self.client.get('/logout')
 
+    #-------------------USER MANAGEMENT-----------------------#
     def test_create_delete_user(self):
 
         data = {

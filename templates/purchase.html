@@ -4,14 +4,26 @@
     <h1><p id="name-Harvest">Cosecha {{harvest.description}}</p></h1>
     <h2>Datos de las Compras</h2>
 
-    <p align="right">
-            Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
-            &nbsp&nbsp&nbsp&nbsp
-            <!-------------------- HACER FUNCION DE IMPRIMIR ------------>
-            <button><a onclick="javascript:generatePDF('miTabla');"><i class="fa fa-print" aria-hidden="true"></i></a></button>
-
-        </p>       
         
+        <table>
+            <tr>
+                <td>
+                    <h5>Filtrar por Rango</h5>
+                <input type="date" id="from-date">
+                <input type="date" id="to-date">
+                <button onclick="filterByDate('table-body-data', 'from-date', 'to-date', 2)">Ir</button>
+                </td>
+                <td>
+                    <p align="right">
+                        Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
+                        &nbsp&nbsp&nbsp&nbsp
+                        <!-------------------- HACER FUNCION DE IMPRIMIR ------------>
+                        <button><a onclick="javascript:generatePDF('miTabla');"><i class="fa fa-print" aria-hidden="true"></i></a></button>
+            
+                    </p>   
+                </td>
+            </tr>
+        </table>
     <p>{{ status }}</p>
         <table class="table content-table" id="miTabla">
             <thead>
