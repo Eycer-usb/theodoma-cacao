@@ -11,7 +11,7 @@ allowed_rols = ['admin', 'shopping-analyst', 'shopping-manager']
 def index():
     if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
-    banks = Bank.query.all()
+    banks = Bank.query.order_by(Bank.id.desc())
 
     total_cantidad = sum(bank.amount for bank in banks)
 
