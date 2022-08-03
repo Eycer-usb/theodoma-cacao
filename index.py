@@ -7,7 +7,6 @@ running in debug mode
 
 from app import create_app
 from utils.db import db
-from models.user import User
 
 if __name__ == '__main__':
     app = create_app()  

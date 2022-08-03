@@ -42,3 +42,27 @@ def create_app():
     app.secret_key = "#a@sKUGHkl[;][/=6095sKHGK-~gh`d=+p?*\ ~`z'.a&689Uh8bHahjashdbjHJKgsdsjaJKKJ"
 
     return app
+
+
+def create_test():
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    testapp = Flask(__name__)
+    db = "test.db"
+    testapp.config['SQLALCHEMY_DATABASE_URI'] = \
+        'sqlite:///' + os.path.join(basedir, db)
+    testapp.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    SQLAlchemy(testapp)
+    testapp.register_blueprint(auth)
+    testapp.register_blueprint(user_rol)
+    testapp.register_blueprint(productor_route)
+    testapp.register_blueprint(productor_type_route)
+    testapp.register_blueprint(user)
+    testapp.register_blueprint(harvest_route)
+    testapp.register_blueprint(purchase)
+    testapp.register_blueprint(financing)
+    testapp.register_blueprint(bank)
+    testapp.register_blueprint(logger)
+
+    testapp.secret_key = "#a@sKUGHkl[;][/=6095sKHGK-~gh`d=+p?*\ ~`z'.a&689Uh8bHahjashdbjHJKgsdsjaJKKJ"
+
+    return testapp
