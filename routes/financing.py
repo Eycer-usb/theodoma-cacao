@@ -105,7 +105,6 @@ def delete(harvest_id, financing_id):
     if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
     financing = Financing.query.get(financing_id)
-    harvest = Harvest.query.get(harvest_id)
     db.session.delete(financing)
     db.session.commit()
     session['management-status'] = "Compra Eliminada"
