@@ -8,7 +8,7 @@
         Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
         &nbsp&nbsp&nbsp&nbsp
         <!-------------------- HACER FUNCION DE IMPRIMIR ------------>
-        <button onclick="print('Financiamientos', 'miTabla')"><i class="fa fa-print" aria-hidden="true"></i></button>
+        <button><a onclick="javascript:generatePDF('miTabla');"><i class="fa fa-print" aria-hidden="true"></i></a></button>
 
     </p>  
      
@@ -30,7 +30,7 @@
                 <th>Monto</th>
                 <th>Pagó</th>
                 <th></th>
-
+                <th></th>
             </thead>
             <tbody id="table-body-data">
             {% for i in financing %}
@@ -58,7 +58,9 @@
                 <td>{{ i.amount }}</td>
                 <td>{{ i.payment}}</td>
                 <td><button onclick="window.location.href=`/harvest/{{harvest.id}}/financing/{{i.id}}/edit`"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
-                {% endfor %}
+                <td><button onclick='deleteConfirm2( {{i.id}}, "Financing",{{harvest.id}})'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>                
+            </tr>    
+            {% endfor %}
             </tbody>
 
             <tfoot>

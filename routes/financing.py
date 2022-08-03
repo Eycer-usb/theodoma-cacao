@@ -2,12 +2,11 @@ from flask import Blueprint, render_template, redirect, url_for, request, sessio
 from utils.functions import *
 from utils.db import db
 from models.financing import Financing
-
 from datetime import datetime
-from models.harvest import Harvest
+from models.bank import Bank
 
 financing = Blueprint('financing', __name__)
-allowed_rols = ['admin', 'shopping-manager']
+allowed_rols = ['admin', 'shopping-analyst']
 
 # Index page display all Harvest and create form
 @financing.route('/harvestFinancing')
@@ -34,7 +33,6 @@ def index(harvest_id):
         return render_template("financing.html", harvest=harvest, financing = financing,
                 productors=productors, productor_types= productor_types)
 
-allowed_rols = ['admin']
 @financing.route('/harvest/<harvest_id>/financing/create', methods=["POST"])
 def create(harvest_id):
 
@@ -86,4 +84,15 @@ def update(harvest_id):
     db.session.add(financing)
     db.session.commit()
     session['management-status'] = "Financiamiento Editado"
+    return redirect(url_for("financing.index", harvest_id = harvest_id))
+
+@financing.route('/harvest/<harvest_id>/financing/<financing_id>/delete')
+def delete(harvest_id, financing_id):
+    if( not verify_permissions(session, User, allowed_rols) ):
+        return redirect(url_for('auth.index'))
+    financing = Financing.query.get(financing_id)
+    harvest = Harvest.query.get(harvest_id)
+    db.session.delete(financing)
+    db.session.commit()
+    session['management-status'] = "Compra Eliminada"
     return redirect(url_for("financing.index", harvest_id = harvest_id))

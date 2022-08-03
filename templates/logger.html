@@ -5,8 +5,7 @@
     Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
     &nbsp&nbsp&nbsp&nbsp
     <!-------------------- HACER FUNCION DE IMPRIMIR ------------>
-    <button onclick='print("Logger", "miTabla")'><i class="fa fa-print" aria-hidden="true"></i></button>
-
+    <button><a onclick="javascript:generatePDF('miTabla');"><i class="fa fa-print" aria-hidden="true"></i></a></button>
 </p>
 <table class="table content-table fixed-table" id="miTabla">
       
@@ -16,7 +15,6 @@
         <th>Modulo</th>
         <th>Fecha</th>
         <th>Hora</th>
-        <th>Detalles</th>
         <th>Eliminar</th>
     </thead>
     <tbody id = table-body-data>
@@ -27,7 +25,6 @@
         <td>{{ register.module }}</td>
         <td>{{ register.date }}</td>
         <td>{{ register.time }}</td>
-        <td><i class="fa fa-search" aria-hidden="true"></i></td>
         <td><button onclick='deleteConfirm( {{register.id}}, "Logger" )'><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
     </tr>                
     {% endfor %}

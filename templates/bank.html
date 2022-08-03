@@ -6,7 +6,7 @@
         
         Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
         &nbsp&nbsp&nbsp&nbsp
-        <button onclick='print("Bank", "miTabla")'><i class="fa fa-print" aria-hidden="true"></i></button>
+        <a onclick="javascript:generatePDF('miTabla');" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i></a>
     </p>
     
     {% if session['rol'] in ['admin', 'shopping-manager'] %}
@@ -38,7 +38,7 @@
         </tr>                
         {% endfor %}
         <tr>
-            <th scope="row" colspan="5" style="text-align: right;">Suma Total: {{total_cantidad}}</th>
+            <th scope="row" colspan="5" style="text-align: right;" step=".01">Suma Total: {{total_cantidad}}</th>
         </tr> 
     </tbody>
     </table>

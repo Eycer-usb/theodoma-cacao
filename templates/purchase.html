@@ -1,18 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Cosecha: {{harvest.description}}</h1>
+
+    <h1><p id="name-Harvest">Cosecha {{harvest.description}}</p></h1>
     <h2>Datos de las Compras</h2>
 
     <p align="right">
-        
             Buscar: <input id ="search-bar" onkeyup="searchEngine()" type="search" name="busqueda" placeholder="Buscar">
             &nbsp&nbsp&nbsp&nbsp
             <!-------------------- HACER FUNCION DE IMPRIMIR ------------>
-            <button onclick='print("Purchase", "miTabla")'><i class="fa fa-print" aria-hidden="true"></i></button>
-    </p>       
+            <button><a onclick="javascript:generatePDF('miTabla');"><i class="fa fa-print" aria-hidden="true"></i></a></button>
 
-
-
+        </p>       
+        
     <p>{{ status }}</p>
         <table class="table content-table" id="miTabla">
             <thead>
@@ -125,5 +124,5 @@
             </div>
             </div>
         </div>
-
+        <script type="text/javascript" src="{{ url_for('static', filename='js/print.js') }}"></script>
 {% endblock %}

@@ -20,8 +20,8 @@ function deleteConfirm(id, table){
             window.location.href = `/logger/delete/${id}`;            
         }
         else if(table == 'Financing'){
-        }
-
+            window.location.href = `/logger/delete/${id}`;            
+        }        
     };
 }
 
@@ -29,10 +29,14 @@ function deleteConfirm2(id, table, id2) {
     let text = `¿Seguro que desea eliminar este elemento? Esta accion no se puede deshacer`
     if(confirm(text)==true){
         if(table == 'Purchase'){
-            window.location.href = `/harvest/${id2}/purchase/${id}/delete`            
+            window.location.href = `/harvest/${id2}/purchase/${id}/delete`;            
         }
-    }
+        else if(table == 'Financing'){
+            window.location.href = `/harvest/${id2}/financing/${id}/delete`;            
+        }
+    };
 }
+
 function unmaskPassword(id){
     element = document.getElementById(id);
     if(element.type == 'password'){
@@ -85,18 +89,6 @@ function searchEngine()
         }        
     }
 
-}
-
-/*
-Al ejecutarse la funcion print(table, title)
-se buscara la tabla con el nombre especificado 
-y el title sera el id de la tabla que se imprimira 
-Para utilizarla solo es necesario ejecutar la funcion 
-con la etiqueta onclick='print("table", "tittle")'
-en el input table = nombre de la tabla de la Base de datos
-y tittle sera id = mitabla*/
-
-function generatePDF() {
 }
 
 
@@ -166,3 +158,18 @@ function obtenerTotalFinaciamientos(id_destino, tabla_id, col_total ){
     }
     document.getElementById(id_destino).innerHTML = total;
 };
+
+
+
+/*
+Al ejecutarse la funcion print(table, title)
+se buscara la tabla con el nombre especificado 
+y el title sera el id de la tabla que se imprimira 
+Para utilizarla solo es necesario ejecutar la funcion 
+con la etiqueta onclick='print("table", "tittle")'
+en el input table = nombre de la tabla de la Base de datos
+y tittle sera id = mitabla*/
+
+function generatePDF(miTabla) {
+    window.print()
+}

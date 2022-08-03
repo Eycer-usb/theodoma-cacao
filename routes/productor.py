@@ -88,7 +88,6 @@ def productor_create():
 
 @productor_route.route('/productor-data/delete/<id>')
 def productor_delete(id):
-    print("esta accediendo?")
     if( not verify_permissions(session, User, allowed_rols) ):
         return redirect(url_for('auth.index'))
     productor = Productor.query.get(id)

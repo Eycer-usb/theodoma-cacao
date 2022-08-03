@@ -36,4 +36,4 @@ class Financing( db.Model ):
 
     # Return the register with given Id
     def find(self, id):
-        return Purchase.query.get(id)
+        return Financing.query.get(id)
